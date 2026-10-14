@@ -7,6 +7,6 @@
 	});
 </script>
 
-<div class="flex h-screen w-screen items-center justify-center bg-slate-950 text-slate-400 text-sm">
+<div class="flex h-screen w-screen items-center justify-center bg-slate-950 text-sm text-slate-400">
 	Redirecting to route browser...
 </div>

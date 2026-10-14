@@ -1,13 +1,6 @@
 <script lang="ts">
 	import { useSvelteFlow, type NodeProps } from '@xyflow/svelte';
-	import {
-		Globe,
-		Lock,
-		ChevronDown,
-		Check,
-		AlertCircle,
-		Info
-	} from '@lucide/svelte';
+	import { Globe, Lock, ChevronDown, Check, AlertCircle, Info } from '@lucide/svelte';
 	import type { HttpTriggerData, HttpMethod } from '../../types';
 	import BaseNode from './BaseNode.svelte';
 
@@ -89,12 +82,8 @@
 	const usedOtherMethods = $derived.by(() => {
 		try {
 			const nodes = getNodes();
-			const otherTriggers = nodes.filter(
-				(n) => n.type === 'httpTrigger' && n.id !== id
-			);
-			return new Set(
-				otherTriggers.map((t) => ((t.data as any)?.method || 'GET') as HttpMethod)
-			);
+			const otherTriggers = nodes.filter((n) => n.type === 'httpTrigger' && n.id !== id);
+			return new Set(otherTriggers.map((t) => ((t.data as any)?.method || 'GET') as HttpMethod));
 		} catch {
 			return new Set<HttpMethod>();
 		}
@@ -134,7 +123,7 @@
 	<div class="space-y-1.5">
 		<div class="flex items-center justify-between text-[11px] font-medium text-slate-400">
 			<span>HTTP Method & Route</span>
-			<span class="text-[10px] text-slate-500 flex items-center gap-1">
+			<span class="flex items-center gap-1 text-[10px] text-slate-500">
 				<Lock class="h-2.5 w-2.5" /> Single-Endpoint
 			</span>
 		</div>
@@ -144,25 +133,31 @@
 			<!-- Custom Method Dropdown Trigger -->
 			<button
 				type="button"
-				class="flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-bold transition shadow-sm select-none {currentMeta.badgeClass} hover:brightness-110 active:scale-95"
+				class="flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-bold shadow-sm transition select-none {currentMeta.badgeClass} hover:brightness-110 active:scale-95"
 				onclick={toggleMethodDropdown}
 				data-dropdown-trigger="true"
 				title="Select HTTP Method with guidelines"
 			>
 				<span>{currentMethod}</span>
-				<ChevronDown class="h-3.5 w-3.5 transition-transform duration-200 {isMethodDropdownOpen ? 'rotate-180' : ''}" />
+				<ChevronDown
+					class="h-3.5 w-3.5 transition-transform duration-200 {isMethodDropdownOpen
+						? 'rotate-180'
+						: ''}"
+				/>
 			</button>
 
 			<!-- Non-editable Endpoint Route Display -->
 			<div
-				class="flex-1 flex items-center justify-between gap-1.5 rounded-lg border border-slate-800 bg-slate-950/80 px-2.5 py-1.5 font-mono text-xs text-slate-300 select-none shadow-inner"
+				class="flex flex-1 items-center justify-between gap-1.5 rounded-lg border border-slate-800 bg-slate-950/80 px-2.5 py-1.5 font-mono text-xs text-slate-300 shadow-inner select-none"
 				title="This route is fixed to the Nodeflow endpoint route and cannot be changed manually."
 			>
 				<div class="flex items-center gap-1.5 truncate">
-					<Lock class="h-3 w-3 text-slate-500 shrink-0" />
+					<Lock class="h-3 w-3 shrink-0 text-slate-500" />
 					<span class="truncate font-medium">{endpointPath}</span>
 				</div>
-				<span class="shrink-0 rounded bg-slate-800/80 px-1.5 py-0.2 text-[9px] font-medium text-slate-400 border border-slate-700/50">
+				<span
+					class="py-0.2 shrink-0 rounded border border-slate-700/50 bg-slate-800/80 px-1.5 text-[9px] font-medium text-slate-400"
+				>
 					Fixed
 				</span>
 			</div>
@@ -172,7 +167,7 @@
 				<!-- Backdrop to dismiss -->
 				<button
 					type="button"
-					class="fixed inset-0 z-40 cursor-default bg-transparent border-none outline-none"
+					class="fixed inset-0 z-40 cursor-default border-none bg-transparent outline-none"
 					aria-label="Close method menu"
 					onclick={(e) => {
 						e.stopPropagation();
@@ -181,16 +176,18 @@
 				></button>
 
 				<div
-					class="absolute left-0 top-full mt-1.5 z-50 w-80 rounded-xl border border-slate-700 bg-slate-900 shadow-2xl backdrop-blur-xl p-2 space-y-1 divide-y divide-slate-800/60 max-h-[380px] overflow-y-auto"
+					class="absolute top-full left-0 z-50 mt-1.5 max-h-[380px] w-80 space-y-1 divide-y divide-slate-800/60 overflow-y-auto rounded-xl border border-slate-700 bg-slate-900 p-2 shadow-2xl backdrop-blur-xl"
 				>
-					<div class="pb-1.5 px-1 flex items-center justify-between text-[11px] font-semibold text-slate-400">
+					<div
+						class="flex items-center justify-between px-1 pb-1.5 text-[11px] font-semibold text-slate-400"
+					>
 						<span class="flex items-center gap-1">
 							<Info class="h-3 w-3 text-blue-400" /> HTTP Method Guide
 						</span>
 						<span class="text-[10px] text-slate-500">Max 1 trigger/method</span>
 					</div>
 
-					<div class="pt-1.5 space-y-1">
+					<div class="space-y-1 pt-1.5">
 						{#each methodsList as m}
 							{@const info = methodDetails[m]}
 							{@const isSelected = currentMethod === m}
@@ -200,15 +197,17 @@
 								type="button"
 								disabled={isUsed}
 								onclick={() => selectMethod(m)}
-								class="w-full text-left rounded-lg p-2 transition flex flex-col gap-1 {isSelected
+								class="flex w-full flex-col gap-1 rounded-lg p-2 text-left transition {isSelected
 									? info.activeClass + ' border'
 									: isUsed
-										? 'opacity-40 cursor-not-allowed bg-slate-950/30'
-										: 'hover:bg-slate-800/70 border border-transparent'}"
+										? 'cursor-not-allowed bg-slate-950/30 opacity-40'
+										: 'border border-transparent hover:bg-slate-800/70'}"
 							>
 								<div class="flex items-center justify-between">
 									<div class="flex items-center gap-2">
-										<span class="rounded px-1.5 py-0.5 text-[10px] font-bold font-mono border {info.badgeClass}">
+										<span
+											class="rounded border px-1.5 py-0.5 font-mono text-[10px] font-bold {info.badgeClass}"
+										>
 											{m}
 										</span>
 										<span class="text-xs font-semibold text-slate-200">
@@ -217,22 +216,25 @@
 									</div>
 
 									{#if isSelected}
-										<div class="flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
+										<div class="flex items-center gap-1 text-[10px] font-medium text-emerald-400">
 											<Check class="h-3 w-3" /> Selected
 										</div>
 									{:else if isUsed}
-										<span class="rounded bg-rose-500/10 px-1.5 py-0.5 text-[9px] font-medium text-rose-400 border border-rose-500/20">
+										<span
+											class="rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[9px] font-medium text-rose-400"
+										>
 											Used in flow
 										</span>
 									{/if}
 								</div>
 
-								<p class="text-[10px] text-slate-400 leading-snug">
+								<p class="text-[10px] leading-snug text-slate-400">
 									{info.desc}
 								</p>
 
-								<div class="text-[9px] text-slate-500 font-mono">
-									<span class="text-slate-400">Best for:</span> {info.bestFor}
+								<div class="font-mono text-[9px] text-slate-500">
+									<span class="text-slate-400">Best for:</span>
+									{info.bestFor}
 								</div>
 							</button>
 						{/each}
@@ -243,12 +245,14 @@
 	</div>
 
 	<!-- Explanation box for current method -->
-	<div class="rounded-lg border border-slate-800 bg-slate-950/70 p-2 text-[11px] text-slate-400 space-y-1">
+	<div
+		class="space-y-1 rounded-lg border border-slate-800 bg-slate-950/70 p-2 text-[11px] text-slate-400"
+	>
 		<div class="flex items-center justify-between font-mono text-[10px] text-slate-500">
 			<span>INBOUND CONTEXT:</span>
-			<span class="text-blue-400 font-mono">req.body, query, headers</span>
+			<span class="font-mono text-blue-400">req.body, query, headers</span>
 		</div>
-		<p class="text-slate-400 leading-relaxed text-[10.5px]">
+		<p class="text-[10.5px] leading-relaxed text-slate-400">
 			{currentMeta.desc}
 		</p>
 	</div>

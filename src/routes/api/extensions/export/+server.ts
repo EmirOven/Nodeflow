@@ -19,10 +19,13 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	const all = getAllExtensions();
-	return new Response(JSON.stringify({ exportedAt: new Date().toISOString(), extensions: all }, null, 2), {
-		headers: {
-			'Content-Type': 'application/json',
-			'Content-Disposition': 'attachment; filename="nodeflow-extensions-bundle.json"'
+	return new Response(
+		JSON.stringify({ exportedAt: new Date().toISOString(), extensions: all }, null, 2),
+		{
+			headers: {
+				'Content-Type': 'application/json',
+				'Content-Disposition': 'attachment; filename="nodeflow-extensions-bundle.json"'
+			}
 		}
-	});
+	);
 };

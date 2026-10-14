@@ -1,5 +1,9 @@
 import { json, type RequestHandler, type RequestEvent } from '@sveltejs/kit';
-import { getPublishedFlow, getAllPublishedFlows, type PublishedFlow } from '../../../lib/server/publishedStore';
+import {
+	getPublishedFlow,
+	getAllPublishedFlows,
+	type PublishedFlow
+} from '../../../lib/server/publishedStore';
 import { executeFlow } from '../../../lib/engine/executor';
 import type { TestRequestPayload } from '../../../lib/types';
 
@@ -23,11 +27,11 @@ async function handlePublishedRequest(event: RequestEvent) {
 		const all: PublishedFlow[] = getAllPublishedFlows();
 		return json(
 			{
-				error: `404 Not Found: No published Nodely endpoint matches ${method} ${fullPath}`,
+				error: `404 Not Found: No published Nodeflow endpoint matches ${method} ${fullPath}`,
 				method,
 				requestedPath: fullPath,
 				availableEndpoints: all.map((f: PublishedFlow) => `${f.method} ${f.path}`),
-				hint: 'Click "Publish API" in the Nodely editor to host this workflow live!'
+				hint: 'Click "Publish API" in the Nodeflow editor to host this workflow live!'
 			},
 			{ status: 404 }
 		);
@@ -66,7 +70,7 @@ async function handlePublishedRequest(event: RequestEvent) {
 
 		const responseHeaders = {
 			'Content-Type': 'application/json',
-			'X-Powered-By': 'Nodely API Builder',
+			'X-Powered-By': 'Nodeflow API Builder',
 			...(result.responseHeaders || {})
 		};
 
@@ -77,7 +81,7 @@ async function handlePublishedRequest(event: RequestEvent) {
 	} catch (err: any) {
 		return json(
 			{
-				error: 'Internal Server Error executing published Nodely workflow',
+				error: 'Internal Server Error executing published Nodeflow workflow',
 				details: err.message || String(err)
 			},
 			{ status: 500 }

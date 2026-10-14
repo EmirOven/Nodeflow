@@ -41,7 +41,8 @@ function seedDefaults() {
 		{
 			id: 'user-auth',
 			title: 'User Registration & Auth',
-			description: 'Validates user payload, hashes password mock, and persists to users collection.',
+			description:
+				'Validates user payload, hashes password mock, and persists to users collection.',
 			method: 'POST',
 			path: '/api/v1/auth/register',
 			nodes: JSON.parse(JSON.stringify(templatesData['user-auth'].nodes)),

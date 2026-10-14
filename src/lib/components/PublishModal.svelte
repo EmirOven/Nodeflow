@@ -93,14 +93,20 @@
 </script>
 
 {#if isOpen}
-	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 select-none">
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm select-none"
+	>
 		<div
-			class="flex flex-col w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl overflow-hidden"
+			class="flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl"
 		>
 			<!-- Header -->
-			<div class="flex items-center justify-between border-b border-slate-800 px-6 py-4 bg-slate-900/40">
+			<div
+				class="flex items-center justify-between border-b border-slate-800 bg-slate-900/40 px-6 py-4"
+			>
 				<div class="flex items-center gap-3">
-					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400"
+					>
 						<Radio class="h-5 w-5 animate-pulse" />
 					</div>
 					<div>
@@ -112,20 +118,20 @@
 				<button
 					type="button"
 					onclick={onClose}
-					class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition"
+					class="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
 				>
 					<X class="h-4 w-4" />
 				</button>
 			</div>
 
 			<!-- Main Content -->
-			<div class="p-6 space-y-5 overflow-y-auto max-h-[70vh]">
+			<div class="max-h-[70vh] space-y-5 overflow-y-auto p-6">
 				<!-- Live URL Box -->
-				<div class="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-4 space-y-3">
+				<div class="space-y-3 rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-4">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
 							<span
-								class="rounded px-2 py-0.5 text-xs font-bold font-mono uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+								class="rounded border border-emerald-500/30 bg-emerald-500/20 px-2 py-0.5 font-mono text-xs font-bold text-emerald-400 uppercase"
 							>
 								{currentEndpoint.method}
 							</span>
@@ -134,23 +140,25 @@
 						<div class="flex items-center gap-1.5">
 							<span class="relative flex h-2 w-2">
 								<span
-									class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+									class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
 								></span>
-								<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+								<span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
 							</span>
-							<span class="text-[11px] font-mono text-emerald-400">Online</span>
+							<span class="font-mono text-[11px] text-emerald-400">Online</span>
 						</div>
 					</div>
 
-					<div class="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-xs text-slate-200">
-						<Globe class="h-4 w-4 text-emerald-400 shrink-0 ml-1" />
+					<div
+						class="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-xs text-slate-200"
+					>
+						<Globe class="ml-1 h-4 w-4 shrink-0 text-emerald-400" />
 						<span class="flex-1 overflow-x-auto whitespace-nowrap text-emerald-300 select-all">
 							{fullUrl}
 						</span>
 						<button
 							type="button"
 							onclick={copyUrl}
-							class="flex items-center gap-1 rounded bg-slate-800 px-2 py-1 text-[11px] text-slate-300 hover:bg-slate-700 hover:text-white transition"
+							class="flex items-center gap-1 rounded bg-slate-800 px-2 py-1 text-[11px] text-slate-300 transition hover:bg-slate-700 hover:text-white"
 						>
 							{#if copiedUrl}
 								<Check class="h-3 w-3 text-emerald-400" />
@@ -165,7 +173,7 @@
 							href={fullUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex items-center gap-1 rounded bg-emerald-600 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-emerald-500 transition"
+							class="flex items-center gap-1 rounded bg-emerald-600 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-emerald-500"
 							title="Open endpoint in new tab"
 						>
 							<ExternalLink class="h-3 w-3" />
@@ -196,26 +204,27 @@
 					</div>
 
 					<pre
-						class="rounded-xl border border-slate-800 bg-slate-900/80 p-3 font-mono text-xs text-slate-300 overflow-x-auto select-all"
-					>curl -X {currentEndpoint.method} "{fullUrl}"</pre>
+						class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/80 p-3 font-mono text-xs text-slate-300 select-all">curl -X {currentEndpoint.method} "{fullUrl}"</pre>
 				</div>
 
 				<!-- Other Active Endpoints Section -->
-				<div class="space-y-2.5 pt-2 border-t border-slate-800/80">
+				<div class="space-y-2.5 border-t border-slate-800/80 pt-2">
 					<div class="flex items-center justify-between text-xs text-slate-400">
 						<span class="flex items-center gap-1.5">
 							<Layers class="h-3.5 w-3.5 text-indigo-400" /> All Active Published Endpoints
 						</span>
-						<span class="text-[11px] text-slate-500 font-mono">{publishedList.length} total</span>
+						<span class="font-mono text-[11px] text-slate-500">{publishedList.length} total</span>
 					</div>
 
-					<div class="space-y-1.5 max-h-40 overflow-y-auto">
+					<div class="max-h-40 space-y-1.5 overflow-y-auto">
 						{#each publishedList as item}
 							<div
 								class="flex items-center justify-between rounded-lg border border-slate-800/60 bg-slate-900/40 px-3 py-2 text-xs"
 							>
 								<div class="flex items-center gap-2">
-									<span class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] font-bold text-slate-300">
+									<span
+										class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] font-bold text-slate-300"
+									>
 										{item.method}
 									</span>
 									<span class="font-mono text-slate-200">{item.path}</span>
@@ -226,7 +235,7 @@
 									<a
 										href={item.path}
 										target="_blank"
-										class="text-slate-400 hover:text-emerald-400 transition"
+										class="text-slate-400 transition hover:text-emerald-400"
 										title="Open"
 									>
 										<ExternalLink class="h-3.5 w-3.5" />
@@ -234,7 +243,7 @@
 									<button
 										type="button"
 										onclick={() => unpublish(item.method, item.path)}
-										class="text-slate-500 hover:text-rose-400 transition"
+										class="text-slate-500 transition hover:text-rose-400"
 										title="Unpublish"
 									>
 										<Trash2 class="h-3.5 w-3.5" />
@@ -244,7 +253,7 @@
 						{/each}
 
 						{#if publishedList.length === 0}
-							<div class="text-center py-2 text-xs text-slate-600">
+							<div class="py-2 text-center text-xs text-slate-600">
 								No other published endpoints
 							</div>
 						{/if}
@@ -257,7 +266,7 @@
 				<button
 					type="button"
 					onclick={onClose}
-					class="rounded-lg bg-slate-800 px-4 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 transition"
+					class="rounded-lg bg-slate-800 px-4 py-1.5 text-xs font-semibold text-slate-200 transition hover:bg-slate-700"
 				>
 					Close
 				</button>

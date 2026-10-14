@@ -28,7 +28,9 @@
 	let { data }: { data: PageData } = $props();
 
 	// svelte-ignore state_referenced_locally
-	let routes = $state<ManagedRoute[]>(data?.routes && data.routes.length > 0 ? [...data.routes] : []);
+	let routes = $state<ManagedRoute[]>(
+		data?.routes && data.routes.length > 0 ? [...data.routes] : []
+	);
 	// svelte-ignore state_referenced_locally
 	let isLoading = $state(!data?.routes || data.routes.length === 0);
 	let updatingRouteId = $state<string | null>(null);
@@ -308,7 +310,7 @@
 	<title>Nodeflow — Visual Nodeflow Builder & Engine</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
+<div class="flex min-h-screen flex-col bg-slate-950 text-slate-100 select-none">
 	<!-- Top Navigation -->
 	<header
 		class="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-6 backdrop-blur-xl"
@@ -316,7 +318,7 @@
 		<!-- Left: Brand -->
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/25 text-white"
+				class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25"
 			>
 				<Network class="h-5 w-5" />
 			</div>
@@ -325,7 +327,7 @@
 				<div class="flex items-center gap-2">
 					<h1 class="text-lg font-bold tracking-tight text-white">Nodeflow</h1>
 					<span
-						class="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400 border border-blue-500/20"
+						class="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400"
 					>
 						v0.5.3
 					</span>
@@ -335,17 +337,31 @@
 		</div>
 
 		<!-- Center: Navigation Tabs -->
-		<div class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800">
-			<a href="/" class="px-3 py-1 text-xs font-semibold text-white bg-slate-800 rounded-lg shadow-sm">
+		<div
+			class="hidden items-center gap-1 rounded-xl border border-slate-800 bg-slate-900/60 p-1 md:flex"
+		>
+			<a
+				href="/"
+				class="rounded-lg bg-slate-800 px-3 py-1 text-xs font-semibold text-white shadow-sm"
+			>
 				Nodeflows
 			</a>
-			<a href="/users" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/users"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Project Users
 			</a>
-			<a href="/extensions" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/extensions"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Extensions
 			</a>
-			<a href="/settings" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/settings"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Settings
 			</a>
 		</div>
@@ -353,7 +369,9 @@
 		<!-- Right: Action Buttons -->
 		<div class="flex items-center gap-3">
 			{#if isLoading && routes.length > 0}
-				<div class="flex items-center gap-1.5 rounded-full bg-blue-500/10 px-2.5 py-1 text-[11px] font-medium text-blue-400 border border-blue-500/20 animate-pulse">
+				<div
+					class="flex animate-pulse items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 text-[11px] font-medium text-blue-400"
+				>
 					<RefreshCw class="h-3 w-3 animate-spin" />
 					<span>Syncing...</span>
 				</div>
@@ -362,7 +380,7 @@
 			<button
 				type="button"
 				onclick={loadRoutes}
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
 				title="Refresh Nodeflows list"
 			>
 				<RefreshCw class="h-3.5 w-3.5 {isLoading ? 'animate-spin' : ''}" />
@@ -379,7 +397,7 @@
 					newTemplate = 'empty';
 					isCreateOpen = true;
 				}}
-				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/60 hover:from-emerald-500 hover:to-teal-500 transition active:scale-95"
+				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/60 transition hover:from-emerald-500 hover:to-teal-500 active:scale-95"
 			>
 				<Plus class="h-4 w-4" />
 				<span>Create New Nodeflow</span>
@@ -388,11 +406,11 @@
 	</header>
 
 	<!-- Main Content Container -->
-	<main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8 space-y-8">
+	<main class="mx-auto w-full max-w-7xl flex-1 space-y-8 p-6 md:p-8">
 		<!-- Hero / Stats Bar -->
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
 			<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-400">
 					<span>Total Nodeflows</span>
 					<Layers class="h-4 w-4 text-blue-400" />
 				</div>
@@ -401,16 +419,16 @@
 			</div>
 
 			<div class="rounded-2xl border border-emerald-500/20 bg-emerald-950/10 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-emerald-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-emerald-400">
 					<span>Live Nodeflows</span>
-					<Radio class="h-4 w-4 text-emerald-400 animate-pulse" />
+					<Radio class="h-4 w-4 animate-pulse text-emerald-400" />
 				</div>
 				<div class="mt-2 text-2xl font-bold text-emerald-400">{stats.live}</div>
 				<p class="mt-1 text-[11px] text-emerald-500/80">Publicly accessible via /api/...</p>
 			</div>
 
 			<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-400">
 					<span>Draft Nodeflows</span>
 					<FileCode class="h-4 w-4 text-amber-400" />
 				</div>
@@ -419,11 +437,11 @@
 			</div>
 
 			<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-400">
 					<span>Self-Hosted Gateway</span>
 					<Globe class="h-4 w-4 text-purple-400" />
 				</div>
-				<div class="mt-2 text-xs font-mono font-semibold text-purple-300 truncate">
+				<div class="mt-2 truncate font-mono text-xs font-semibold text-purple-300">
 					localhost:5173/api/...
 				</div>
 				<p class="mt-1 text-[11px] text-slate-500">Direct HTTP JSON execution</p>
@@ -431,21 +449,21 @@
 		</div>
 
 		<!-- Filter & Search Controls -->
-		<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+		<div class="flex flex-col items-stretch justify-between gap-4 md:flex-row md:items-center">
 			<!-- Search input -->
-			<div class="relative flex-1 max-w-md">
-				<Search class="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+			<div class="relative max-w-md flex-1">
+				<Search class="absolute top-3 left-3 h-4 w-4 text-slate-500" />
 				<input
 					type="text"
 					placeholder="Search Nodeflows by path, title, or description..."
 					bind:value={searchQuery}
-					class="w-full rounded-xl border border-slate-800 bg-slate-900/80 pl-9 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none transition"
+					class="w-full rounded-xl border border-slate-800 bg-slate-900/80 py-2.5 pr-4 pl-9 text-xs text-slate-200 placeholder-slate-500 transition focus:border-blue-500 focus:outline-none"
 				/>
 				{#if searchQuery}
 					<button
 						type="button"
 						onclick={() => (searchQuery = '')}
-						class="absolute right-3 top-3 text-slate-500 hover:text-white"
+						class="absolute top-3 right-3 text-slate-500 hover:text-white"
 					>
 						<X class="h-3.5 w-3.5" />
 					</button>
@@ -453,12 +471,14 @@
 			</div>
 
 			<!-- Method Filter Pills -->
-			<div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-900/60">
+			<div
+				class="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 p-1"
+			>
 				{#each methodsList as m}
 					<button
 						type="button"
 						onclick={() => (selectedMethod = m)}
-						class="px-2.5 py-1 text-xs font-semibold rounded-lg transition {selectedMethod === m
+						class="rounded-lg px-2.5 py-1 text-xs font-semibold transition {selectedMethod === m
 							? 'bg-blue-600 text-white shadow-sm'
 							: 'text-slate-400 hover:text-slate-200'}"
 					>
@@ -468,11 +488,11 @@
 			</div>
 
 			<!-- Status Filter Pills -->
-			<div class="flex items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-900/60">
+			<div class="flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 p-1">
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'ALL')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'ALL'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'ALL'
 						? 'bg-slate-700 text-white'
 						: 'text-slate-400 hover:text-slate-200'}"
 				>
@@ -481,7 +501,7 @@
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'LIVE')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'LIVE'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'LIVE'
 						? 'bg-emerald-600 text-white'
 						: 'text-slate-400 hover:text-emerald-400'}"
 				>
@@ -490,7 +510,7 @@
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'DRAFT')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'DRAFT'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'DRAFT'
 						? 'bg-amber-600 text-white'
 						: 'text-slate-400 hover:text-amber-400'}"
 				>
@@ -501,42 +521,48 @@
 
 		<!-- Routes Grid -->
 		{#if filteredRoutes.length > 0}
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
 				{#each filteredRoutes as route (route.id)}
 					{@const isUpdatingThisCard = updatingRouteId === route.id}
 					{@const nodeTypes = getNodeSummary(route.nodes || [])}
 					<div
-						class="group relative flex flex-col justify-between rounded-2xl border bg-slate-900/50 p-5 shadow-lg backdrop-blur-xl transition-all duration-200 overflow-hidden {isUpdatingThisCard
+						class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border bg-slate-900/50 p-5 shadow-lg backdrop-blur-xl transition-all duration-200 {isUpdatingThisCard
 							? 'border-blue-500/50 ring-2 ring-blue-500/30'
 							: 'border-slate-800/90 hover:border-slate-700 hover:bg-slate-900/80 hover:shadow-2xl'}"
 					>
 						{#if isUpdatingThisCard}
 							<!-- Isolated Per-Card Loading Overlay -->
 							<div
-								class="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-950/95 p-6 text-center backdrop-blur-md animate-in fade-in duration-150"
+								class="animate-in fade-in absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-950/95 p-6 text-center backdrop-blur-md duration-150"
 							>
-								<div class="relative flex items-center justify-center mb-3">
+								<div class="relative mb-3 flex items-center justify-center">
 									<span
-										class="absolute inline-flex h-10 w-10 rounded-full {updatingAction === 'publishing'
+										class="absolute inline-flex h-10 w-10 rounded-full {updatingAction ===
+										'publishing'
 											? 'bg-emerald-500/20'
 											: 'bg-amber-500/20'} animate-ping opacity-75"
 									></span>
 									<span
-										class="inline-block h-8 w-8 animate-spin rounded-full border-2 {updatingAction === 'publishing'
+										class="inline-block h-8 w-8 animate-spin rounded-full border-2 {updatingAction ===
+										'publishing'
 											? 'border-emerald-400'
 											: 'border-amber-400'} border-t-transparent shadow-lg"
 									></span>
 								</div>
 
 								<div class="text-sm font-bold text-white">
-									{updatingAction === 'publishing' ? 'Hosting Nodeflow Live...' : 'Taking Nodeflow Down...'}
+									{updatingAction === 'publishing'
+										? 'Hosting Nodeflow Live...'
+										: 'Taking Nodeflow Down...'}
 								</div>
 
-								<div class="mt-2 inline-block max-w-[90%] truncate rounded-md bg-slate-900 px-2.5 py-1 font-mono text-[11px] text-slate-300 border border-slate-800 shadow-inner">
+								<div
+									class="mt-2 inline-block max-w-[90%] truncate rounded-md border border-slate-800 bg-slate-900 px-2.5 py-1 font-mono text-[11px] text-slate-300 shadow-inner"
+								>
 									{route.path}
 								</div>
 
-								<p class="mt-2 text-[10px] text-slate-400 max-w-[85%] leading-relaxed">
+								<p class="mt-2 max-w-[85%] text-[10px] leading-relaxed text-slate-400">
 									{updatingAction === 'publishing'
 										? 'Registering Nodeflow on gateway & syncing state...'
 										: 'De-registering Nodeflow and revoking gateway access...'}
@@ -549,7 +575,7 @@
 							<div class="flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2">
 									<span
-										class="rounded-lg px-2.5 py-0.5 text-[11px] font-bold font-mono border {getMethodBadgeClass(
+										class="rounded-lg border px-2.5 py-0.5 font-mono text-[11px] font-bold {getMethodBadgeClass(
 											route.method
 										)}"
 									>
@@ -558,14 +584,14 @@
 
 									{#if route.isPublished}
 										<span
-											class="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/20"
+											class="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400"
 										>
-											<span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+											<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
 											LIVE
 										</span>
 									{:else}
 										<span
-											class="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-400 border border-slate-700"
+											class="rounded-full border border-slate-700 bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-400"
 										>
 											DRAFT
 										</span>
@@ -577,12 +603,12 @@
 									type="button"
 									onclick={() => copyToClipboard(route.path, route.id)}
 									disabled={isUpdatingThisCard}
-									class="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-mono text-slate-400 hover:bg-slate-800 hover:text-white transition disabled:opacity-40"
+									class="flex items-center gap-1 rounded-lg px-2 py-1 font-mono text-[11px] text-slate-400 transition hover:bg-slate-800 hover:text-white disabled:opacity-40"
 									title="Copy full endpoint URL"
 								>
 									{#if copiedPath === route.id}
 										<Check class="h-3 w-3 text-emerald-400" />
-										<span class="text-emerald-400 text-[10px]">Copied!</span>
+										<span class="text-[10px] text-emerald-400">Copied!</span>
 									{:else}
 										<Copy class="h-3 w-3 text-slate-400" />
 										<span class="text-[10px]">Copy URL</span>
@@ -592,17 +618,21 @@
 
 							<!-- Title & Description -->
 							<div class="mt-3.5">
-								<h2 class="text-base font-bold tracking-tight text-white group-hover:text-blue-300 transition-colors">
+								<h2
+									class="text-base font-bold tracking-tight text-white transition-colors group-hover:text-blue-300"
+								>
 									{route.title}
 								</h2>
-								<p class="mt-1 text-xs text-slate-400 line-clamp-2 leading-relaxed">
+								<p class="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-400">
 									{route.description || 'Custom visual Nodeflow created in Nodeflow.'}
 								</p>
 							</div>
 
 							<!-- Endpoint Path display -->
-							<div class="mt-3.5 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 px-3 py-2">
-								<span class="font-mono text-xs text-slate-300 truncate">
+							<div
+								class="mt-3.5 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 px-3 py-2"
+							>
+								<span class="truncate font-mono text-xs text-slate-300">
 									{route.path}
 								</span>
 							</div>
@@ -611,7 +641,7 @@
 							<div class="mt-4 flex flex-wrap items-center gap-1 text-[10px] text-slate-400">
 								<span class="font-semibold text-slate-300">{route.nodes?.length || 0} nodes:</span>
 								{#each nodeTypes as t, idx}
-									<span class="rounded bg-slate-800/80 px-1.5 py-0.5 text-slate-300 font-mono">
+									<span class="rounded bg-slate-800/80 px-1.5 py-0.5 font-mono text-slate-300">
 										{t}
 									</span>
 									{#if idx < nodeTypes.length - 1}
@@ -622,14 +652,16 @@
 						</div>
 
 						<!-- Card Bottom Actions -->
-						<div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
+						<div
+							class="mt-5 flex items-center justify-between gap-2 border-t border-slate-800/80 pt-4"
+						>
 							<div class="flex items-center gap-1.5">
 								<!-- Quick Test / cURL -->
 								<button
 									type="button"
 									onclick={(e) => openTestModal(route, e)}
 									disabled={isUpdatingThisCard}
-									class="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition disabled:opacity-40"
+									class="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white disabled:opacity-40"
 									title="Test API or view cURL"
 								>
 									<Terminal class="h-3.5 w-3.5 text-indigo-400" />
@@ -655,7 +687,7 @@
 									type="button"
 									onclick={(e) => confirmDelete(route, e)}
 									disabled={isUpdatingThisCard}
-									class="rounded-lg p-1.5 text-slate-500 hover:bg-rose-500/10 hover:text-rose-400 transition disabled:opacity-40"
+									class="rounded-lg p-1.5 text-slate-500 transition hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-40"
 									title="Delete Nodeflow"
 								>
 									<Trash2 class="h-3.5 w-3.5" />
@@ -665,7 +697,7 @@
 							<!-- Open in Visual Builder -->
 							<a
 								href="/editor/{route.id}"
-								class="flex items-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-blue-900/30 transition active:scale-95 {isUpdatingThisCard
+								class="flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md shadow-blue-900/30 transition hover:bg-blue-500 active:scale-95 {isUpdatingThisCard
 									? 'pointer-events-none opacity-40'
 									: ''}"
 							>
@@ -678,33 +710,39 @@
 			</div>
 		{:else if isLoading}
 			<!-- Initial Skeleton Loading Cards -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
 				{#each [1, 2, 3] as _}
-					<div class="rounded-2xl border border-slate-800/80 bg-slate-900/30 p-5 space-y-4 animate-pulse">
+					<div
+						class="animate-pulse space-y-4 rounded-2xl border border-slate-800/80 bg-slate-900/30 p-5"
+					>
 						<div class="flex items-center justify-between">
-							<div class="h-5 w-14 bg-slate-800 rounded-lg"></div>
-							<div class="h-5 w-16 bg-slate-800 rounded-full"></div>
+							<div class="h-5 w-14 rounded-lg bg-slate-800"></div>
+							<div class="h-5 w-16 rounded-full bg-slate-800"></div>
 						</div>
 						<div class="space-y-2 pt-2">
-							<div class="h-5 w-3/4 bg-slate-800 rounded"></div>
-							<div class="h-3 w-5/6 bg-slate-800/70 rounded"></div>
+							<div class="h-5 w-3/4 rounded bg-slate-800"></div>
+							<div class="h-3 w-5/6 rounded bg-slate-800/70"></div>
 						</div>
-						<div class="h-8 bg-slate-950/80 rounded-xl"></div>
-						<div class="pt-4 border-t border-slate-800/60 flex justify-between items-center">
-							<div class="h-7 w-20 bg-slate-800 rounded-lg"></div>
-							<div class="h-7 w-16 bg-slate-800 rounded-xl"></div>
+						<div class="h-8 rounded-xl bg-slate-950/80"></div>
+						<div class="flex items-center justify-between border-t border-slate-800/60 pt-4">
+							<div class="h-7 w-20 rounded-lg bg-slate-800"></div>
+							<div class="h-7 w-16 rounded-xl bg-slate-800"></div>
 						</div>
 					</div>
 				{/each}
 			</div>
 		{:else if !isLoading}
 			<!-- Empty State -->
-			<div class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-800 p-12 text-center bg-slate-900/20">
-				<div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400">
+			<div
+				class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-800 bg-slate-900/20 p-12 text-center"
+			>
+				<div
+					class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400"
+				>
 					<Network class="h-6 w-6" />
 				</div>
 				<h3 class="mt-4 text-base font-bold text-slate-200">No matching Nodeflows</h3>
-				<p class="mt-1 text-xs text-slate-500 max-w-sm">
+				<p class="mt-1 max-w-sm text-xs text-slate-500">
 					{#if searchQuery || selectedMethod !== 'ALL' || selectedStatus !== 'ALL'}
 						Try clearing your filters or search keywords to view all Nodeflows.
 					{:else}
@@ -721,7 +759,7 @@
 						newTemplate = 'empty';
 						isCreateOpen = true;
 					}}
-					class="mt-6 flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition shadow-lg shadow-blue-900/40"
+					class="mt-6 flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500"
 				>
 					<Plus class="h-4 w-4" />
 					<span>Create Your First Nodeflow</span>
@@ -733,27 +771,31 @@
 	<!-- Create Route Modal -->
 	{#if isCreateOpen}
 		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-in fade-in duration-100"
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm duration-100"
 			role="dialog"
 			aria-modal="true"
 		>
 			<div
-				class="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-100"
+				class="animate-in zoom-in-95 w-full max-w-lg space-y-5 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
 			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-2.5">
-						<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
+						<div
+							class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400"
+						>
 							<Plus class="h-4 w-4" />
 						</div>
 						<div>
 							<h3 class="text-sm font-bold text-white">Create New Nodeflow</h3>
-							<p class="text-[11px] text-slate-400">Define your endpoint and pick a starter blueprint</p>
+							<p class="text-[11px] text-slate-400">
+								Define your endpoint and pick a starter blueprint
+							</p>
 						</div>
 					</div>
 					<button
 						type="button"
 						onclick={() => (isCreateOpen = false)}
-						class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
+						class="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-white"
 					>
 						<X class="h-4 w-4" />
 					</button>
@@ -762,7 +804,8 @@
 				<div class="space-y-4">
 					<!-- Route Title -->
 					<div class="space-y-1">
-						<label for="route-title" class="text-xs font-medium text-slate-300">Nodeflow Name</label>
+						<label for="route-title" class="text-xs font-medium text-slate-300">Nodeflow Name</label
+						>
 						<input
 							id="route-title"
 							type="text"
@@ -775,7 +818,9 @@
 					<!-- Method & Path -->
 					<div class="grid grid-cols-3 gap-3">
 						<div class="space-y-1">
-							<label for="route-method" class="text-xs font-medium text-slate-300">HTTP Method</label>
+							<label for="route-method" class="text-xs font-medium text-slate-300"
+								>HTTP Method</label
+							>
 							<select
 								id="route-method"
 								bind:value={newMethod}
@@ -790,7 +835,9 @@
 						</div>
 
 						<div class="col-span-2 space-y-1">
-							<label for="route-path" class="text-xs font-medium text-slate-300">Endpoint Path</label>
+							<label for="route-path" class="text-xs font-medium text-slate-300"
+								>Endpoint Path</label
+							>
 							<input
 								id="route-path"
 								type="text"
@@ -803,7 +850,9 @@
 
 					<!-- Description -->
 					<div class="space-y-1">
-						<label for="route-desc" class="text-xs font-medium text-slate-300">Description (Optional)</label>
+						<label for="route-desc" class="text-xs font-medium text-slate-300"
+							>Description (Optional)</label
+						>
 						<input
 							id="route-desc"
 							type="text"
@@ -815,60 +864,60 @@
 
 					<!-- Starter Blueprint -->
 					<div class="space-y-1.5">
-						<span class="text-xs font-medium text-slate-300 block">Starter Blueprint</span>
+						<span class="block text-xs font-medium text-slate-300">Starter Blueprint</span>
 						<div class="grid grid-cols-2 gap-2 text-left">
 							<button
 								type="button"
 								onclick={() => (newTemplate = 'empty')}
-								class="rounded-xl border p-2.5 transition text-left {newTemplate === 'empty'
+								class="rounded-xl border p-2.5 text-left transition {newTemplate === 'empty'
 									? 'border-emerald-500 bg-emerald-500/10'
 									: 'border-slate-800 bg-slate-900/50 hover:bg-slate-900'}"
 							>
 								<div class="text-xs font-semibold text-slate-200">Simple Starter</div>
-								<div class="text-[10px] text-slate-400 mt-0.5">Trigger → JSON Response</div>
+								<div class="mt-0.5 text-[10px] text-slate-400">Trigger → JSON Response</div>
 							</button>
 
 							<button
 								type="button"
 								onclick={() => (newTemplate = 'user-auth')}
-								class="rounded-xl border p-2.5 transition text-left {newTemplate === 'user-auth'
+								class="rounded-xl border p-2.5 text-left transition {newTemplate === 'user-auth'
 									? 'border-emerald-500 bg-emerald-500/10'
 									: 'border-slate-800 bg-slate-900/50 hover:bg-slate-900'}"
 							>
 								<div class="text-xs font-semibold text-slate-200">Auth & Validation</div>
-								<div class="text-[10px] text-slate-400 mt-0.5">Validation, Logic, Database</div>
+								<div class="mt-0.5 text-[10px] text-slate-400">Validation, Logic, Database</div>
 							</button>
 
 							<button
 								type="button"
 								onclick={() => (newTemplate = 'weather-api')}
-								class="rounded-xl border p-2.5 transition text-left {newTemplate === 'weather-api'
+								class="rounded-xl border p-2.5 text-left transition {newTemplate === 'weather-api'
 									? 'border-emerald-500 bg-emerald-500/10'
 									: 'border-slate-800 bg-slate-900/50 hover:bg-slate-900'}"
 							>
 								<div class="text-xs font-semibold text-slate-200">API Aggregator</div>
-								<div class="text-[10px] text-slate-400 mt-0.5">Fetch External API & Map</div>
+								<div class="mt-0.5 text-[10px] text-slate-400">Fetch External API & Map</div>
 							</button>
 
 							<button
 								type="button"
 								onclick={() => (newTemplate = 'blank')}
-								class="rounded-xl border p-2.5 transition text-left {newTemplate === 'blank'
+								class="rounded-xl border p-2.5 text-left transition {newTemplate === 'blank'
 									? 'border-emerald-500 bg-emerald-500/10'
 									: 'border-slate-800 bg-slate-900/50 hover:bg-slate-900'}"
 							>
 								<div class="text-xs font-semibold text-slate-200">Blank Canvas</div>
-								<div class="text-[10px] text-slate-400 mt-0.5">Start completely from scratch</div>
+								<div class="mt-0.5 text-[10px] text-slate-400">Start completely from scratch</div>
 							</button>
 						</div>
 					</div>
 				</div>
 
-				<div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-800">
+				<div class="flex items-center justify-end gap-2.5 border-t border-slate-800 pt-3">
 					<button
 						type="button"
 						onclick={() => (isCreateOpen = false)}
-						class="rounded-xl border border-slate-800 px-4 py-2 text-xs font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition"
+						class="rounded-xl border border-slate-800 px-4 py-2 text-xs font-semibold text-slate-400 transition hover:bg-slate-900 hover:text-white"
 					>
 						Cancel
 					</button>
@@ -876,10 +925,12 @@
 						type="button"
 						onclick={handleCreateRoute}
 						disabled={isCreating}
-						class="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-lg hover:from-emerald-500 hover:to-teal-500 transition active:scale-95 disabled:opacity-50"
+						class="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-lg transition hover:from-emerald-500 hover:to-teal-500 active:scale-95 disabled:opacity-50"
 					>
 						{#if isCreating}
-							<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+							<span
+								class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+							></span>
 							<span>Creating...</span>
 						{:else}
 							<span>Create & Open Canvas</span>
@@ -896,16 +947,18 @@
 		{@const fullUrl = `${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173'}${testRoute.path}`}
 		{@const curlCommand = `curl -X ${testRoute.method} "${fullUrl}"${testRoute.method !== 'GET' ? ' -H "Content-Type: application/json" -d \'{}\'' : ''}`}
 		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-in fade-in duration-100"
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm duration-100"
 			role="dialog"
 			aria-modal="true"
 		>
 			<div
-				class="w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-100"
+				class="animate-in zoom-in-95 w-full max-w-xl space-y-5 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
 			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-2.5">
-						<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
+						<div
+							class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400"
+						>
 							<Terminal class="h-4 w-4" />
 						</div>
 						<div>
@@ -916,7 +969,7 @@
 					<button
 						type="button"
 						onclick={() => (isTestModalOpen = false)}
-						class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
+						class="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-white"
 					>
 						<X class="h-4 w-4" />
 					</button>
@@ -929,7 +982,7 @@
 						<button
 							type="button"
 							onclick={() => copyToClipboard(curlCommand, 'curl')}
-							class="text-blue-400 hover:text-blue-300 text-[11px] flex items-center gap-1"
+							class="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300"
 						>
 							{#if copiedPath === 'curl'}
 								<Check class="h-3 w-3 text-emerald-400" />
@@ -940,7 +993,9 @@
 							{/if}
 						</button>
 					</div>
-					<div class="rounded-xl border border-slate-800 bg-slate-900 p-3 font-mono text-xs text-slate-200 overflow-x-auto select-all">
+					<div
+						class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 p-3 font-mono text-xs text-slate-200 select-all"
+					>
 						{curlCommand}
 					</div>
 				</div>
@@ -953,10 +1008,12 @@
 							type="button"
 							onclick={runQuickTest}
 							disabled={testRunning}
-							class="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-500 transition active:scale-95 disabled:opacity-50"
+							class="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-500 active:scale-95 disabled:opacity-50"
 						>
 							{#if testRunning}
-								<span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+								<span
+									class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
+								></span>
 								<span>Sending...</span>
 							{:else}
 								<Play class="h-3 w-3 fill-current" />
@@ -966,25 +1023,34 @@
 					</div>
 
 					{#if testStatusCode !== null}
-						<div class="rounded-xl border border-slate-800 bg-slate-900 p-3 space-y-2">
+						<div class="space-y-2 rounded-xl border border-slate-800 bg-slate-900 p-3">
 							<div class="flex items-center gap-2">
-								<span class="text-xs font-mono font-bold {testStatusCode < 300 ? 'text-emerald-400' : 'text-rose-400'}">
+								<span
+									class="font-mono text-xs font-bold {testStatusCode < 300
+										? 'text-emerald-400'
+										: 'text-rose-400'}"
+								>
 									HTTP {testStatusCode}
 								</span>
-								<span class="text-[10px] text-slate-500 font-mono">
+								<span class="font-mono text-[10px] text-slate-500">
 									{testStatusCode < 300 ? 'Success' : 'Error'}
 								</span>
 							</div>
-							<pre class="max-h-48 overflow-y-auto font-mono text-xs text-slate-300 bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">{JSON.stringify(testResult, null, 2)}</pre>
+							<pre
+								class="max-h-48 overflow-y-auto rounded-lg border border-slate-800/80 bg-slate-950 p-2.5 font-mono text-xs text-slate-300">{JSON.stringify(
+									testResult,
+									null,
+									2
+								)}</pre>
 						</div>
 					{/if}
 				</div>
 
-				<div class="flex items-center justify-end pt-3 border-t border-slate-800">
+				<div class="flex items-center justify-end border-t border-slate-800 pt-3">
 					<button
 						type="button"
 						onclick={() => (isTestModalOpen = false)}
-						class="rounded-xl bg-slate-800 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-700 transition"
+						class="rounded-xl bg-slate-800 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-700"
 					>
 						Close
 					</button>
@@ -996,15 +1062,17 @@
 	<!-- Delete Confirmation Modal -->
 	{#if isDeleteModalOpen && routeToDelete}
 		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-in fade-in duration-100"
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm duration-100"
 			role="dialog"
 			aria-modal="true"
 		>
 			<div
-				class="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-100"
+				class="animate-in zoom-in-95 w-full max-w-sm space-y-4 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
 			>
 				<div class="flex items-center gap-3">
-					<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400">
+					<div
+						class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400"
+					>
 						<Trash2 class="h-5 w-5" />
 					</div>
 					<div>
@@ -1013,8 +1081,10 @@
 					</div>
 				</div>
 
-				<p class="text-xs text-slate-400 leading-relaxed">
-					Are you sure you want to delete <span class="font-mono text-rose-300">{routeToDelete.path}</span>? This action cannot be undone.
+				<p class="text-xs leading-relaxed text-slate-400">
+					Are you sure you want to delete <span class="font-mono text-rose-300"
+						>{routeToDelete.path}</span
+					>? This action cannot be undone.
 				</p>
 
 				<div class="flex items-center justify-end gap-2 pt-2">
@@ -1024,14 +1094,14 @@
 							isDeleteModalOpen = false;
 							routeToDelete = null;
 						}}
-						class="rounded-xl border border-slate-800 px-3.5 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-900 transition"
+						class="rounded-xl border border-slate-800 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-900"
 					>
 						Cancel
 					</button>
 					<button
 						type="button"
 						onclick={handleDelete}
-						class="rounded-xl bg-rose-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-rose-500 transition active:scale-95"
+						class="rounded-xl bg-rose-600 px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-rose-500 active:scale-95"
 					>
 						Delete
 					</button>

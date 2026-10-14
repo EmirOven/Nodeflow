@@ -28,9 +28,10 @@
 				<label for="ds-op-{id}" class="text-[11px] font-medium text-slate-400">Operation</label>
 				<select
 					id="ds-op-{id}"
-					class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold text-emerald-400 outline-none cursor-pointer"
+					class="w-full cursor-pointer rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold text-emerald-400 outline-none"
 					value={storeData.operation || 'set'}
-					onchange={(e) => updateNodeData(id, { operation: (e.target as HTMLSelectElement).value as any })}
+					onchange={(e) =>
+						updateNodeData(id, { operation: (e.target as HTMLSelectElement).value as any })}
 				>
 					{#each operations as op}
 						<option value={op} class="bg-slate-900 text-slate-200">{op.toUpperCase()}</option>
@@ -53,7 +54,9 @@
 
 		{#if storeData.operation !== 'list'}
 			<div class="space-y-1">
-				<label for="ds-key-{id}" class="text-[11px] font-medium text-slate-400">Key Expression</label>
+				<label for="ds-key-{id}" class="text-[11px] font-medium text-slate-400"
+					>Key Expression</label
+				>
 				<input
 					id="ds-key-{id}"
 					type="text"
@@ -67,7 +70,9 @@
 
 		{#if storeData.operation === 'set'}
 			<div class="space-y-1">
-				<label for="ds-val-{id}" class="text-[11px] font-medium text-slate-400">Value Expression</label>
+				<label for="ds-val-{id}" class="text-[11px] font-medium text-slate-400"
+					>Value Expression</label
+				>
 				<input
 					id="ds-val-{id}"
 					type="text"

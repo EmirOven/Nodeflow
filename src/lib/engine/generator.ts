@@ -121,7 +121,9 @@ export const ${method}: RequestHandler = async ({ request, url }) => {
 			current = nodes.find((n: Node) => n.id === nextEdges[0]?.target);
 		} else if (current.type === 'authNode') {
 			const authData = nodeData as unknown as AuthNodeData;
-			const headerKey = (authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')).toLowerCase();
+			const headerKey = (
+				authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')
+			).toLowerCase();
 			const expected = authData.expectedValue || 'secret';
 			const validEdge = nextEdges.find((e: Edge) => e.sourceHandle === 'valid');
 			const invalidEdge = nextEdges.find((e: Edge) => e.sourceHandle === 'invalid');
@@ -203,7 +205,11 @@ export const ${method}: RequestHandler = async ({ request, url }) => {
 			code += `\t\tstate.user = { id: 'usr_1', email: payload.email, role: '${uData.role || 'user'}' };\n`;
 			code += `\t\tstate.sessionToken = 'tok_' + Math.random().toString(36).substring(2);\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'aiNode' || current.type === 'openAiNode') {
 			const aiData = nodeData as unknown as AiNodeData;
 			const provider = aiData.provider || 'openai';
@@ -219,7 +225,11 @@ export const ${method}: RequestHandler = async ({ request, url }) => {
 			code += `\t\t}).then((r) => r.json());\n`;
 			code += `\t\tstate.aiResponse = { text: aiResponse.choices?.[0]?.message?.content, provider: '${provider}', model: '${model}' };\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'telegramTrigger') {
 			code += `\t\t// ${stepNum}. Telegram Bot Webhook Inbound Update\n`;
 			code += `\t\tconst update = payload || {};\n`;
@@ -246,7 +256,11 @@ export const ${method}: RequestHandler = async ({ request, url }) => {
 			code += `\t\t}).then((r) => r.json());\n`;
 			code += `\t\tstate.telegramResponse = tgRes;\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'httpResponse') {
 			const respData = nodeData as HttpResponseData;
 			code += `\t\t// Final Response: HTTP ${respData.statusCode || 200}\n`;
@@ -302,7 +316,9 @@ app.${method}('${path}', async (req, res) => {
 
 		if (current.type === 'authNode') {
 			const authData = nodeData as unknown as AuthNodeData;
-			const headerKey = (authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')).toLowerCase();
+			const headerKey = (
+				authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')
+			).toLowerCase();
 			const expected = authData.expectedValue || 'secret';
 			const validEdge = nextEdges.find((e: Edge) => e.sourceHandle === 'valid');
 			const validNode = nodes.find((n: Node) => n.id === validEdge?.target);
@@ -354,7 +370,11 @@ app.${method}('${path}', async (req, res) => {
 			code += `\t\tstate.user = { id: 'usr_1', email: req.body.email, role: '${uData.role || 'user'}' };\n`;
 			code += `\t\tstate.sessionToken = 'tok_' + Math.random().toString(36).substring(2);\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'aiNode' || current.type === 'openAiNode') {
 			const aiData = nodeData as unknown as AiNodeData;
 			const provider = aiData.provider || 'openai';
@@ -370,7 +390,11 @@ app.${method}('${path}', async (req, res) => {
 			code += `\t\t}).then((r) => r.json());\n`;
 			code += `\t\tstate.aiResponse = { text: aiResponse.choices?.[0]?.message?.content, provider: '${provider}', model: '${model}' };\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'telegramTrigger') {
 			code += `\t\t// ${stepNum}. Telegram Bot Webhook Inbound Update\n`;
 			code += `\t\tconst update = req.body || {};\n`;
@@ -397,7 +421,11 @@ app.${method}('${path}', async (req, res) => {
 			code += `\t\t}).then((r) => r.json());\n`;
 			code += `\t\tstate.telegramResponse = tgRes;\n\n`;
 			stepNum++;
-			current = nodes.find((n: Node) => n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target || nextEdges[0]?.target);
+			current = nodes.find(
+				(n: Node) =>
+					n.id === nextEdges.find((e: Edge) => e.sourceHandle === 'success')?.target ||
+					nextEdges[0]?.target
+			);
 		} else if (current.type === 'codeBlock') {
 			const blockData = nodeData as CodeBlockData;
 			code += `\t\t// ${stepNum}. Code Block: ${blockData.title || 'Transform'}\n`;

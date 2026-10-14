@@ -227,7 +227,7 @@
 	<title>Project Users & Auth — Nodeflow</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
+<div class="flex min-h-screen flex-col bg-slate-950 text-slate-100 select-none">
 	<!-- Top Navigation -->
 	<header
 		class="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-6 backdrop-blur-xl"
@@ -236,16 +236,18 @@
 		<div class="flex items-center gap-4">
 			<a
 				href="/"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition group"
+				class="group flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Back to All Nodeflows"
 			>
-				<ArrowLeft class="h-3.5 w-3.5 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
+				<ArrowLeft
+					class="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:-translate-x-0.5"
+				/>
 				<span>Nodeflows</span>
 			</a>
 
 			<div class="flex items-center gap-3">
 				<div
-					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/25 text-white"
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25"
 				>
 					<Network class="h-5 w-5" />
 				</div>
@@ -253,7 +255,7 @@
 					<div class="flex items-center gap-2">
 						<h1 class="text-base font-bold tracking-tight text-white">Project Users</h1>
 						<span
-							class="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400 border border-blue-500/20"
+							class="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400"
 						>
 							v0.5.3
 						</span>
@@ -264,17 +266,31 @@
 		</div>
 
 		<!-- Center: Navigation Tabs -->
-		<div class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800">
-			<a href="/" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+		<div
+			class="hidden items-center gap-1 rounded-xl border border-slate-800 bg-slate-900/60 p-1 md:flex"
+		>
+			<a
+				href="/"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Nodeflows
 			</a>
-			<a href="/users" class="px-3 py-1 text-xs font-semibold text-white bg-slate-800 rounded-lg shadow-sm">
+			<a
+				href="/users"
+				class="rounded-lg bg-slate-800 px-3 py-1 text-xs font-semibold text-white shadow-sm"
+			>
 				Project Users
 			</a>
-			<a href="/extensions" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/extensions"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Extensions
 			</a>
-			<a href="/settings" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/settings"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Settings
 			</a>
 		</div>
@@ -284,7 +300,7 @@
 			<button
 				type="button"
 				onclick={loadUsers}
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
 				title="Refresh user list"
 			>
 				<RefreshCw class="h-3.5 w-3.5 {isLoading ? 'animate-spin' : ''}" />
@@ -302,7 +318,7 @@
 					createError = null;
 					isCreateModalOpen = true;
 				}}
-				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-indigo-950/60 hover:from-indigo-500 hover:to-purple-500 transition active:scale-95"
+				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-indigo-950/60 transition hover:from-indigo-500 hover:to-purple-500 active:scale-95"
 			>
 				<UserPlus class="h-4 w-4" />
 				<span>Create User</span>
@@ -311,11 +327,11 @@
 	</header>
 
 	<!-- Main Content -->
-	<main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8 space-y-8">
+	<main class="mx-auto w-full max-w-7xl flex-1 space-y-8 p-6 md:p-8">
 		<!-- Stats Grid -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
 			<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-400">
 					<span>Total Users</span>
 					<Users class="h-4 w-4 text-indigo-400" />
 				</div>
@@ -324,7 +340,7 @@
 			</div>
 
 			<div class="rounded-2xl border border-emerald-500/20 bg-emerald-950/10 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-emerald-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-emerald-400">
 					<span>Active Users</span>
 					<CheckCircle2 class="h-4 w-4 text-emerald-400" />
 				</div>
@@ -333,7 +349,7 @@
 			</div>
 
 			<div class="rounded-2xl border border-red-500/20 bg-red-950/10 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-300 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-300">
 					<span>Google OAuth</span>
 					<GoogleIcon class="h-4 w-4" />
 				</div>
@@ -342,7 +358,7 @@
 			</div>
 
 			<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 backdrop-blur">
-				<div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+				<div class="flex items-center justify-between text-xs font-medium text-slate-400">
 					<span>Suspended / Banned</span>
 					<Ban class="h-4 w-4 text-rose-400" />
 				</div>
@@ -352,21 +368,21 @@
 		</div>
 
 		<!-- Filters & Search -->
-		<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+		<div class="flex flex-col items-stretch justify-between gap-4 md:flex-row md:items-center">
 			<!-- Search -->
-			<div class="relative flex-1 max-w-md">
-				<Search class="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+			<div class="relative max-w-md flex-1">
+				<Search class="absolute top-3 left-3 h-4 w-4 text-slate-500" />
 				<input
 					type="text"
 					placeholder="Search users by name, email, or user ID..."
 					bind:value={searchQuery}
-					class="w-full rounded-xl border border-slate-800 bg-slate-900/80 pl-9 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none transition"
+					class="w-full rounded-xl border border-slate-800 bg-slate-900/80 py-2.5 pr-4 pl-9 text-xs text-slate-200 placeholder-slate-500 transition focus:border-indigo-500 focus:outline-none"
 				/>
 				{#if searchQuery}
 					<button
 						type="button"
 						onclick={() => (searchQuery = '')}
-						class="absolute right-3 top-3 text-slate-500 hover:text-white"
+						class="absolute top-3 right-3 text-slate-500 hover:text-white"
 					>
 						<X class="h-3.5 w-3.5" />
 					</button>
@@ -374,11 +390,11 @@
 			</div>
 
 			<!-- Provider Filter -->
-			<div class="flex items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-900/60">
+			<div class="flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 p-1">
 				<button
 					type="button"
 					onclick={() => (selectedProvider = 'ALL')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedProvider === 'ALL'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedProvider === 'ALL'
 						? 'bg-slate-700 text-white'
 						: 'text-slate-400 hover:text-slate-200'}"
 				>
@@ -387,7 +403,7 @@
 				<button
 					type="button"
 					onclick={() => (selectedProvider = 'email')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedProvider === 'email'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedProvider === 'email'
 						? 'bg-indigo-600 text-white'
 						: 'text-slate-400 hover:text-indigo-400'}"
 				>
@@ -396,7 +412,8 @@
 				<button
 					type="button"
 					onclick={() => (selectedProvider = 'google')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedProvider === 'google'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedProvider ===
+					'google'
 						? 'bg-red-600 text-white'
 						: 'text-slate-400 hover:text-red-400'}"
 				>
@@ -405,11 +422,11 @@
 			</div>
 
 			<!-- Status Filter -->
-			<div class="flex items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-900/60">
+			<div class="flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 p-1">
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'ALL')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'ALL'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'ALL'
 						? 'bg-slate-700 text-white'
 						: 'text-slate-400 hover:text-slate-200'}"
 				>
@@ -418,7 +435,7 @@
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'active')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'active'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'active'
 						? 'bg-emerald-600 text-white'
 						: 'text-slate-400 hover:text-emerald-400'}"
 				>
@@ -427,7 +444,7 @@
 				<button
 					type="button"
 					onclick={() => (selectedStatus = 'banned')}
-					class="px-2.5 py-1 text-xs font-medium rounded-lg transition {selectedStatus === 'banned'
+					class="rounded-lg px-2.5 py-1 text-xs font-medium transition {selectedStatus === 'banned'
 						? 'bg-rose-600 text-white'
 						: 'text-slate-400 hover:text-rose-400'}"
 				>
@@ -437,11 +454,13 @@
 		</div>
 
 		<!-- Users Table -->
-		<div class="rounded-2xl border border-slate-800/80 bg-slate-900/40 shadow-xl backdrop-blur-xl overflow-hidden">
+		<div
+			class="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/40 shadow-xl backdrop-blur-xl"
+		>
 			<div class="overflow-x-auto">
-				<table class="w-full text-left border-collapse text-xs">
+				<table class="w-full border-collapse text-left text-xs">
 					<thead>
-						<tr class="border-b border-slate-800/80 bg-slate-900/70 text-slate-400 font-semibold">
+						<tr class="border-b border-slate-800/80 bg-slate-900/70 font-semibold text-slate-400">
 							<th class="p-4">User</th>
 							<th class="p-4">Provider</th>
 							<th class="p-4">Role</th>
@@ -453,25 +472,31 @@
 					</thead>
 					<tbody class="divide-y divide-slate-800/60 text-slate-300">
 						{#each filteredUsers as user (user.id)}
-							<tr class="hover:bg-slate-900/60 transition-colors">
+							<tr class="transition-colors hover:bg-slate-900/60">
 								<!-- User Avatar & Info -->
 								<td class="p-4">
 									<div class="flex items-center gap-3">
-										<div class="h-8 w-8 rounded-full bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-xs uppercase border border-indigo-500/20 overflow-hidden">
+										<div
+											class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-indigo-500/20 bg-indigo-600/20 text-xs font-bold text-indigo-400 uppercase"
+										>
 											{#if user.avatarUrl}
-												<img src={user.avatarUrl} alt={user.name} class="h-full w-full object-cover" />
+												<img
+													src={user.avatarUrl}
+													alt={user.name}
+													class="h-full w-full object-cover"
+												/>
 											{:else}
 												{user.name.charAt(0) || user.email.charAt(0)}
 											{/if}
 										</div>
 										<div>
-											<div class="font-bold text-white flex items-center gap-1.5">
+											<div class="flex items-center gap-1.5 font-bold text-white">
 												<span>{user.name}</span>
 												{#if user.isEmailVerified}
 													<CheckCircle2 class="h-3 w-3 text-emerald-400" title="Email Verified" />
 												{/if}
 											</div>
-											<div class="text-[11px] text-slate-400 font-mono">{user.email}</div>
+											<div class="font-mono text-[11px] text-slate-400">{user.email}</div>
 										</div>
 									</div>
 								</td>
@@ -479,12 +504,16 @@
 								<!-- Provider -->
 								<td class="p-4">
 									{#if user.provider === 'google'}
-										<span class="inline-flex items-center gap-1.5 rounded-md bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-200 border border-slate-700">
+										<span
+											class="inline-flex items-center gap-1.5 rounded-md border border-slate-700 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-200"
+										>
 											<GoogleIcon class="h-3 w-3" />
 											Google
 										</span>
 									{:else}
-										<span class="inline-flex items-center gap-1 rounded-md bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400 border border-indigo-500/20">
+										<span
+											class="inline-flex items-center gap-1 rounded-md border border-indigo-500/20 bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-400"
+										>
 											<Mail class="h-3 w-3" />
 											Email/Password
 										</span>
@@ -493,29 +522,35 @@
 
 								<!-- Role -->
 								<td class="p-4">
-									<span class="rounded bg-slate-800 px-2 py-0.5 font-mono text-[10px] font-medium text-slate-300 border border-slate-700">
+									<span
+										class="rounded border border-slate-700 bg-slate-800 px-2 py-0.5 font-mono text-[10px] font-medium text-slate-300"
+									>
 										{user.role}
 									</span>
 								</td>
 
 								<!-- Created -->
-								<td class="p-4 text-slate-400 text-[11px]">
+								<td class="p-4 text-[11px] text-slate-400">
 									{formatDate(user.createdAt)}
 								</td>
 
 								<!-- Last Sign In -->
-								<td class="p-4 text-slate-400 text-[11px]">
+								<td class="p-4 text-[11px] text-slate-400">
 									{formatDate(user.lastSignInAt)}
 								</td>
 
 								<!-- Status -->
 								<td class="p-4">
 									{#if user.isBanned}
-										<span class="rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-400 border border-rose-500/20">
+										<span
+											class="rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-400"
+										>
 											Banned
 										</span>
 									{:else}
-										<span class="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/20">
+										<span
+											class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400"
+										>
 											Active
 										</span>
 									{/if}
@@ -527,7 +562,7 @@
 										<button
 											type="button"
 											onclick={() => openEditModal(user)}
-											class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
+											class="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-white"
 											title="Edit User"
 										>
 											<Edit2 class="h-3.5 w-3.5" />
@@ -547,7 +582,7 @@
 										<button
 											type="button"
 											onclick={() => confirmDelete(user)}
-											class="rounded-lg p-1.5 text-slate-500 hover:bg-rose-500/10 hover:text-rose-400 transition"
+											class="rounded-lg p-1.5 text-slate-500 transition hover:bg-rose-500/10 hover:text-rose-400"
 											title="Delete User"
 										>
 											<Trash2 class="h-3.5 w-3.5" />
@@ -560,8 +595,8 @@
 				</table>
 
 				{#if filteredUsers.length === 0 && !isLoading}
-					<div class="p-12 text-center text-slate-500 space-y-2">
-						<Users class="h-8 w-8 mx-auto text-slate-600" />
+					<div class="space-y-2 p-12 text-center text-slate-500">
+						<Users class="mx-auto h-8 w-8 text-slate-600" />
 						<div class="text-sm font-semibold text-slate-400">No matching users found</div>
 						<p class="text-xs">Create users via visual nodeflows or click "Create User" above.</p>
 					</div>
@@ -572,32 +607,54 @@
 
 	<!-- Create User Modal -->
 	{#if isCreateModalOpen}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-100">
-			<div class="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-100">
+		<div
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-100"
+		>
+			<div
+				class="animate-in zoom-in-95 w-full max-w-md space-y-5 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-2.5">
-						<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
+						<div
+							class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400"
+						>
 							<UserPlus class="h-4 w-4" />
 						</div>
 						<div>
 							<h3 class="text-sm font-bold text-white">Add Project User</h3>
-							<p class="text-[11px] text-slate-400">Manually provision a user for node authentication</p>
+							<p class="text-[11px] text-slate-400">
+								Manually provision a user for node authentication
+							</p>
 						</div>
 					</div>
-					<button type="button" onclick={() => (isCreateModalOpen = false)} class="text-slate-500 hover:text-white">
+					<button
+						type="button"
+						onclick={() => (isCreateModalOpen = false)}
+						class="text-slate-500 hover:text-white"
+					>
 						<X class="h-4 w-4" />
 					</button>
 				</div>
 
 				{#if createError}
-					<div class="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs font-medium text-rose-300">
+					<div
+						class="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs font-medium text-rose-300"
+					>
 						{createError}
 					</div>
 				{/if}
 
-				<form onsubmit={(e) => { e.preventDefault(); handleCreateUser(); }} class="space-y-4">
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						handleCreateUser();
+					}}
+					class="space-y-4"
+				>
 					<div class="space-y-1">
-						<label for="modal-email" class="text-xs font-medium text-slate-300">Email Address *</label>
+						<label for="modal-email" class="text-xs font-medium text-slate-300"
+							>Email Address *</label
+						>
 						<input
 							id="modal-email"
 							type="email"
@@ -657,7 +714,7 @@
 						</div>
 					</div>
 
-					<div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+					<div class="flex items-center justify-end gap-2.5 border-t border-slate-800/80 pt-3">
 						<button
 							type="button"
 							onclick={() => (isCreateModalOpen = false)}
@@ -671,7 +728,9 @@
 							class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
 						>
 							{#if isCreating}
-								<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+								<span
+									class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+								></span>
 								<span>Creating...</span>
 							{:else}
 								<span>Create User</span>
@@ -685,16 +744,30 @@
 
 	<!-- Edit User Modal -->
 	{#if isEditModalOpen && editingUser}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-100">
-			<div class="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-100">
+		<div
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-100"
+		>
+			<div
+				class="animate-in zoom-in-95 w-full max-w-md space-y-5 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<h3 class="text-sm font-bold text-white">Edit User: {editingUser.email}</h3>
-					<button type="button" onclick={() => (isEditModalOpen = false)} class="text-slate-500 hover:text-white">
+					<button
+						type="button"
+						onclick={() => (isEditModalOpen = false)}
+						class="text-slate-500 hover:text-white"
+					>
 						<X class="h-4 w-4" />
 					</button>
 				</div>
 
-				<form onsubmit={(e) => { e.preventDefault(); handleSaveEdit(); }} class="space-y-4">
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						handleSaveEdit();
+					}}
+					class="space-y-4"
+				>
 					<div class="space-y-1">
 						<label for="edit-name" class="text-xs font-medium text-slate-300">Name</label>
 						<input
@@ -719,7 +792,9 @@
 					</div>
 
 					<div class="space-y-1">
-						<label for="edit-pwd" class="text-xs font-medium text-slate-300">Reset Password (Optional)</label>
+						<label for="edit-pwd" class="text-xs font-medium text-slate-300"
+							>Reset Password (Optional)</label
+						>
 						<input
 							id="edit-pwd"
 							type="password"
@@ -729,7 +804,7 @@
 						/>
 					</div>
 
-					<div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+					<div class="flex items-center justify-end gap-2.5 border-t border-slate-800/80 pt-3">
 						<button
 							type="button"
 							onclick={() => (isEditModalOpen = false)}
@@ -743,7 +818,9 @@
 							class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
 						>
 							{#if isEditing}
-								<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+								<span
+									class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+								></span>
 								<span>Saving...</span>
 							{:else}
 								<span>Save Changes</span>
@@ -757,10 +834,16 @@
 
 	<!-- Delete Confirmation Modal -->
 	{#if isDeleteModalOpen && userToDelete}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-100">
-			<div class="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-100">
+		<div
+			class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-100"
+		>
+			<div
+				class="animate-in zoom-in-95 w-full max-w-sm space-y-4 rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-2xl duration-100"
+			>
 				<div class="flex items-center gap-3">
-					<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400">
+					<div
+						class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400"
+					>
 						<Trash2 class="h-5 w-5" />
 					</div>
 					<div>
@@ -769,7 +852,8 @@
 					</div>
 				</div>
 				<p class="text-xs text-slate-400">
-					This user will be permanently removed from your project auth store. Nodeflows attempting to authenticate this user will fail.
+					This user will be permanently removed from your project auth store. Nodeflows attempting
+					to authenticate this user will fail.
 				</p>
 				<div class="flex items-center justify-end gap-2.5 pt-2">
 					<button

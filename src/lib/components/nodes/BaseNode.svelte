@@ -7,7 +7,17 @@
 	export interface OutputHandleConfig {
 		id: string;
 		label?: string;
-		color?: 'emerald' | 'rose' | 'blue' | 'amber' | 'purple' | 'cyan' | 'teal' | 'indigo' | 'yellow' | string;
+		color?:
+			| 'emerald'
+			| 'rose'
+			| 'blue'
+			| 'amber'
+			| 'purple'
+			| 'cyan'
+			| 'teal'
+			| 'indigo'
+			| 'yellow'
+			| string;
 		position?: Position;
 		class?: string;
 	}
@@ -301,7 +311,7 @@
 	data-dropdown-open={dataDropdownOpen}
 	class="{width} rounded-xl border bg-slate-900/95 shadow-xl backdrop-blur-md transition-all duration-200 {selected
 		? theme.selectedBorder
-		: theme.border} {isExecuting ? 'ring-2 ring-blue-400 shadow-lg shadow-blue-500/20' : ''}"
+		: theme.border} {isExecuting ? 'shadow-lg ring-2 shadow-blue-500/20 ring-blue-400' : ''}"
 	onpointerdown={pullFocus}
 	onkeydown={(e) => {
 		const target = e.target as HTMLElement | null;
@@ -319,19 +329,22 @@
 				type="target"
 				position={inputHandlePosition}
 				id={inputHandleId}
-				class="!h-3.5 !w-3.5 !border-2 !border-slate-900 {inputHandleClass || theme.handleBg} transition"
+				class="!h-3.5 !w-3.5 !border-2 !border-slate-900 {inputHandleClass ||
+					theme.handleBg} transition"
 			/>
 		</div>
 	{/if}
 
 	<!-- Header / Drag Handle -->
 	<div
-		class="drag-handle flex items-center justify-between border-b border-slate-800/80 bg-slate-800/50 px-3 py-2.5 rounded-t-xl"
+		class="drag-handle flex items-center justify-between rounded-t-xl border-b border-slate-800/80 bg-slate-800/50 px-3 py-2.5"
 	>
-		<div class="flex items-center gap-2 flex-1 min-w-0 mr-2">
-			<GripVertical class="h-4 w-4 text-slate-500 cursor-grab active:cursor-grabbing shrink-0" />
+		<div class="mr-2 flex min-w-0 flex-1 items-center gap-2">
+			<GripVertical class="h-4 w-4 shrink-0 cursor-grab text-slate-500 active:cursor-grabbing" />
 			{#if IconComponent}
-				<div class="flex h-6 w-6 items-center justify-center rounded-md {theme.iconBg} {theme.iconColor} shrink-0 {iconClass}">
+				<div
+					class="flex h-6 w-6 items-center justify-center rounded-md {theme.iconBg} {theme.iconColor} shrink-0 {iconClass}"
+				>
 					<IconComponent class="h-3.5 w-3.5" />
 				</div>
 			{/if}
@@ -339,20 +352,20 @@
 				<input
 					type="text"
 					aria-label="Node title"
-					class="nodrag nopan bg-transparent text-xs font-semibold tracking-wide text-slate-200 uppercase outline-none focus:border-b focus:border-blue-400 truncate flex-1 min-w-0"
+					class="nodrag nopan min-w-0 flex-1 truncate bg-transparent text-xs font-semibold tracking-wide text-slate-200 uppercase outline-none focus:border-b focus:border-blue-400"
 					value={title}
 					oninput={handleTitleInput}
 					onpointerdown={(e) => e.stopPropagation()}
 					onkeydown={(e) => e.stopPropagation()}
 				/>
 			{:else}
-				<span class="text-xs font-semibold tracking-wide text-slate-200 uppercase truncate">
+				<span class="truncate text-xs font-semibold tracking-wide text-slate-200 uppercase">
 					{title}
 				</span>
 			{/if}
 		</div>
 
-		<div class="flex items-center gap-1.5 shrink-0">
+		<div class="flex shrink-0 items-center gap-1.5">
 			{#if headerBadge}
 				{@render headerBadge()}
 			{:else if badge}
@@ -368,7 +381,7 @@
 			<!-- Inspect Schema: Button to view Input & Output structure modal -->
 			<button
 				type="button"
-				class="nodrag nopan rounded p-1 text-slate-400 hover:bg-slate-700/60 hover:text-indigo-400 transition"
+				class="nodrag nopan rounded p-1 text-slate-400 transition hover:bg-slate-700/60 hover:text-indigo-400"
 				onclick={handleOpenStructureModal}
 				title="View Input & Output Data Structure"
 			>
@@ -378,7 +391,7 @@
 			{#if deletable}
 				<button
 					type="button"
-					class="nodrag nopan rounded p-1 text-slate-400 hover:bg-slate-700/60 hover:text-rose-400 transition"
+					class="nodrag nopan rounded p-1 text-slate-400 transition hover:bg-slate-700/60 hover:text-rose-400"
 					onclick={handleDelete}
 					title="Delete Node"
 				>
@@ -390,13 +403,15 @@
 
 	<!-- Error Alert Banner (if node has error) -->
 	{#if error}
-		<div class="mx-3 mt-2 rounded-lg border border-rose-500/40 bg-rose-500/10 px-2.5 py-1 text-[11px] font-mono text-rose-300">
+		<div
+			class="mx-3 mt-2 rounded-lg border border-rose-500/40 bg-rose-500/10 px-2.5 py-1 font-mono text-[11px] text-rose-300"
+		>
 			{error}
 		</div>
 	{/if}
 
 	<!-- Node Body Content -->
-	<div class="p-3 space-y-2.5 nodrag nopan">
+	<div class="nodrag nopan space-y-2.5 p-3">
 		{@render children?.()}
 	</div>
 
@@ -410,17 +425,26 @@
 		{@render customHandles()}
 	{:else if outputs && outputs.length > 0}
 		<!-- Multi-Output Handles Container -->
-		<div class="relative flex justify-between px-6 pb-2.5 border-t border-slate-800/60 pt-2 bg-slate-950/40 rounded-b-xl">
+		<div
+			class="relative flex justify-between rounded-b-xl border-t border-slate-800/60 bg-slate-950/40 px-6 pt-2 pb-2.5"
+		>
 			{#each outputs as out}
 				<div class="flex flex-col items-center">
 					<Handle
 						type="source"
 						position={out.position || Position.Bottom}
 						id={out.id}
-						class="!static !transform-none !h-3.5 !w-3.5 !border-2 !border-slate-900 {out.class || getHandleColorClass(out.color)} transition"
+						class="!static !h-3.5 !w-3.5 !transform-none !border-2 !border-slate-900 {out.class ||
+							getHandleColorClass(out.color)} transition"
 					/>
 					{#if out.label}
-						<span class="text-[9px] font-bold mt-1 {out.color === 'rose' ? 'text-rose-400' : out.color === 'emerald' ? 'text-emerald-400' : 'text-slate-400'}">
+						<span
+							class="mt-1 text-[9px] font-bold {out.color === 'rose'
+								? 'text-rose-400'
+								: out.color === 'emerald'
+									? 'text-emerald-400'
+									: 'text-slate-400'}"
+						>
 							{out.label}
 						</span>
 					{/if}
@@ -434,7 +458,8 @@
 				type="source"
 				position={outputHandlePosition}
 				id={outputHandleId}
-				class="!h-3.5 !w-3.5 !border-2 !border-slate-900 {outputHandleClass || theme.handleBg} transition"
+				class="!h-3.5 !w-3.5 !border-2 !border-slate-900 {outputHandleClass ||
+					theme.handleBg} transition"
 			/>
 		</div>
 	{/if}

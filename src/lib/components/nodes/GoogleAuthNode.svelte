@@ -27,12 +27,15 @@
 	<div class="space-y-3">
 		<!-- Token Source Selector -->
 		<div class="space-y-1">
-			<label for="token-source-{id}" class="text-[11px] font-medium text-slate-400">Token Location</label>
+			<label for="token-source-{id}" class="text-[11px] font-medium text-slate-400"
+				>Token Location</label
+			>
 			<div class="grid grid-cols-2 gap-1.5">
 				<button
 					type="button"
 					onclick={() => updateNodeData(id, { tokenSource: 'header' })}
-					class="rounded-lg border px-2 py-1.5 text-[11px] font-medium transition {googleData.tokenSource !== 'payload'
+					class="rounded-lg border px-2 py-1.5 text-[11px] font-medium transition {googleData.tokenSource !==
+					'payload'
 						? 'border-red-500/50 bg-red-500/10 text-red-300'
 						: 'border-slate-800 bg-slate-950/60 text-slate-400 hover:bg-slate-800'}"
 				>
@@ -41,7 +44,8 @@
 				<button
 					type="button"
 					onclick={() => updateNodeData(id, { tokenSource: 'payload' })}
-					class="rounded-lg border px-2 py-1.5 text-[11px] font-medium transition {googleData.tokenSource === 'payload'
+					class="rounded-lg border px-2 py-1.5 text-[11px] font-medium transition {googleData.tokenSource ===
+					'payload'
 						? 'border-red-500/50 bg-red-500/10 text-red-300'
 						: 'border-slate-800 bg-slate-950/60 text-slate-400 hover:bg-slate-800'}"
 				>
@@ -53,7 +57,9 @@
 		<!-- Token Field / Client ID -->
 		{#if googleData.tokenSource === 'payload'}
 			<div class="space-y-1">
-				<label for="token-field-{id}" class="text-[11px] font-medium text-slate-400">Payload Property</label>
+				<label for="token-field-{id}" class="text-[11px] font-medium text-slate-400"
+					>Payload Property</label
+				>
 				<input
 					id="token-field-{id}"
 					type="text"
@@ -66,7 +72,9 @@
 		{/if}
 
 		<div class="space-y-1">
-			<label for="client-id-{id}" class="text-[11px] font-medium text-slate-400">Google Client ID (Optional)</label>
+			<label for="client-id-{id}" class="text-[11px] font-medium text-slate-400"
+				>Google Client ID (Optional)</label
+			>
 			<input
 				id="client-id-{id}"
 				type="text"
@@ -78,9 +86,11 @@
 		</div>
 
 		<!-- Info Note -->
-		<div class="rounded-lg bg-slate-950/80 p-2 text-[10px] text-slate-400 border border-slate-800/80 flex items-center justify-between">
-			<span>Injects: <code class="text-red-300 font-mono">state.googleUser</code></span>
-			<span class="text-slate-500 font-mono">name, email, sub</span>
+		<div
+			class="flex items-center justify-between rounded-lg border border-slate-800/80 bg-slate-950/80 p-2 text-[10px] text-slate-400"
+		>
+			<span>Injects: <code class="font-mono text-red-300">state.googleUser</code></span>
+			<span class="font-mono text-slate-500">name, email, sub</span>
 		</div>
 	</div>
 </BaseNode>

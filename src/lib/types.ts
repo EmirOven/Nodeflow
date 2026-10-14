@@ -84,7 +84,8 @@ export interface GoogleAuthData {
 	isExecuting?: boolean;
 }
 
-export type UserActionType = 'signup' | 'login' | 'getUser' | 'updateUser' | 'deleteUser' | 'listUsers';
+export type UserActionType =
+	'signup' | 'login' | 'getUser' | 'updateUser' | 'deleteUser' | 'listUsers';
 
 export interface UserManagementData {
 	title: string;

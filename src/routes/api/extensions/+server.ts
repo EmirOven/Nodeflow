@@ -19,7 +19,9 @@ export const GET: RequestHandler = async ({ url }) => {
 		let list: ExtensionPackage[] = getAllExtensions();
 
 		if (category && category !== 'ALL') {
-			list = list.filter((e: ExtensionPackage) => e.category.toLowerCase() === category.toLowerCase());
+			list = list.filter(
+				(e: ExtensionPackage) => e.category.toLowerCase() === category.toLowerCase()
+			);
 		}
 
 		if (status === 'ENABLED') {
@@ -49,7 +51,10 @@ export const GET: RequestHandler = async ({ url }) => {
 			total: list.length
 		});
 	} catch (err: any) {
-		return json({ success: false, error: err.message || 'Failed to fetch extensions' }, { status: 500 });
+		return json(
+			{ success: false, error: err.message || 'Failed to fetch extensions' },
+			{ status: 500 }
+		);
 	}
 };
 
@@ -61,11 +66,18 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (body.url) {
 			const res = await fetch(body.url);
 			if (!res.ok) {
-				return json({ success: false, error: `Failed to fetch manifest from URL: HTTP ${res.status}` }, { status: 400 });
+				return json(
+					{ success: false, error: `Failed to fetch manifest from URL: HTTP ${res.status}` },
+					{ status: 400 }
+				);
 			}
 			const manifest = await res.json();
 			const extension = importExtensionFromManifest(manifest);
-			return json({ success: true, extension, message: `Successfully imported extension "${extension.name}"` });
+			return json({
+				success: true,
+				extension,
+				message: `Successfully imported extension "${extension.name}"`
+			});
 		}
 
 		// Case B: Reset to default
@@ -77,9 +89,16 @@ export const POST: RequestHandler = async ({ request }) => {
 		// Case C: Direct manifest object
 		const manifest = body.manifest || body;
 		const extension = importExtensionFromManifest(manifest);
-		return json({ success: true, extension, message: `Successfully imported extension "${extension.name}"` });
+		return json({
+			success: true,
+			extension,
+			message: `Successfully imported extension "${extension.name}"`
+		});
 	} catch (err: any) {
-		return json({ success: false, error: err.message || 'Failed to import extension' }, { status: 400 });
+		return json(
+			{ success: false, error: err.message || 'Failed to import extension' },
+			{ status: 400 }
+		);
 	}
 };
 
@@ -95,7 +114,10 @@ export const PATCH: RequestHandler = async ({ request }) => {
 		if (typeof enabled === 'boolean') {
 			const updated = toggleExtension(id, enabled);
 			if (!updated) {
-				return json({ success: false, error: `Extension with ID "${id}" not found` }, { status: 404 });
+				return json(
+					{ success: false, error: `Extension with ID "${id}" not found` },
+					{ status: 404 }
+				);
 			}
 			return json({ success: true, extension: updated });
 		}
@@ -103,14 +125,20 @@ export const PATCH: RequestHandler = async ({ request }) => {
 		// Full update if provided
 		const existing = getExtensionById(id);
 		if (!existing) {
-			return json({ success: false, error: `Extension with ID "${id}" not found` }, { status: 404 });
+			return json(
+				{ success: false, error: `Extension with ID "${id}" not found` },
+				{ status: 404 }
+			);
 		}
 
 		const merged = { ...existing, ...body, updatedAt: new Date().toISOString() };
 		const saved = saveExtension(merged);
 		return json({ success: true, extension: saved });
 	} catch (err: any) {
-		return json({ success: false, error: err.message || 'Failed to update extension' }, { status: 500 });
+		return json(
+			{ success: false, error: err.message || 'Failed to update extension' },
+			{ status: 500 }
+		);
 	}
 };
 
@@ -130,11 +158,17 @@ export const DELETE: RequestHandler = async ({ url, request }) => {
 
 		const success = deleteExtension(id);
 		if (!success) {
-			return json({ success: false, error: `Extension "${id}" not found or could not be removed` }, { status: 404 });
+			return json(
+				{ success: false, error: `Extension "${id}" not found or could not be removed` },
+				{ status: 404 }
+			);
 		}
 
 		return json({ success: true, message: `Extension "${id}" deleted successfully` });
 	} catch (err: any) {
-		return json({ success: false, error: err.message || 'Failed to delete extension' }, { status: 400 });
+		return json(
+			{ success: false, error: err.message || 'Failed to delete extension' },
+			{ status: 400 }
+		);
 	}
 };

@@ -24,12 +24,12 @@ import type {
 // Global in-memory storage for simulated database
 const inMemoryDatabase: Record<string, Record<string, any>> = {
 	users: {
-		'usr_1': { id: 'usr_1', name: 'Alice Smith', email: 'alice@example.com', role: 'admin' },
-		'usr_2': { id: 'usr_2', name: 'Bob Jones', email: 'bob@example.com', role: 'user' }
+		usr_1: { id: 'usr_1', name: 'Alice Smith', email: 'alice@example.com', role: 'admin' },
+		usr_2: { id: 'usr_2', name: 'Bob Jones', email: 'bob@example.com', role: 'user' }
 	},
 	products: {
-		'prod_1': { id: 'prod_1', name: 'Mechanical Keyboard', price: 120, stock: 15 },
-		'prod_2': { id: 'prod_2', name: 'Wireless Mouse', price: 65, stock: 40 }
+		prod_1: { id: 'prod_1', name: 'Mechanical Keyboard', price: 120, stock: 15 },
+		prod_2: { id: 'prod_2', name: 'Wireless Mouse', price: 65, stock: 40 }
 	}
 };
 
@@ -43,7 +43,13 @@ export async function executeFlow(
 	const steps: ExecutionStepTrace[] = [];
 	const executedNodeIds: string[] = [];
 
-	const addLog = (nodeId: string, nodeTitle: string, level: 'info' | 'warn' | 'error', message: string, data?: any) => {
+	const addLog = (
+		nodeId: string,
+		nodeTitle: string,
+		level: 'info' | 'warn' | 'error',
+		message: string,
+		data?: any
+	) => {
 		logs.push({
 			nodeId,
 			nodeTitle,
@@ -57,7 +63,7 @@ export async function executeFlow(
 	// Find the trigger node (match HTTP method, or default HTTP trigger, or Telegram Bot webhook)
 	const triggerNode =
 		nodes.find(
-			(n: Node) => n.type === 'httpTrigger' && ((n.data as any)?.method === request.method)
+			(n: Node) => n.type === 'httpTrigger' && (n.data as any)?.method === request.method
 		) ||
 		nodes.find((n: Node) => n.type === 'httpTrigger') ||
 		nodes.find((n: Node) => n.type === 'telegramTrigger');
@@ -71,22 +77,28 @@ export async function executeFlow(
 			durationMs: Math.round(performance.now() - startTime),
 			executedNodeIds: [],
 			steps: [],
-			logs: [{
-				nodeId: 'none',
-				nodeTitle: 'System',
-				timestamp: Date.now(),
-				level: 'error',
-				message: 'Cannot execute flow without an HTTP Trigger or Telegram Bot Trigger starting node.'
-			}],
+			logs: [
+				{
+					nodeId: 'none',
+					nodeTitle: 'System',
+					timestamp: Date.now(),
+					level: 'error',
+					message:
+						'Cannot execute flow without an HTTP Trigger or Telegram Bot Trigger starting node.'
+				}
+			],
 			error: 'No Trigger starting node found.'
 		};
 	}
 
 	// Execution state
 	const state: Record<string, any> = {};
-	let payload = typeof request.body === 'object' && request.body !== null
-		? JSON.parse(JSON.stringify(request.body))
-		: (request.body !== undefined && request.body !== null ? request.body : {});
+	let payload =
+		typeof request.body === 'object' && request.body !== null
+			? JSON.parse(JSON.stringify(request.body))
+			: request.body !== undefined && request.body !== null
+				? request.body
+				: {};
 	const req = {
 		method: request.method,
 		path: request.path,
@@ -97,7 +109,8 @@ export async function executeFlow(
 
 	let currentNode: Node | undefined = triggerNode;
 	let maxSteps = 40;
-	let responseResult: { statusCode: number; body: any; headers: Record<string, string> } | null = null;
+	let responseResult: { statusCode: number; body: any; headers: Record<string, string> } | null =
+		null;
 
 	while (currentNode && maxSteps > 0) {
 		maxSteps--;
@@ -117,7 +130,12 @@ export async function executeFlow(
 		try {
 			if (nodeType === 'httpTrigger') {
 				const triggerData = nodeData as unknown as HttpTriggerData;
-				addLog(currentId, nodeTitle, 'info', `Trigger received ${req.method} request to ${triggerData.path || req.path}`);
+				addLog(
+					currentId,
+					nodeTitle,
+					'info',
+					`Trigger received ${req.method} request to ${triggerData.path || req.path}`
+				);
 				stepOutput = { received: true, method: req.method, path: req.path, body: payload };
 				nextHandleOut = 'output';
 			} else if (nodeType === 'codeBlock') {
@@ -150,7 +168,16 @@ export async function executeFlow(
 					`
 				);
 
-				const result = fn(req, payload, payload, req.query, req.headers, state, inMemoryDatabase, customLog);
+				const result = fn(
+					req,
+					payload,
+					payload,
+					req.query,
+					req.headers,
+					state,
+					inMemoryDatabase,
+					customLog
+				);
 				stepOutput = result;
 				state[currentId] = result;
 				state.lastResult = result;
@@ -188,9 +215,21 @@ export async function executeFlow(
 					`
 				);
 
-				const conditionValue = evalCondition(req, payload, payload, req.query, req.headers, state, inMemoryDatabase);
+				const conditionValue = evalCondition(
+					req,
+					payload,
+					payload,
+					req.query,
+					req.headers,
+					state,
+					inMemoryDatabase
+				);
 				nextHandleOut = conditionValue ? 'true' : 'false';
-				stepOutput = { condition: expression, evaluatedTo: conditionValue, branchTaken: nextHandleOut };
+				stepOutput = {
+					condition: expression,
+					evaluatedTo: conditionValue,
+					branchTaken: nextHandleOut
+				};
 
 				addLog(
 					currentId,
@@ -233,7 +272,14 @@ export async function executeFlow(
 				const op = storeData.operation || 'get';
 				const evalExpr = (expr: string) => {
 					try {
-						const fn = new Function('req', 'payload', 'body', 'query', 'state', `"use strict"; return (${expr});`);
+						const fn = new Function(
+							'req',
+							'payload',
+							'body',
+							'query',
+							'state',
+							`"use strict"; return (${expr});`
+						);
 						return fn(req, payload, payload, req.query, state);
 					} catch {
 						return expr;
@@ -264,14 +310,23 @@ export async function executeFlow(
 					stepOutput = Object.values(inMemoryDatabase[collection]);
 					state[currentId] = stepOutput;
 					state.lastResult = stepOutput;
-					addLog(currentId, nodeTitle, 'info', `Store LIST "${collection}" (${stepOutput.length} items)`);
+					addLog(
+						currentId,
+						nodeTitle,
+						'info',
+						`Store LIST "${collection}" (${stepOutput.length} items)`
+					);
 				}
 				nextHandleOut = 'output';
 			} else if (nodeType === 'authNode') {
 				const authData = nodeData as unknown as AuthNodeData;
-				const headerKey = (authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')).toLowerCase();
+				const headerKey = (
+					authData.headerName || (authData.authType === 'bearer' ? 'authorization' : 'x-api-key')
+				).toLowerCase();
 				const expected = (authData.expectedValue || '').trim();
-				const reqHeaderVal = (req.headers[headerKey] || req.headers[headerKey.toUpperCase()] || '') as string;
+				const reqHeaderVal = (req.headers[headerKey] ||
+					req.headers[headerKey.toUpperCase()] ||
+					'') as string;
 				let isAuthed = false;
 
 				if (authData.authType === 'bearer') {
@@ -331,7 +386,9 @@ export async function executeFlow(
 				state.lastResult = validationResult;
 
 				if (!isValid && typeof payload === 'object' && payload !== null) {
-					payload.validationErrors = missingKeys.map((k: string) => `Field '${k}' is required and cannot be empty`);
+					payload.validationErrors = missingKeys.map(
+						(k: string) => `Field '${k}' is required and cannot be empty`
+					);
 				}
 
 				addLog(
@@ -357,9 +414,14 @@ export async function executeFlow(
 
 				if (googleData.tokenSource === 'payload') {
 					const field = googleData.tokenField || 'credential';
-					token = payload && typeof payload === 'object' ? payload[field] || payload['id_token'] || payload['token'] : '';
+					token =
+						payload && typeof payload === 'object'
+							? payload[field] || payload['id_token'] || payload['token']
+							: '';
 				} else {
-					const authHeader = (req.headers['authorization'] || req.headers['Authorization'] || '') as string;
+					const authHeader = (req.headers['authorization'] ||
+						req.headers['Authorization'] ||
+						'') as string;
 					const match = authHeader.match(/^Bearer\s+(.*)$/i);
 					token = match ? match[1].trim() : authHeader.trim();
 				}
@@ -460,11 +522,14 @@ export async function executeFlow(
 					if (!email || !String(email).includes('@')) {
 						errorMsg = 'Invalid email address provided for sign up';
 					} else {
-						const existing = Object.values(inMemoryDatabase.users).find((u: any) => u.email === email);
+						const existing = Object.values(inMemoryDatabase.users).find(
+							(u: any) => u.email === email
+						);
 						if (existing) {
 							errorMsg = `User with email ${email} already exists`;
 						} else {
-							const id = 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6);
+							const id =
+								'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6);
 							const newUser = {
 								id,
 								email: String(email).toLowerCase(),
@@ -483,7 +548,9 @@ export async function executeFlow(
 					if (!email) {
 						errorMsg = 'Email is required for sign in';
 					} else {
-						const user = Object.values(inMemoryDatabase.users).find((u: any) => u.email?.toLowerCase() === String(email).toLowerCase());
+						const user = Object.values(inMemoryDatabase.users).find(
+							(u: any) => u.email?.toLowerCase() === String(email).toLowerCase()
+						);
 						if (user) {
 							const sessionToken = `tok_${(user as any).id}_${Math.random().toString(36).substring(2, 10)}`;
 							resultData = { user, sessionToken, status: 'authenticated' };
@@ -494,7 +561,9 @@ export async function executeFlow(
 					}
 				} else if (action === 'getUser') {
 					const targetId = userId || (payload && payload.userId);
-					const user = (targetId && inMemoryDatabase.users[targetId]) || Object.values(inMemoryDatabase.users)[0];
+					const user =
+						(targetId && inMemoryDatabase.users[targetId]) ||
+						Object.values(inMemoryDatabase.users)[0];
 					if (user) {
 						resultData = { user };
 						success = true;
@@ -562,7 +631,11 @@ export async function executeFlow(
 						try {
 							const fn = new Function('req', 'payload', 'state', `return (${expr});`);
 							const val = fn(req, payload, state);
-							return val !== undefined && val !== null ? (typeof val === 'object' ? JSON.stringify(val) : String(val)) : '';
+							return val !== undefined && val !== null
+								? typeof val === 'object'
+									? JSON.stringify(val)
+									: String(val)
+								: '';
 						} catch {
 							return '';
 						}
@@ -603,7 +676,8 @@ export async function executeFlow(
 								],
 								temperature: aiData.temperature ?? 0.7,
 								max_tokens: aiData.maxTokens ?? 1000,
-								response_format: aiData.responseFormat === 'json_object' ? { type: 'json_object' } : undefined
+								response_format:
+									aiData.responseFormat === 'json_object' ? { type: 'json_object' } : undefined
 							})
 						});
 
@@ -664,7 +738,9 @@ export async function executeFlow(
 									contents: [
 										{
 											role: 'user',
-											parts: [{ text: `${resolvedSystem ? resolvedSystem + '\n\n' : ''}${resolvedUser}` }]
+											parts: [
+												{ text: `${resolvedSystem ? resolvedSystem + '\n\n' : ''}${resolvedUser}` }
+											]
 										}
 									],
 									generationConfig: {
@@ -724,7 +800,12 @@ export async function executeFlow(
 				} else if (provider === 'custom') {
 					const baseUrl = aiData.baseUrl || 'http://localhost:11434/v1';
 					try {
-						addLog(currentId, nodeTitle, 'info', `Calling Custom LLM Endpoint at ${baseUrl} (${model})...`);
+						addLog(
+							currentId,
+							nodeTitle,
+							'info',
+							`Calling Custom LLM Endpoint at ${baseUrl} (${model})...`
+						);
 						const res = await fetch(`${baseUrl.replace(/\/+$/, '')}/chat/completions`, {
 							method: 'POST',
 							headers: {
@@ -826,7 +907,10 @@ export async function executeFlow(
 
 				if (filterCmd) {
 					const normalizedFilter = filterCmd.startsWith('/') ? filterCmd.slice(1) : filterCmd;
-					if (command.toLowerCase() !== normalizedFilter.toLowerCase() && text.toLowerCase() !== filterCmd.toLowerCase()) {
+					if (
+						command.toLowerCase() !== normalizedFilter.toLowerCase() &&
+						text.toLowerCase() !== filterCmd.toLowerCase()
+					) {
 						addLog(
 							currentId,
 							nodeTitle,
@@ -896,7 +980,11 @@ export async function executeFlow(
 					botToken = env?.TELEGRAM_BOT_TOKEN || '';
 				}
 
-				const resolvedChatId = interpolate(tgData.chatId || '{{telegram.chatId}}') || state.telegram?.chatId || payload.chatId || 123456789;
+				const resolvedChatId =
+					interpolate(tgData.chatId || '{{telegram.chatId}}') ||
+					state.telegram?.chatId ||
+					payload.chatId ||
+					123456789;
 				const resolvedText = interpolate(tgData.text || '') || 'Hello from Nodeflow Telegram bot!';
 				const resolvedPhoto = interpolate(tgData.photoUrl || '');
 
@@ -906,7 +994,12 @@ export async function executeFlow(
 
 				if (botToken) {
 					try {
-						addLog(currentId, nodeTitle, 'info', `Calling Telegram Bot API (${action}) to chat ${resolvedChatId}...`);
+						addLog(
+							currentId,
+							nodeTitle,
+							'info',
+							`Calling Telegram Bot API (${action}) to chat ${resolvedChatId}...`
+						);
 						const url = `https://api.telegram.org/bot${botToken}/${action}`;
 						const bodyPayload: any = {
 							chat_id: resolvedChatId,
@@ -1014,7 +1107,12 @@ export async function executeFlow(
 				currentNode = undefined;
 			} else {
 				// Custom / Extension Node Execution
-				addLog(currentId, nodeTitle, 'info', `Executing extension node "${nodeTitle}" (${nodeType})`);
+				addLog(
+					currentId,
+					nodeTitle,
+					'info',
+					`Executing extension node "${nodeTitle}" (${nodeType})`
+				);
 				const extResult: any = {
 					extension: nodeType,
 					executedAt: Date.now(),
@@ -1023,7 +1121,10 @@ export async function executeFlow(
 				};
 
 				// If custom extension provided a runtimeHandler snippet
-				if ((nodeData as any)?.runtimeHandler && typeof (nodeData as any).runtimeHandler === 'string') {
+				if (
+					(nodeData as any)?.runtimeHandler &&
+					typeof (nodeData as any).runtimeHandler === 'string'
+				) {
 					try {
 						const extFn = new Function(
 							'req',
@@ -1041,7 +1142,16 @@ export async function executeFlow(
 							})();
 							`
 						);
-						const handlerOutput = await extFn(req, payload, state, currentNode, inMemoryDatabase, addLog, currentId, nodeTitle);
+						const handlerOutput = await extFn(
+							req,
+							payload,
+							state,
+							currentNode,
+							inMemoryDatabase,
+							addLog,
+							currentId,
+							nodeTitle
+						);
 						if (handlerOutput !== undefined) {
 							Object.assign(extResult, handlerOutput);
 						}
@@ -1054,7 +1164,12 @@ export async function executeFlow(
 				state[currentId] = extResult;
 				state.lastResult = extResult;
 				nextHandleOut = 'success';
-				addLog(currentId, nodeTitle, 'info', `Extension node "${nodeTitle}" finished. Routing to "${nextHandleOut}".`);
+				addLog(
+					currentId,
+					nodeTitle,
+					'info',
+					`Extension node "${nodeTitle}" finished. Routing to "${nextHandleOut}".`
+				);
 			}
 		} catch (err: any) {
 			stepError = err.message || String(err);
@@ -1108,7 +1223,10 @@ export async function executeFlow(
 	if (!responseResult) {
 		responseResult = {
 			statusCode: 200,
-			body: state.lastResult !== undefined ? state.lastResult : { success: true, message: 'Workflow completed', payload },
+			body:
+				state.lastResult !== undefined
+					? state.lastResult
+					: { success: true, message: 'Workflow completed', payload },
 			headers: { 'content-type': 'application/json' }
 		};
 	}

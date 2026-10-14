@@ -1,5 +1,10 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { getRoute, saveRoute, deleteRoute, setRoutePublishStatus } from '../../../../lib/server/routeStore';
+import {
+	getRoute,
+	saveRoute,
+	deleteRoute,
+	setRoutePublishStatus
+} from '../../../../lib/server/routeStore';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const id = params.id;

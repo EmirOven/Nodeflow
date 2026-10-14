@@ -43,7 +43,8 @@
 					class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-sky-500 focus:outline-none"
 					placeholder="Leave empty for all updates, or e.g. /start"
 					value={filterCmd}
-					oninput={(e) => updateNodeData(id, { filterCommand: (e.target as HTMLInputElement).value })}
+					oninput={(e) =>
+						updateNodeData(id, { filterCommand: (e.target as HTMLInputElement).value })}
 				/>
 			</div>
 
@@ -52,9 +53,9 @@
 				{#each quickCommands as cmd}
 					<button
 						type="button"
-						class="rounded px-2 py-0.5 text-[10px] font-mono transition border {filterCmd === cmd
-							? 'bg-sky-500/20 text-sky-300 border-sky-500/40 font-bold'
-							: 'bg-slate-800/60 text-slate-400 border-slate-700/60 hover:bg-slate-800 hover:text-slate-200'}"
+						class="rounded border px-2 py-0.5 font-mono text-[10px] transition {filterCmd === cmd
+							? 'border-sky-500/40 bg-sky-500/20 font-bold text-sky-300'
+							: 'border-slate-700/60 bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200'}"
 						onclick={() => updateNodeData(id, { filterCommand: cmd })}
 					>
 						{cmd || 'Any Message'}
@@ -64,22 +65,24 @@
 		</div>
 
 		<!-- Provided Context Box -->
-		<div class="rounded-lg border border-slate-800 bg-slate-950/70 p-2.5 text-[11px] text-slate-400 space-y-1.5">
+		<div
+			class="space-y-1.5 rounded-lg border border-slate-800 bg-slate-950/70 p-2.5 text-[11px] text-slate-400"
+		>
 			<div class="flex items-center justify-between font-mono text-[10px]">
 				<span class="text-slate-500">PARSED TELEGRAM CONTEXT:</span>
-				<span class="text-sky-400 font-semibold">state.telegram</span>
+				<span class="font-semibold text-sky-400">state.telegram</span>
 			</div>
 			<div class="grid grid-cols-2 gap-1 font-mono text-[10px] text-slate-300">
-				<div class="rounded bg-slate-900/80 px-1.5 py-0.5 border border-slate-800/80 truncate">
+				<div class="truncate rounded border border-slate-800/80 bg-slate-900/80 px-1.5 py-0.5">
 					<span class="text-slate-500">chatId:</span> 123456
 				</div>
-				<div class="rounded bg-slate-900/80 px-1.5 py-0.5 border border-slate-800/80 truncate">
+				<div class="truncate rounded border border-slate-800/80 bg-slate-900/80 px-1.5 py-0.5">
 					<span class="text-slate-500">text:</span> "Hello"
 				</div>
-				<div class="rounded bg-slate-900/80 px-1.5 py-0.5 border border-slate-800/80 truncate">
+				<div class="truncate rounded border border-slate-800/80 bg-slate-900/80 px-1.5 py-0.5">
 					<span class="text-slate-500">command:</span> "{filterCmd || '/start'}"
 				</div>
-				<div class="rounded bg-slate-900/80 px-1.5 py-0.5 border border-slate-800/80 truncate">
+				<div class="truncate rounded border border-slate-800/80 bg-slate-900/80 px-1.5 py-0.5">
 					<span class="text-slate-500">sender:</span> user object
 				</div>
 			</div>

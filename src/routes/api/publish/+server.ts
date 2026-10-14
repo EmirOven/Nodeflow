@@ -1,5 +1,10 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { publishFlow, unpublishFlow, getAllPublishedFlows, type PublishedFlow } from '../../../lib/server/publishedStore';
+import {
+	publishFlow,
+	unpublishFlow,
+	getAllPublishedFlows,
+	type PublishedFlow
+} from '../../../lib/server/publishedStore';
 
 export const GET: RequestHandler = async () => {
 	const flows: PublishedFlow[] = getAllPublishedFlows();
@@ -33,7 +38,7 @@ export const POST: RequestHandler = async ({ request, url }) => {
 
 		const published: PublishedFlow = {
 			id: id || `pub_${Date.now()}`,
-			title: title || 'Nodely API Endpoint',
+			title: title || 'Nodeflow API Endpoint',
 			method: method.toUpperCase(),
 			path: formattedPath,
 			nodes: nodes || [],

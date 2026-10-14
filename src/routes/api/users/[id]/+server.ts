@@ -1,5 +1,10 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { getUserById, updateUser, deleteUser, sanitizeUser } from '../../../../lib/server/userStore';
+import {
+	getUserById,
+	updateUser,
+	deleteUser,
+	sanitizeUser
+} from '../../../../lib/server/userStore';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const id = params.id;

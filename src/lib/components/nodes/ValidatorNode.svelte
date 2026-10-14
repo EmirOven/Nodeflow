@@ -38,11 +38,12 @@
 				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 font-mono text-xs text-teal-200 placeholder-slate-600 focus:border-teal-500 focus:outline-none"
 				placeholder="email, name, password"
 				value={valData.requiredFields || 'email, name'}
-				oninput={(e) => updateNodeData(id, { requiredFields: (e.target as HTMLInputElement).value })}
+				oninput={(e) =>
+					updateNodeData(id, { requiredFields: (e.target as HTMLInputElement).value })}
 			/>
 		</div>
 
-		<p class="text-[10px] text-slate-400 leading-relaxed">
+		<p class="text-[10px] leading-relaxed text-slate-400">
 			Ensures payload contains non-empty values for each specified key.
 		</p>
 

@@ -1,4 +1,4 @@
-# Nodely ⚡
+# Nodeflow ⚡
 
 <p align="center">
   <strong>Visual drag-and-drop API builder and live execution runtime powered by Svelte 5 & Bun.</strong>
@@ -10,13 +10,15 @@
   <img src="https://img.shields.io/badge/TailwindCSS-4.x-38bdf8.svg" alt="Tailwind CSS 4" />
   <img src="https://img.shields.io/badge/Engine-Svelte%20Flow-6366f1.svg" alt="Svelte Flow" />
   <img src="https://img.shields.io/badge/License-MIT-emerald.svg" alt="License MIT" />
+  <a href="https://liberapay.com/postbeta/"><img src="https://img.shields.io/badge/Liberapay-postbeta-f6c915.svg?logo=liberapay&logoColor=black" alt="Liberapay" /></a>
+  <a href="https://buymeacoffee.com/postbeta"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-postbeta-FFDD00.svg?logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a>
 </p>
 
 ---
 
 ## 📖 Overview
 
-**Nodely** is a visual backend API playground and self-hostable service. Build endpoints visually by chaining request triggers, custom JavaScript/TypeScript code blocks, conditional logic, and database operations. 
+**Nodeflow** is a visual backend API playground and self-hostable service. Build endpoints visually by chaining request triggers, custom JavaScript/TypeScript code blocks, conditional logic, and database operations.
 
 Hit **"Publish API"** to immediately host and serve your visual pipelines as live, publicly reachable HTTP endpoints on the built-in server runtime.
 
@@ -47,7 +49,7 @@ Hit **"Publish API"** to immediately host and serve your visual pipelines as liv
   - Export to standalone, production-ready **SvelteKit server routes** (`+server.ts`).
   - Export to **Express.js / Node.js** route handlers.
   - Export to Flow JSON Schema.
-- 📦 **Templates**: Includes *Weather Data Aggregator*, *User Registration & Auth*, *Note CRUD*, *Simple Hello Starter*, and *Blank Canvas*.
+- 📦 **Templates**: Includes _Weather Data Aggregator_, _User Registration & Auth_, _Note CRUD_, _Simple Hello Starter_, and _Blank Canvas_.
 
 ---
 
@@ -81,41 +83,50 @@ HTTP Response (Status 200/400/500 + JSON Headers & Body)
 ## 🚀 Quickstart (Local Development)
 
 ### Prerequisites
+
 - [Bun](https://bun.sh/) (v1.2+ recommended) or Node.js (v20+)
 
 ### 1. Clone & Install
+
 ```bash
-git clone https://github.com/EmirOven/Nodely.git
-cd Nodely
+git clone https://github.com/EmirOven/Nodeflow.git
+cd Nodeflow
 bun install
 ```
 
 ### 2. Start Dev Server
+
 ```bash
 bun run dev -- --open
 ```
+
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
 ## 🐳 Self-Hosting Guide
 
-Nodely is built with `@sveltejs/adapter-node` and can be self-hosted anywhere with Docker, Bun, systemd, or reverse proxies.
+Nodeflow is built with `@sveltejs/adapter-node` and can be self-hosted anywhere with Docker, Bun, systemd, or reverse proxies.
+
+> **Why port `3000` instead of `5173`?**
+> During local development (`bun run dev`), Vite's dev server runs on port `5173` with Hot Module Replacement (HMR). For self-hosting in production (`bun run build` + `bun run start`), SvelteKit compiles the app via `@sveltejs/adapter-node` into a standalone production server (`./build/index.js`), which defaults to port `3000` (configurable via the `PORT` environment variable).
 
 ### Option A: Docker & Docker Compose (Recommended)
 
 1. **Clone the repository:**
+
    ```bash
-   git clone https://github.com/EmirOven/Nodely.git
-   cd Nodely
+   git clone https://github.com/EmirOven/Nodeflow.git
+   cd Nodeflow
    ```
 
 2. **Launch via Docker Compose:**
+
    ```bash
    docker compose up -d
    ```
 
-3. Nodely will be accessible on port `3000`:
+3. Nodeflow will be accessible on port `3000`:
    - Web UI: `http://localhost:3000`
    - Published APIs: `http://localhost:3000/api/v1/weather`
 
@@ -126,6 +137,7 @@ Published endpoints are persisted on the host in `.nodely-published.json`.
 ### Option B: Bare-Metal / VPS with Bun
 
 1. **Build the production bundle:**
+
    ```bash
    bun install --frozen-lockfile
    bun run build
@@ -145,7 +157,7 @@ Published endpoints are persisted on the host in `.nodely-published.json`.
 bun run build
 
 # Start with PM2
-pm2 start ./build/index.js --name nodely --interpreter bun --env PORT=3000
+pm2 start ./build/index.js --name nodeflow --interpreter bun --env PORT=3000
 pm2 save
 ```
 
@@ -153,18 +165,18 @@ pm2 save
 
 ### Option D: Systemd Service (Linux)
 
-Create `/etc/systemd/system/nodely.service`:
+Create `/etc/systemd/system/nodeflow.service`:
 
 ```ini
 [Unit]
-Description=Nodely Visual API Service
+Description=Nodeflow Visual API Service
 After=network.target
 
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/var/www/nodely
-ExecStart=/usr/local/bin/bun /var/www/nodely/build/index.js
+WorkingDirectory=/var/www/nodeflow
+ExecStart=/usr/local/bin/bun /var/www/nodeflow/build/index.js
 Restart=always
 RestartSec=5
 Environment=PORT=3000
@@ -176,9 +188,10 @@ WantedBy=multi-user.target
 ```
 
 Enable and start:
+
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now nodely
+sudo systemctl enable --now nodeflow
 ```
 
 ---
@@ -186,10 +199,11 @@ sudo systemctl enable --now nodely
 ### Option E: Reverse Proxy Setup
 
 #### Nginx
+
 ```nginx
 server {
     listen 80;
-    server_name nodely.yourdomain.com;
+    server_name nodeflow.yourdomain.com;
 
     location / {
         proxy_pass http://127.0.0.1:3000;
@@ -205,8 +219,9 @@ server {
 ```
 
 #### Caddy
+
 ```caddyfile
-nodely.yourdomain.com {
+nodeflow.yourdomain.com {
     reverse_proxy 127.0.0.1:3000
 }
 ```
@@ -215,12 +230,12 @@ nodely.yourdomain.com {
 
 ## ⚙️ Environment Variables
 
-| Variable | Default | Description |
-|---|---|---|
-| `PORT` | `3000` | Port for the standalone server |
-| `HOST` | `0.0.0.0` | Host binding address |
-| `NODE_ENV` | `production` | Node environment |
-| `ORIGIN` | `http://localhost:3000` | Protocol & domain origin for CORS/preflight |
+| Variable   | Default                 | Description                                                          |
+| ---------- | ----------------------- | -------------------------------------------------------------------- |
+| `PORT`     | `3000`                  | Port for the standalone production server (`@sveltejs/adapter-node`) |
+| `HOST`     | `0.0.0.0`               | Host binding address                                                 |
+| `NODE_ENV` | `production`            | Node environment                                                     |
+| `ORIGIN`   | `http://localhost:3000` | Protocol & domain origin for CORS/preflight                          |
 
 ---
 
@@ -233,6 +248,25 @@ bun run start        # Launch production server from ./build
 bun run check        # Run Svelte and TypeScript static type diagnostics
 bun run format       # Format files with Prettier
 ```
+
+---
+
+## 💖 Support the Project
+
+If you find Nodeflow useful and would like to support its ongoing development, consider sponsoring or donating:
+
+- ☕ **Buy Me a Coffee**: [buymeacoffee.com/postbeta](https://buymeacoffee.com/postbeta)
+- 🪙 **Liberapay**: [liberapay.com/postbeta](https://liberapay.com/postbeta/)
+
+<p align="left">
+  <a href="https://buymeacoffee.com/postbeta">
+    <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-postbeta-FFDD00.svg?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" />
+  </a>
+  &nbsp;
+  <a href="https://liberapay.com/postbeta/">
+    <img src="https://img.shields.io/badge/Liberapay-postbeta-f6c915.svg?style=for-the-badge&logo=liberapay&logoColor=black" alt="Liberapay" />
+  </a>
+</p>
 
 ---
 

@@ -22,7 +22,10 @@ const USERS_FILE = path.resolve(process.cwd(), '.nodely-users.json');
 const usersMap = new Map<string, ProjectUser>();
 
 function hashPassword(password: string): string {
-	return crypto.createHash('sha256').update(password + '_nodely_salt').digest('hex');
+	return crypto
+		.createHash('sha256')
+		.update(password + '_nodely_salt')
+		.digest('hex');
 }
 
 function seedDefaultUsers() {
@@ -35,7 +38,8 @@ function seedDefaultUsers() {
 			passwordHash: hashPassword('password123'),
 			provider: 'email',
 			role: 'admin',
-			avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=128&fit=crop&crop=face',
+			avatarUrl:
+				'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=128&fit=crop&crop=face',
 			metadata: { department: 'Engineering' },
 			isBanned: false,
 			isEmailVerified: true,
@@ -49,7 +53,8 @@ function seedDefaultUsers() {
 			name: 'Sarah Chen',
 			provider: 'google',
 			role: 'user',
-			avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&fit=crop&crop=face',
+			avatarUrl:
+				'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&fit=crop&crop=face',
 			metadata: { googleSub: '109827364512398471203' },
 			isBanned: false,
 			isEmailVerified: true,
@@ -260,7 +265,8 @@ export function updateUser(
 	if (updates.avatarUrl !== undefined) user.avatarUrl = updates.avatarUrl;
 	if (updates.isBanned !== undefined) user.isBanned = updates.isBanned;
 	if (updates.isEmailVerified !== undefined) user.isEmailVerified = updates.isEmailVerified;
-	if (updates.metadata !== undefined) user.metadata = { ...(user.metadata || {}), ...updates.metadata };
+	if (updates.metadata !== undefined)
+		user.metadata = { ...(user.metadata || {}), ...updates.metadata };
 	if (updates.password) {
 		user.passwordHash = hashPassword(updates.password);
 	}

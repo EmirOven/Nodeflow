@@ -22,15 +22,21 @@ export const POST: RequestHandler = async ({ request }) => {
 				}
 			});
 		} else {
-			return json({
-				success: false,
-				error: data.description || 'Invalid Telegram Bot Token or unauthorized request'
-			}, { status: 400 });
+			return json(
+				{
+					success: false,
+					error: data.description || 'Invalid Telegram Bot Token or unauthorized request'
+				},
+				{ status: 400 }
+			);
 		}
 	} catch (err: any) {
-		return json({
-			success: false,
-			error: err.message || 'Failed to connect to Telegram Bot API'
-		}, { status: 500 });
+		return json(
+			{
+				success: false,
+				error: err.message || 'Failed to connect to Telegram Bot API'
+			},
+			{ status: 500 }
+		);
 	}
 };

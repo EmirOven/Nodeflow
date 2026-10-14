@@ -35,10 +35,12 @@
 	<div class="space-y-3">
 		<!-- Action Selector -->
 		<div class="space-y-1">
-			<label class="text-[11px] font-medium text-slate-400" for="tg-action-{id}">Telegram Action</label>
+			<label class="text-[11px] font-medium text-slate-400" for="tg-action-{id}"
+				>Telegram Action</label
+			>
 			<select
 				id="tg-action-{id}"
-				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs font-semibold text-slate-200 focus:border-sky-500 focus:outline-none cursor-pointer"
+				class="w-full cursor-pointer rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs font-semibold text-slate-200 focus:border-sky-500 focus:outline-none"
 				value={action}
 				onchange={(e) => updateNodeData(id, { action: (e.target as HTMLSelectElement).value })}
 			>
@@ -52,13 +54,13 @@
 		<div class="space-y-1">
 			<div class="flex items-center justify-between text-[11px] font-medium text-slate-400">
 				<label for="tg-chat-{id}">Target Chat ID</label>
-				<span class="text-[10px] font-mono text-sky-400">Expr / Static</span>
+				<span class="font-mono text-[10px] text-sky-400">Expr / Static</span>
 			</div>
 			<input
 				id="tg-chat-{id}"
 				type="text"
 				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-sky-500 focus:outline-none"
-				placeholder="{'{{telegram.chatId}}'}"
+				placeholder={'{{telegram.chatId}}'}
 				value={telegramData.chatId ?? '{{telegram.chatId}}'}
 				oninput={(e) => updateNodeData(id, { chatId: (e.target as HTMLInputElement).value })}
 			/>
@@ -83,30 +85,36 @@
 		<div class="space-y-1">
 			<div class="flex items-center justify-between text-[11px] font-medium text-slate-400">
 				<label for="tg-text-{id}">
-					{action === 'sendPhoto' ? 'Caption' : action === 'answerCallbackQuery' ? 'Alert Text' : 'Message Text'}
+					{action === 'sendPhoto'
+						? 'Caption'
+						: action === 'answerCallbackQuery'
+							? 'Alert Text'
+							: 'Message Text'}
 				</label>
 				<span class="text-[10px] text-slate-500">Supports {'{{vars}}'}</span>
 			</div>
 			<textarea
 				id="tg-text-{id}"
 				rows="3"
-				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-sky-500 focus:outline-none resize-none leading-relaxed"
+				class="w-full resize-none rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-2 font-mono text-xs leading-relaxed text-slate-200 placeholder-slate-600 focus:border-sky-500 focus:outline-none"
 				placeholder="Hello {`{{telegram.sender?.firstName || 'there'}}`}! {`{{aiResponse?.text || payload.result}}`}"
-				value={telegramData.text ?? "Hello {{telegram.sender?.firstName || 'there'}}! Your message has been processed."}
+				value={telegramData.text ??
+					"Hello {{telegram.sender?.firstName || 'there'}}! Your message has been processed."}
 				oninput={(e) => updateNodeData(id, { text: (e.target as HTMLTextAreaElement).value })}
 			></textarea>
 		</div>
 
 		<!-- Parse Mode Pills -->
 		<div class="space-y-1">
-			<span class="text-[11px] font-medium text-slate-400 block">Formatting Parse Mode</span>
+			<span class="block text-[11px] font-medium text-slate-400">Formatting Parse Mode</span>
 			<div class="flex items-center gap-1.5">
 				{#each parseModes as pm}
 					<button
 						type="button"
-						class="flex-1 rounded-lg py-1 text-center font-mono text-[11px] font-semibold transition border {parseMode === pm
-							? 'bg-sky-500/20 text-sky-300 border-sky-500/50 shadow-sm'
-							: 'bg-slate-950/60 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200'}"
+						class="flex-1 rounded-lg border py-1 text-center font-mono text-[11px] font-semibold transition {parseMode ===
+						pm
+							? 'border-sky-500/50 bg-sky-500/20 text-sky-300 shadow-sm'
+							: 'border-slate-800 bg-slate-950/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200'}"
 						onclick={() => updateNodeData(id, { parseMode: pm })}
 					>
 						{pm}
@@ -116,7 +124,7 @@
 		</div>
 
 		<!-- Token Override (Optional) -->
-		<div class="space-y-1 pt-1 border-t border-slate-800/80">
+		<div class="space-y-1 border-t border-slate-800/80 pt-1">
 			<div class="flex items-center justify-between text-[10px] text-slate-400">
 				<span class="flex items-center gap-1 font-medium">
 					<KeyRound class="h-3 w-3 text-slate-500" /> Bot Token Override

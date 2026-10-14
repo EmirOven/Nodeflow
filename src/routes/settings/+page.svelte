@@ -68,7 +68,11 @@
 
 	const defaultModelsForProvider: Record<string, string[]> = {
 		openai: ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo', 'o1-mini', 'o3-mini'],
-		anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
+		anthropic: [
+			'claude-3-5-sonnet-20241022',
+			'claude-3-5-haiku-20241022',
+			'claude-3-opus-20240229'
+		],
 		google: ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash'],
 		groq: ['llama-3.3-70b-versatile', 'mixtral-8x7b-32768', 'gemma2-9b-it'],
 		custom: ['llama3.2', 'deepseek-r1', 'mistral', 'qwen2.5']
@@ -121,7 +125,10 @@
 	}
 
 	function generateRandomJwtSecret() {
-		const rand = 'nodeflow_jwt_' + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+		const rand =
+			'nodeflow_jwt_' +
+			Math.random().toString(36).substring(2) +
+			Math.random().toString(36).substring(2);
 		settings.jwtSecret = rand;
 	}
 
@@ -142,7 +149,10 @@
 			if (res.ok && data.success) {
 				testTelegramResult = { success: true, bot: data.bot };
 			} else {
-				testTelegramResult = { success: false, error: data.error || 'Failed to authenticate Telegram Bot' };
+				testTelegramResult = {
+					success: false,
+					error: data.error || 'Failed to authenticate Telegram Bot'
+				};
 			}
 		} catch (e: any) {
 			testTelegramResult = { success: false, error: e.message || 'Network request failed' };
@@ -220,7 +230,7 @@
 	<title>Nodeflow Settings & Secrets — Nodeflow</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
+<div class="flex min-h-screen flex-col bg-slate-950 text-slate-100 select-none">
 	<!-- Top Navigation -->
 	<header
 		class="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-6 backdrop-blur-xl"
@@ -229,16 +239,18 @@
 		<div class="flex items-center gap-4">
 			<a
 				href="/"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition group"
+				class="group flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Back to All Nodeflows"
 			>
-				<ArrowLeft class="h-3.5 w-3.5 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
+				<ArrowLeft
+					class="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:-translate-x-0.5"
+				/>
 				<span>Nodeflows</span>
 			</a>
 
 			<div class="flex items-center gap-3">
 				<div
-					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/25 text-white"
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25"
 				>
 					<Network class="h-5 w-5" />
 				</div>
@@ -246,7 +258,7 @@
 					<div class="flex items-center gap-2">
 						<h1 class="text-base font-bold tracking-tight text-white">Nodeflow Settings</h1>
 						<span
-							class="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400 border border-blue-500/20"
+							class="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400"
 						>
 							v0.5.3
 						</span>
@@ -257,17 +269,31 @@
 		</div>
 
 		<!-- Center: Navigation Tabs -->
-		<div class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800">
-			<a href="/" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+		<div
+			class="hidden items-center gap-1 rounded-xl border border-slate-800 bg-slate-900/60 p-1 md:flex"
+		>
+			<a
+				href="/"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Nodeflows
 			</a>
-			<a href="/users" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/users"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Project Users
 			</a>
-			<a href="/extensions" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/extensions"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Extensions
 			</a>
-			<a href="/settings" class="px-3 py-1 text-xs font-semibold text-white bg-slate-800 rounded-lg shadow-sm">
+			<a
+				href="/settings"
+				class="rounded-lg bg-slate-800 px-3 py-1 text-xs font-semibold text-white shadow-sm"
+			>
 				Settings
 			</a>
 		</div>
@@ -278,10 +304,12 @@
 				type="button"
 				onclick={saveSettings}
 				disabled={isSaving}
-				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-950/60 hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-950/60 transition hover:from-blue-500 hover:to-indigo-500 active:scale-95 disabled:opacity-50"
 			>
 				{#if isSaving}
-					<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+					<span
+						class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+					></span>
 					<span>Saving...</span>
 				{:else if savedSuccess}
 					<Check class="h-4 w-4 text-emerald-300" />
@@ -295,32 +323,43 @@
 	</header>
 
 	<!-- Main Content -->
-	<main class="flex-1 max-w-4xl w-full mx-auto p-6 md:p-8 space-y-8">
+	<main class="mx-auto w-full max-w-4xl flex-1 space-y-8 p-6 md:p-8">
 		{#if isLoading}
-			<div class="space-y-4 animate-pulse">
-				<div class="h-40 rounded-2xl bg-slate-900/40 border border-slate-800"></div>
-				<div class="h-40 rounded-2xl bg-slate-900/40 border border-slate-800"></div>
+			<div class="animate-pulse space-y-4">
+				<div class="h-40 rounded-2xl border border-slate-800 bg-slate-900/40"></div>
+				<div class="h-40 rounded-2xl border border-slate-800 bg-slate-900/40"></div>
 			</div>
 		{:else}
 			<!-- Universal AI Engine Section -->
-			<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl space-y-5">
+			<section
+				class="space-y-5 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-3">
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+						>
 							<Sparkles class="h-5 w-5" />
 						</div>
 						<div>
 							<h2 class="text-sm font-bold text-white">Universal AI Engine (AI SDK Compatible)</h2>
-							<p class="text-xs text-slate-400">Configure credentials for OpenAI, Anthropic Claude, Google Gemini, Groq, or Local Ollama</p>
+							<p class="text-xs text-slate-400">
+								Configure credentials for OpenAI, Anthropic Claude, Google Gemini, Groq, or Local
+								Ollama
+							</p>
 						</div>
 					</div>
-					<span class="rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-400">
+					<span
+						class="rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-400"
+					>
 						AI Engine
 					</span>
 				</div>
 
 				<!-- AI Provider Selector Tabs -->
-				<div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-950/60">
+				<div
+					class="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-950/60 p-1"
+				>
 					{#each aiProvidersList as p}
 						<button
 							type="button"
@@ -328,12 +367,13 @@
 								activeAiTab = p.id;
 								settings.aiProvider = p.id;
 							}}
-							class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition {activeAiTab === p.id
+							class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition {activeAiTab ===
+							p.id
 								? 'bg-emerald-600 text-white shadow-sm'
-								: 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'}"
+								: 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}"
 						>
 							<span>{p.name}</span>
-							<span class="text-[9px] opacity-75 font-mono">({p.badge})</span>
+							<span class="font-mono text-[9px] opacity-75">({p.badge})</span>
 						</button>
 					{/each}
 				</div>
@@ -343,12 +383,14 @@
 					{#if activeAiTab === 'openai'}
 						<div class="space-y-1.5">
 							<div class="flex items-center justify-between">
-								<label for="openai-api-key" class="text-xs font-medium text-slate-300">OpenAI API Key</label>
+								<label for="openai-api-key" class="text-xs font-medium text-slate-300"
+									>OpenAI API Key</label
+								>
 								<button
 									type="button"
 									onclick={() => testAiKey('openai')}
 									disabled={testingAi}
-									class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1 disabled:opacity-50"
+									class="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 transition hover:text-emerald-300 disabled:opacity-50"
 								>
 									{#if testingAi}
 										<RefreshCw class="h-3 w-3 animate-spin" />
@@ -365,12 +407,12 @@
 									type={showApiKey ? 'text' : 'password'}
 									placeholder="sk-proj-..."
 									bind:value={settings.openaiApiKey}
-									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 								/>
 								<button
 									type="button"
 									onclick={() => (showApiKey = !showApiKey)}
-									class="absolute right-3 top-3 text-slate-500 hover:text-white"
+									class="absolute top-3 right-3 text-slate-500 hover:text-white"
 									title="Toggle visibility"
 								>
 									{#if showApiKey}
@@ -384,12 +426,14 @@
 					{:else if activeAiTab === 'anthropic'}
 						<div class="space-y-1.5">
 							<div class="flex items-center justify-between">
-								<label for="anthropic-api-key" class="text-xs font-medium text-slate-300">Anthropic Claude API Key</label>
+								<label for="anthropic-api-key" class="text-xs font-medium text-slate-300"
+									>Anthropic Claude API Key</label
+								>
 								<button
 									type="button"
 									onclick={() => testAiKey('anthropic')}
 									disabled={testingAi}
-									class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1 disabled:opacity-50"
+									class="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 transition hover:text-emerald-300 disabled:opacity-50"
 								>
 									{#if testingAi}
 										<RefreshCw class="h-3 w-3 animate-spin" />
@@ -405,18 +449,20 @@
 								type="password"
 								placeholder="sk-ant-api..."
 								bind:value={settings.anthropicApiKey}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 							/>
 						</div>
 					{:else if activeAiTab === 'google'}
 						<div class="space-y-1.5">
 							<div class="flex items-center justify-between">
-								<label for="gemini-api-key" class="text-xs font-medium text-slate-300">Google Gemini API Key</label>
+								<label for="gemini-api-key" class="text-xs font-medium text-slate-300"
+									>Google Gemini API Key</label
+								>
 								<button
 									type="button"
 									onclick={() => testAiKey('google')}
 									disabled={testingAi}
-									class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1 disabled:opacity-50"
+									class="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 transition hover:text-emerald-300 disabled:opacity-50"
 								>
 									{#if testingAi}
 										<RefreshCw class="h-3 w-3 animate-spin" />
@@ -432,18 +478,20 @@
 								type="password"
 								placeholder="AIzaSy..."
 								bind:value={settings.geminiApiKey}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 							/>
 						</div>
 					{:else if activeAiTab === 'groq'}
 						<div class="space-y-1.5">
 							<div class="flex items-center justify-between">
-								<label for="groq-api-key" class="text-xs font-medium text-slate-300">Groq API Key</label>
+								<label for="groq-api-key" class="text-xs font-medium text-slate-300"
+									>Groq API Key</label
+								>
 								<button
 									type="button"
 									onclick={() => testAiKey('groq')}
 									disabled={testingAi}
-									class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1 disabled:opacity-50"
+									class="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 transition hover:text-emerald-300 disabled:opacity-50"
 								>
 									{#if testingAi}
 										<RefreshCw class="h-3 w-3 animate-spin" />
@@ -459,30 +507,34 @@
 								type="password"
 								placeholder="gsk_..."
 								bind:value={settings.groqApiKey}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 							/>
 						</div>
 					{:else if activeAiTab === 'custom'}
 						<div class="space-y-3">
 							<div class="space-y-1.5">
-								<label for="custom-base-url" class="text-xs font-medium text-slate-300">Ollama / Custom API Base URL</label>
+								<label for="custom-base-url" class="text-xs font-medium text-slate-300"
+									>Ollama / Custom API Base URL</label
+								>
 								<input
 									id="custom-base-url"
 									type="text"
 									placeholder="http://localhost:11434/v1"
 									bind:value={settings.customAiBaseUrl}
-									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 								/>
 							</div>
 
 							<div class="space-y-1.5">
-								<label for="custom-api-key" class="text-xs font-medium text-slate-300">API Key (Optional for Local Ollama)</label>
+								<label for="custom-api-key" class="text-xs font-medium text-slate-300"
+									>API Key (Optional for Local Ollama)</label
+								>
 								<input
 									id="custom-api-key"
 									type="password"
 									placeholder="Bearer token or leave empty"
 									bind:value={settings.customAiApiKey}
-									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition"
+									class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-emerald-500 focus:outline-none"
 								/>
 							</div>
 						</div>
@@ -490,9 +542,9 @@
 
 					{#if testAiResult}
 						<div
-							class="rounded-lg p-2.5 text-xs font-medium flex items-center gap-2 {testAiResult.success
-								? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
-								: 'bg-rose-500/10 text-rose-300 border border-rose-500/20'}"
+							class="flex items-center gap-2 rounded-lg p-2.5 text-xs font-medium {testAiResult.success
+								? 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-300'
+								: 'border border-rose-500/20 bg-rose-500/10 text-rose-300'}"
 						>
 							{#if testAiResult.success}
 								<Check class="h-3.5 w-3.5 text-emerald-400" />
@@ -504,13 +556,15 @@
 					{/if}
 
 					<!-- Default Model and Temperature Settings -->
-					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-800/60">
+					<div class="grid grid-cols-1 gap-4 border-t border-slate-800/60 pt-2 sm:grid-cols-2">
 						<div class="space-y-1.5">
-							<label for="default-model" class="text-xs font-medium text-slate-300">Default Model ({activeAiTab})</label>
+							<label for="default-model" class="text-xs font-medium text-slate-300"
+								>Default Model ({activeAiTab})</label
+							>
 							<select
 								id="default-model"
 								bind:value={settings.aiDefaultModel}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-xs font-mono text-slate-200 focus:border-emerald-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 font-mono text-xs text-slate-200 transition focus:border-emerald-500 focus:outline-none"
 							>
 								{#each defaultModelsForProvider[activeAiTab] || ['gpt-4o-mini'] as m}
 									<option value={m}>{m}</option>
@@ -521,7 +575,9 @@
 						<div class="space-y-1.5">
 							<div class="flex justify-between text-xs font-medium text-slate-300">
 								<label for="default-temp">Default Temperature</label>
-								<span class="font-mono text-emerald-400">{settings.aiDefaultTemperature ?? 0.7}</span>
+								<span class="font-mono text-emerald-400"
+									>{settings.aiDefaultTemperature ?? 0.7}</span
+								>
 							</div>
 							<input
 								id="default-temp"
@@ -530,7 +586,7 @@
 								max="2"
 								step="0.1"
 								bind:value={settings.aiDefaultTemperature}
-								class="w-full mt-2 accent-emerald-500"
+								class="mt-2 w-full accent-emerald-500"
 							/>
 						</div>
 					</div>
@@ -538,67 +594,92 @@
 			</section>
 
 			<!-- Google OAuth Section -->
-			<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl space-y-5">
+			<section
+				class="space-y-5 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-3">
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border border-slate-700">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 bg-white/5"
+						>
 							<GoogleIcon class="h-5 w-5" />
 						</div>
 						<div>
 							<h2 class="text-sm font-bold text-white">Google OAuth 2.0 Credentials</h2>
-							<p class="text-xs text-slate-400">Used by Google Auth nodes for validating ID tokens & sign-ins</p>
+							<p class="text-xs text-slate-400">
+								Used by Google Auth nodes for validating ID tokens & sign-ins
+							</p>
 						</div>
 					</div>
-					<span class="rounded bg-red-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-red-400">
+					<span
+						class="rounded bg-red-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-red-400"
+					>
 						OAuth
 					</span>
 				</div>
 
 				<div class="space-y-4">
 					<div class="space-y-1.5">
-						<label for="google-client-id" class="text-xs font-medium text-slate-300">Google Client ID</label>
+						<label for="google-client-id" class="text-xs font-medium text-slate-300"
+							>Google Client ID</label
+						>
 						<input
 							id="google-client-id"
 							type="text"
 							placeholder="e.g. 1234567890-abc.apps.googleusercontent.com"
 							bind:value={settings.googleClientId}
-							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-red-500 focus:outline-none"
 						/>
 					</div>
 
 					<div class="space-y-1.5">
-						<label for="google-client-secret" class="text-xs font-medium text-slate-300">Google Client Secret (Optional)</label>
+						<label for="google-client-secret" class="text-xs font-medium text-slate-300"
+							>Google Client Secret (Optional)</label
+						>
 						<input
 							id="google-client-secret"
 							type="password"
 							placeholder="GOCSPX-..."
 							bind:value={settings.googleClientSecret}
-							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 transition focus:border-red-500 focus:outline-none"
 						/>
 					</div>
 
-					<div class="rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs text-slate-400 space-y-1">
+					<div
+						class="space-y-1 rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs text-slate-400"
+					>
 						<span class="font-semibold text-slate-300">Setup Note:</span>
 						<p>
-							Configure your Authorized JavaScript Origins in Google Cloud Console to match your Nodeflow domain (e.g. <code class="font-mono text-slate-300">http://localhost:5173</code>).
+							Configure your Authorized JavaScript Origins in Google Cloud Console to match your
+							Nodeflow domain (e.g. <code class="font-mono text-slate-300"
+								>http://localhost:5173</code
+							>).
 						</p>
 					</div>
 				</div>
 			</section>
 
 			<!-- Telegram Bot API Settings -->
-			<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl space-y-5">
+			<section
+				class="space-y-5 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-3">
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-sky-500/20 bg-sky-500/10 text-sky-400"
+						>
 							<TelegramIcon class="h-5 w-5" />
 						</div>
 						<div>
 							<h2 class="text-sm font-bold text-white">Telegram Bot API</h2>
-							<p class="text-xs text-slate-400">Default bot token for Telegram Webhooks and Send Message nodes</p>
+							<p class="text-xs text-slate-400">
+								Default bot token for Telegram Webhooks and Send Message nodes
+							</p>
 						</div>
 					</div>
-					<span class="rounded bg-sky-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-sky-400">
+					<span
+						class="rounded bg-sky-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-sky-400"
+					>
 						Bot Platform
 					</span>
 				</div>
@@ -606,12 +687,14 @@
 				<div class="space-y-4">
 					<div class="space-y-1.5">
 						<div class="flex items-center justify-between">
-							<label for="telegram-token" class="text-xs font-medium text-slate-300">Default Telegram Bot Token</label>
+							<label for="telegram-token" class="text-xs font-medium text-slate-300"
+								>Default Telegram Bot Token</label
+							>
 							<button
 								type="button"
 								onclick={testTelegramConnection}
 								disabled={testingTelegram}
-								class="text-[11px] font-semibold text-sky-400 hover:text-sky-300 disabled:opacity-50 transition flex items-center gap-1"
+								class="flex items-center gap-1 text-[11px] font-semibold text-sky-400 transition hover:text-sky-300 disabled:opacity-50"
 							>
 								{#if testingTelegram}
 									<RefreshCw class="h-3 w-3 animate-spin" />
@@ -629,12 +712,12 @@
 								type={showTelegramToken ? 'text' : 'password'}
 								placeholder="e.g. 123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
 								bind:value={settings.telegramBotToken}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 focus:border-sky-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 transition focus:border-sky-500 focus:outline-none"
 							/>
 							<button
 								type="button"
 								onclick={() => (showTelegramToken = !showTelegramToken)}
-								class="absolute right-3 top-3 text-slate-500 hover:text-white"
+								class="absolute top-3 right-3 text-slate-500 hover:text-white"
 								title="Toggle visibility"
 							>
 								{#if showTelegramToken}
@@ -647,16 +730,21 @@
 
 						{#if testTelegramResult}
 							<div
-								class="rounded-xl border p-3 text-xs flex items-center justify-between {testTelegramResult.success
+								class="flex items-center justify-between rounded-xl border p-3 text-xs {testTelegramResult.success
 									? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
 									: 'border-rose-500/30 bg-rose-500/10 text-rose-300'}"
 							>
 								{#if testTelegramResult.success}
 									<div class="flex items-center gap-2">
 										<Check class="h-4 w-4 text-emerald-400" />
-										<span>Connected: <strong>@{testTelegramResult.bot?.username}</strong> ({testTelegramResult.bot?.firstName})</span>
+										<span
+											>Connected: <strong>@{testTelegramResult.bot?.username}</strong>
+											({testTelegramResult.bot?.firstName})</span
+										>
 									</div>
-									<span class="font-mono text-[10px] text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded">
+									<span
+										class="rounded bg-emerald-500/20 px-2 py-0.5 font-mono text-[10px] text-emerald-400"
+									>
 										ID: {testTelegramResult.bot?.id}
 									</span>
 								{:else}
@@ -669,28 +757,44 @@
 						{/if}
 					</div>
 
-					<div class="rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs text-slate-400 space-y-1">
+					<div
+						class="space-y-1 rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs text-slate-400"
+					>
 						<span class="font-semibold text-slate-300">How to get a Bot Token:</span>
 						<p>
-							Open Telegram and chat with <a href="https://t.me/BotFather" target="_blank" rel="noreferrer" class="text-sky-400 hover:underline font-mono">@BotFather</a>. Send <code class="font-mono text-slate-300">/newbot</code> to obtain an HTTP API token. Once saved here, all Telegram nodes in your flows can use it automatically.
+							Open Telegram and chat with <a
+								href="https://t.me/BotFather"
+								target="_blank"
+								rel="noreferrer"
+								class="font-mono text-sky-400 hover:underline">@BotFather</a
+							>. Send <code class="font-mono text-slate-300">/newbot</code> to obtain an HTTP API token.
+							Once saved here, all Telegram nodes in your flows can use it automatically.
 						</p>
 					</div>
 				</div>
 			</section>
 
 			<!-- JWT Authentication Secrets -->
-			<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl space-y-5">
+			<section
+				class="space-y-5 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-3">
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-purple-500/20 bg-purple-500/10 text-purple-400"
+						>
 							<ShieldCheck class="h-5 w-5" />
 						</div>
 						<div>
 							<h2 class="text-sm font-bold text-white">JSON Web Token (JWT) Config</h2>
-							<p class="text-xs text-slate-400">Used for signing session tokens in User Management nodes</p>
+							<p class="text-xs text-slate-400">
+								Used for signing session tokens in User Management nodes
+							</p>
 						</div>
 					</div>
-					<span class="rounded bg-purple-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-purple-400">
+					<span
+						class="rounded bg-purple-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-purple-400"
+					>
 						Security
 					</span>
 				</div>
@@ -698,11 +802,13 @@
 				<div class="space-y-4">
 					<div class="space-y-1.5">
 						<div class="flex items-center justify-between">
-							<label for="jwt-secret" class="text-xs font-medium text-slate-300">JWT Signing Secret</label>
+							<label for="jwt-secret" class="text-xs font-medium text-slate-300"
+								>JWT Signing Secret</label
+							>
 							<button
 								type="button"
 								onclick={generateRandomJwtSecret}
-								class="text-[11px] font-semibold text-purple-400 hover:text-purple-300 transition flex items-center gap-1"
+								class="flex items-center gap-1 text-[11px] font-semibold text-purple-400 transition hover:text-purple-300"
 							>
 								<RefreshCw class="h-3 w-3" />
 								<span>Regenerate Key</span>
@@ -714,12 +820,12 @@
 								id="jwt-secret"
 								type={showJwtSecret ? 'text' : 'password'}
 								bind:value={settings.jwtSecret}
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 focus:border-purple-500 focus:outline-none transition"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-200 transition focus:border-purple-500 focus:outline-none"
 							/>
 							<button
 								type="button"
 								onclick={() => (showJwtSecret = !showJwtSecret)}
-								class="absolute right-3 top-3 text-slate-500 hover:text-white"
+								class="absolute top-3 right-3 text-slate-500 hover:text-white"
 								title="Toggle visibility"
 							>
 								{#if showJwtSecret}
@@ -732,11 +838,13 @@
 					</div>
 
 					<div class="space-y-1.5">
-						<label for="jwt-exp" class="text-xs font-medium text-slate-300">Default Session Expiration</label>
+						<label for="jwt-exp" class="text-xs font-medium text-slate-300"
+							>Default Session Expiration</label
+						>
 						<select
 							id="jwt-exp"
 							bind:value={settings.jwtExpiresIn}
-							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-xs font-mono text-slate-200 focus:border-purple-500 focus:outline-none transition"
+							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 font-mono text-xs text-slate-200 transition focus:border-purple-500 focus:outline-none"
 						>
 							<option value="1h">1 Hour</option>
 							<option value="24h">24 Hours (1 Day)</option>
@@ -748,33 +856,45 @@
 			</section>
 
 			<!-- Gateway & CORS Settings -->
-			<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl space-y-5">
+			<section
+				class="space-y-5 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-xl"
+			>
 				<div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
 					<div class="flex items-center gap-3">
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400"
+						>
 							<Globe class="h-5 w-5" />
 						</div>
 						<div>
 							<h2 class="text-sm font-bold text-white">Gateway CORS & Network Defaults</h2>
-							<p class="text-xs text-slate-400">Configure cross-origin resource sharing for published API endpoints</p>
+							<p class="text-xs text-slate-400">
+								Configure cross-origin resource sharing for published API endpoints
+							</p>
 						</div>
 					</div>
-					<span class="rounded bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-blue-400">
+					<span
+						class="rounded bg-blue-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-blue-400"
+					>
 						Gateway
 					</span>
 				</div>
 
 				<div class="space-y-4">
 					<div class="space-y-1.5">
-						<label for="cors-origins" class="text-xs font-medium text-slate-300">Allowed Origins</label>
+						<label for="cors-origins" class="text-xs font-medium text-slate-300"
+							>Allowed Origins</label
+						>
 						<input
 							id="cors-origins"
 							type="text"
 							placeholder="* or https://app.mydomain.com"
 							bind:value={settings.corsOrigins}
-							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 focus:border-blue-500 focus:outline-none transition"
+							class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 transition focus:border-blue-500 focus:outline-none"
 						/>
-						<p class="text-[11px] text-slate-500">Comma-separated list of origins or wildcard * for open access.</p>
+						<p class="text-[11px] text-slate-500">
+							Comma-separated list of origins or wildcard * for open access.
+						</p>
 					</div>
 				</div>
 			</section>

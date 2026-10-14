@@ -252,31 +252,29 @@
 			</div>
 			<a
 				href="/extensions"
-				class="text-[10px] text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 border border-indigo-500/30 bg-indigo-500/10 rounded px-1.5 py-0.5"
+				class="flex items-center gap-1 rounded border border-indigo-500/30 bg-indigo-500/10 px-1.5 py-0.5 text-[10px] font-medium text-indigo-400 hover:text-indigo-300"
 				title="Manage extensions and plugins"
 			>
 				<Blocks class="h-3 w-3" />
 				<span>Extensions</span>
 			</a>
 		</div>
-		<p class="mt-1 text-xs text-slate-400">
-			Drag nodes into canvas or click + to add
-		</p>
+		<p class="mt-1 text-xs text-slate-400">Drag nodes into canvas or click + to add</p>
 
 		<!-- Search -->
 		<div class="relative mt-3">
-			<Search class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
+			<Search class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-slate-500" />
 			<input
 				type="text"
 				placeholder="Search nodes or extensions..."
 				bind:value={searchQuery}
-				class="w-full rounded-lg border border-slate-800 bg-slate-900/80 pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:border-blue-500 focus:outline-none"
+				class="w-full rounded-lg border border-slate-800 bg-slate-900/80 py-1.5 pr-3 pl-8 text-xs text-slate-200 placeholder-slate-600 focus:border-blue-500 focus:outline-none"
 			/>
 		</div>
 	</div>
 
 	<!-- Node Cards List -->
-	<div class="flex-1 overflow-y-auto p-3 space-y-2.5">
+	<div class="flex-1 space-y-2.5 overflow-y-auto p-3">
 		{#each filteredItems as item}
 			<div
 				role="button"
@@ -289,7 +287,7 @@
 						onAddNode(item.type);
 					}
 				}}
-				class="drag-handle group relative flex items-start gap-3 rounded-xl border p-3 shadow-sm transition-all duration-150 hover:shadow-md cursor-grab active:cursor-grabbing {item.color} bg-slate-900/40 text-left"
+				class="drag-handle group relative flex cursor-grab items-start gap-3 rounded-xl border p-3 shadow-sm transition-all duration-150 hover:shadow-md active:cursor-grabbing {item.color} bg-slate-900/40 text-left"
 			>
 				<div class="flex flex-col items-center pt-0.5 text-slate-500 group-hover:text-slate-300">
 					<GripVertical class="h-4 w-4" />
@@ -307,7 +305,9 @@
 						</div>
 						<span class="text-xs font-semibold text-slate-100">{item.title}</span>
 						{#if item.isCustom}
-							<span class="rounded bg-indigo-500/20 px-1 py-0.2 text-[9px] font-mono text-indigo-300 border border-indigo-500/30">
+							<span
+								class="py-0.2 rounded border border-indigo-500/30 bg-indigo-500/20 px-1 font-mono text-[9px] text-indigo-300"
+							>
 								Ext
 							</span>
 						{/if}
@@ -321,7 +321,7 @@
 						e.stopPropagation();
 						onAddNode(item.type);
 					}}
-					class="opacity-0 group-hover:opacity-100 rounded-md p-1 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition shadow"
+					class="rounded-md bg-slate-800 p-1 text-slate-300 opacity-0 shadow transition group-hover:opacity-100 hover:bg-slate-700 hover:text-white"
 					title="Click to add node to canvas"
 				>
 					<Plus class="h-3.5 w-3.5" />
@@ -337,14 +337,16 @@
 	</div>
 
 	<!-- Tips Footer -->
-	<div class="border-t border-slate-800 p-3 bg-slate-900/30 flex items-center justify-between text-[11px]">
+	<div
+		class="flex items-center justify-between border-t border-slate-800 bg-slate-900/30 p-3 text-[11px]"
+	>
 		<div class="flex items-center gap-1.5 text-slate-400">
 			<BookOpen class="h-3.5 w-3.5 text-blue-400" />
 			<span>Connect handles</span>
 		</div>
 		<a
 			href="/extensions"
-			class="flex items-center gap-1 rounded bg-slate-800/80 px-2 py-0.5 text-indigo-300 hover:bg-slate-800 hover:text-white transition font-medium"
+			class="flex items-center gap-1 rounded bg-slate-800/80 px-2 py-0.5 font-medium text-indigo-300 transition hover:bg-slate-800 hover:text-white"
 		>
 			<Blocks class="h-3 w-3" />
 			<span>Manage Extensions</span>

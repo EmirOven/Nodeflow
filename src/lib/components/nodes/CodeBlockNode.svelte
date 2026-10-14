@@ -36,10 +36,10 @@
 >
 	<!-- Context Helpers Bar -->
 	<div class="flex items-center justify-between text-[11px] text-slate-400">
-		<span class="flex items-center gap-1 text-slate-400 font-medium">
+		<span class="flex items-center gap-1 font-medium text-slate-400">
 			<Terminal class="h-3 w-3 text-indigo-400" /> Transform Logic
 		</span>
-		<div class="flex items-center gap-1 text-[10px] font-mono text-slate-400">
+		<div class="flex items-center gap-1 font-mono text-[10px] text-slate-400">
 			<span class="rounded bg-slate-800 px-1 py-0.5 text-slate-300">payload</span>
 			<span class="rounded bg-slate-800 px-1 py-0.5 text-slate-300">state</span>
 			<span class="rounded bg-slate-800 px-1 py-0.5 text-slate-300">log()</span>
@@ -47,19 +47,18 @@
 	</div>
 
 	<!-- Code Editor Textarea -->
-	<div class="relative rounded-lg border border-slate-800 bg-slate-950 overflow-hidden group">
+	<div class="group relative overflow-hidden rounded-lg border border-slate-800 bg-slate-950">
 		<textarea
 			aria-label="JavaScript code editor"
-			class="w-full h-32 p-2.5 font-mono text-xs text-indigo-200 bg-transparent resize-y focus:outline-none placeholder-slate-700 selection:bg-indigo-900/60 leading-relaxed nodrag"
+			class="nodrag h-32 w-full resize-y bg-transparent p-2.5 font-mono text-xs leading-relaxed text-indigo-200 placeholder-slate-700 selection:bg-indigo-900/60 focus:outline-none"
 			placeholder={'// Process and return data\nreturn { ...payload, processedAt: Date.now() };'}
 			value={codeData.code || ''}
 			onkeydown={handleKeyDown}
 			oninput={(e) => updateNodeData(id, { code: (e.target as HTMLTextAreaElement).value })}
-			spellcheck="false"
-		></textarea>
+			spellcheck="false"></textarea>
 	</div>
 
-	<div class="text-[10px] text-slate-400 flex items-center justify-between">
+	<div class="flex items-center justify-between text-[10px] text-slate-400">
 		<span>Return a value or object to forward to the next node.</span>
 		<span class="font-mono text-indigo-400/80">return &lt;val&gt;</span>
 	</div>

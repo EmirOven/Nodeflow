@@ -35,7 +35,7 @@
 		<label for="model-select-{id}" class="text-[11px] font-medium text-slate-400">Model</label>
 		<select
 			id="model-select-{id}"
-			class="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-slate-200 font-mono focus:border-emerald-500 focus:outline-none"
+			class="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 font-mono text-xs text-slate-200 focus:border-emerald-500 focus:outline-none"
 			value={openAiData.model || 'gpt-4o-mini'}
 			onchange={(e) => updateNodeData(id, { model: (e.target as HTMLSelectElement).value })}
 		>
@@ -47,11 +47,13 @@
 
 	<!-- System Prompt -->
 	<div class="space-y-1">
-		<label for="system-prompt-{id}" class="text-[11px] font-medium text-slate-400">System Prompt</label>
+		<label for="system-prompt-{id}" class="text-[11px] font-medium text-slate-400"
+			>System Prompt</label
+		>
 		<textarea
 			id="system-prompt-{id}"
 			rows="2"
-			class="w-full rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px] text-slate-300 placeholder-slate-600 focus:border-emerald-500 focus:outline-none resize-none leading-relaxed"
+			class="w-full resize-none rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px] leading-relaxed text-slate-300 placeholder-slate-600 focus:border-emerald-500 focus:outline-none"
 			placeholder="You are an expert AI assistant that responds concisely."
 			value={openAiData.systemPrompt ?? 'You are an AI assistant helping with API processing.'}
 			oninput={(e) => updateNodeData(id, { systemPrompt: (e.target as HTMLTextAreaElement).value })}
@@ -61,13 +63,17 @@
 	<!-- User Prompt Template -->
 	<div class="space-y-1">
 		<div class="flex items-center justify-between">
-			<label for="user-prompt-{id}" class="text-[11px] font-medium text-slate-400">User Prompt</label>
-			<span class="text-[9px] text-slate-500 font-mono">supports &#123;&#123;payload.field&#125;&#125;</span>
+			<label for="user-prompt-{id}" class="text-[11px] font-medium text-slate-400"
+				>User Prompt</label
+			>
+			<span class="font-mono text-[9px] text-slate-500"
+				>supports &#123;&#123;payload.field&#125;&#125;</span
+			>
 		</div>
 		<textarea
 			id="user-prompt-{id}"
 			rows="3"
-			class="w-full rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px] text-slate-300 placeholder-slate-600 focus:border-emerald-500 focus:outline-none resize-none leading-relaxed"
+			class="w-full resize-none rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px] leading-relaxed text-slate-300 placeholder-slate-600 focus:border-emerald-500 focus:outline-none"
 			placeholder="Analyze this text: &#123;&#123;payload.text&#125;&#125;"
 			value={openAiData.userPrompt ?? 'Process this request: {{payload.prompt || payload.text}}'}
 			oninput={(e) => updateNodeData(id, { userPrompt: (e.target as HTMLTextAreaElement).value })}
@@ -79,14 +85,16 @@
 		<button
 			type="button"
 			onclick={() => (showAdvanced = !showAdvanced)}
-			class="flex items-center gap-1 text-[10px] text-slate-400 hover:text-emerald-400 transition"
+			class="flex items-center gap-1 text-[10px] text-slate-400 transition hover:text-emerald-400"
 		>
 			<Sliders class="h-3 w-3" />
 			<span>{showAdvanced ? 'Hide Advanced Settings' : 'Show Advanced Settings'}</span>
 		</button>
 
 		{#if showAdvanced}
-			<div class="mt-2.5 space-y-2.5 rounded-lg border border-slate-800 bg-slate-950/70 p-2.5 animate-in fade-in duration-100">
+			<div
+				class="animate-in fade-in mt-2.5 space-y-2.5 rounded-lg border border-slate-800 bg-slate-950/70 p-2.5 duration-100"
+			>
 				<!-- Temperature & Max Tokens -->
 				<div class="grid grid-cols-2 gap-2">
 					<div class="space-y-1">
@@ -101,7 +109,10 @@
 							step="0.1"
 							class="w-full accent-emerald-500"
 							value={openAiData.temperature ?? 0.7}
-							oninput={(e) => updateNodeData(id, { temperature: parseFloat((e.target as HTMLInputElement).value) })}
+							oninput={(e) =>
+								updateNodeData(id, {
+									temperature: parseFloat((e.target as HTMLInputElement).value)
+								})}
 						/>
 					</div>
 					<div class="space-y-1">
@@ -111,7 +122,10 @@
 							type="number"
 							class="w-full rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 text-[10px] text-slate-200"
 							value={openAiData.maxTokens ?? 1000}
-							oninput={(e) => updateNodeData(id, { maxTokens: parseInt((e.target as HTMLInputElement).value, 10) || 1000 })}
+							oninput={(e) =>
+								updateNodeData(id, {
+									maxTokens: parseInt((e.target as HTMLInputElement).value, 10) || 1000
+								})}
 						/>
 					</div>
 				</div>
@@ -123,7 +137,8 @@
 						<button
 							type="button"
 							onclick={() => updateNodeData(id, { responseFormat: 'text' })}
-							class="rounded py-1 text-[10px] border transition {openAiData.responseFormat !== 'json_object'
+							class="rounded border py-1 text-[10px] transition {openAiData.responseFormat !==
+							'json_object'
 								? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300'
 								: 'border-slate-800 text-slate-400'}"
 						>
@@ -132,7 +147,8 @@
 						<button
 							type="button"
 							onclick={() => updateNodeData(id, { responseFormat: 'json_object' })}
-							class="rounded py-1 text-[10px] border transition {openAiData.responseFormat === 'json_object'
+							class="rounded border py-1 text-[10px] transition {openAiData.responseFormat ===
+							'json_object'
 								? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300'
 								: 'border-slate-800 text-slate-400'}"
 						>
@@ -143,14 +159,17 @@
 
 				<!-- API Key Override -->
 				<div class="space-y-1">
-					<label for="api-key-override-{id}" class="text-[10px] text-slate-400">API Key Override (Optional)</label>
+					<label for="api-key-override-{id}" class="text-[10px] text-slate-400"
+						>API Key Override (Optional)</label
+					>
 					<input
 						id="api-key-override-{id}"
 						type="password"
 						class="w-full rounded border border-slate-800 bg-slate-900 px-2 py-1 font-mono text-[10px] text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:outline-none"
 						placeholder="Defaults to Settings OpenAI Key"
 						value={openAiData.apiKeyOverride ?? ''}
-						oninput={(e) => updateNodeData(id, { apiKeyOverride: (e.target as HTMLInputElement).value })}
+						oninput={(e) =>
+							updateNodeData(id, { apiKeyOverride: (e.target as HTMLInputElement).value })}
 					/>
 				</div>
 			</div>
@@ -158,8 +177,10 @@
 	</div>
 
 	<!-- Info Note -->
-	<div class="rounded-lg bg-slate-950/80 p-2 text-[10px] text-slate-400 border border-slate-800/80 flex items-center justify-between">
-		<span>Injects: <code class="text-emerald-300 font-mono">state.aiResponse</code></span>
-		<span class="text-slate-500 font-mono">text, json, usage</span>
+	<div
+		class="flex items-center justify-between rounded-lg border border-slate-800/80 bg-slate-950/80 p-2 text-[10px] text-slate-400"
+	>
+		<span>Injects: <code class="font-mono text-emerald-300">state.aiResponse</code></span>
+		<span class="font-mono text-slate-500">text, json, usage</span>
 	</div>
 </BaseNode>

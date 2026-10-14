@@ -37,12 +37,15 @@
 >
 	<div class="space-y-2.5">
 		<div class="space-y-1">
-			<label for="resp-status-{id}" class="text-[11px] font-medium text-slate-400">HTTP Status Code</label>
+			<label for="resp-status-{id}" class="text-[11px] font-medium text-slate-400"
+				>HTTP Status Code</label
+			>
 			<select
 				id="resp-status-{id}"
-				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold {currentStatusOption.color} outline-none cursor-pointer"
+				class="w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold {currentStatusOption.color} cursor-pointer outline-none"
 				value={respData.statusCode || 200}
-				onchange={(e) => updateNodeData(id, { statusCode: Number((e.target as HTMLSelectElement).value) })}
+				onchange={(e) =>
+					updateNodeData(id, { statusCode: Number((e.target as HTMLSelectElement).value) })}
 			>
 				{#each statusOptions as opt}
 					<option value={opt.code} class="bg-slate-900 text-slate-200">{opt.label}</option>
@@ -51,13 +54,16 @@
 		</div>
 
 		<div class="space-y-1">
-			<label for="resp-body-{id}" class="text-[11px] font-medium text-slate-400">Response Body Expression (JSON / Object)</label>
+			<label for="resp-body-{id}" class="text-[11px] font-medium text-slate-400"
+				>Response Body Expression (JSON / Object)</label
+			>
 			<textarea
 				id="resp-body-{id}"
-				class="w-full h-20 rounded-lg border border-slate-700 bg-slate-950 p-2 font-mono text-xs text-purple-200 placeholder-slate-600 focus:border-purple-500 focus:outline-none resize-none nodrag"
+				class="nodrag h-20 w-full resize-none rounded-lg border border-slate-700 bg-slate-950 p-2 font-mono text-xs text-purple-200 placeholder-slate-600 focus:border-purple-500 focus:outline-none"
 				placeholder="payload"
 				value={respData.bodyExpression || 'payload'}
-				oninput={(e) => updateNodeData(id, { bodyExpression: (e.target as HTMLTextAreaElement).value })}
+				oninput={(e) =>
+					updateNodeData(id, { bodyExpression: (e.target as HTMLTextAreaElement).value })}
 			></textarea>
 		</div>
 

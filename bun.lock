@@ -1,8 +1,9 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "nodely",
+      "name": "nodeflow",
       "dependencies": {
         "@lucide/svelte": "^1.53.0",
         "@xyflow/svelte": "^1.7.0",

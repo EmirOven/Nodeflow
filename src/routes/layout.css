@@ -66,7 +66,9 @@
 	border: 1px solid #334155 !important;
 	border-radius: 0.75rem !important;
 	overflow: hidden !important;
-	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+	box-shadow:
+		0 10px 25px -5px rgba(0, 0, 0, 0.5),
+		0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
 }
 
 .svelte-flow__controls-button {
@@ -135,9 +137,7 @@
 /* Pull focus & elevate nodes with active dropdowns or selection above other nodes */
 .svelte-flow__node:focus-within,
 .svelte-flow__node.selected,
-.svelte-flow__node[data-dropdown-open="true"],
-.svelte-flow__node:has([data-dropdown-open="true"]) {
+.svelte-flow__node[data-dropdown-open='true'],
+.svelte-flow__node:has([data-dropdown-open='true']) {
 	z-index: 1000 !important;
 }
-
-

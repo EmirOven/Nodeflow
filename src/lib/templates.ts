@@ -127,7 +127,7 @@ export const templatesData: Record<string, TemplateDefinition> = {
 			body: JSON.stringify(
 				{
 					name: 'Alice Johnson',
-					email: 'alice@nodely.dev',
+					email: 'alice@nodeflow.dev',
 					password: 'secret_password_123',
 					role: 'developer'
 				},
@@ -291,7 +291,7 @@ export const templatesData: Record<string, TemplateDefinition> = {
 			path: '/api/v1/notes',
 			body: JSON.stringify(
 				{
-					title: 'Ideas for Nodely',
+					title: 'Ideas for Nodeflow',
 					content: 'Add OpenAPI 3.0 import and export.',
 					tags: ['roadmap', 'v1']
 				},
@@ -300,7 +300,7 @@ export const templatesData: Record<string, TemplateDefinition> = {
 			)
 		}
 	},
-	'empty': {
+	empty: {
 		nodes: [
 			{
 				id: 'trigger-empty',
@@ -359,7 +359,8 @@ export const templatesData: Record<string, TemplateDefinition> = {
 					title: 'AI Bot Brain',
 					provider: 'openai',
 					model: 'gpt-4o-mini',
-					systemPrompt: 'You are a helpful and concise Telegram assistant. Keep replies brief, friendly, and formatted nicely.',
+					systemPrompt:
+						'You are a helpful and concise Telegram assistant. Keep replies brief, friendly, and formatted nicely.',
 					userPrompt: 'User message: {{telegram.text || payload.text}}',
 					temperature: 0.7,
 					maxTokens: 500,
@@ -418,7 +419,7 @@ export const templatesData: Record<string, TemplateDefinition> = {
 			)
 		}
 	},
-	'blank': {
+	blank: {
 		nodes: [],
 		edges: [],
 		defaultRequest: {

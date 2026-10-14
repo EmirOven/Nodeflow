@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.3] - 2026-10-08
 
 ### Added
+
 - **Full Extensions Management Page (`/extensions`)**:
   - Dedicated extensions dashboard to import, explore, configure, inspect, and manage custom nodes and plugins.
   - Multi-tab Extension Import modal:
@@ -37,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.2] - 2026-10-08
 
 ### Added
+
 - **Generalized `BaseNode.svelte` Architecture**:
   - Engineered a first-class, reusable base Svelte 5 component (`BaseNode.svelte`) serving as the universal foundational chrome and shell for all Nodeflow nodes.
   - Built-in drag header with Lucide grip icons, interactive node icon badges, editable or locked node titles, category badges, execution status indicators, and delete actions.
@@ -50,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Exported `BaseNode` and Extension SDK from `$lib` (`src/lib/index.ts`) for clean public consumption.
 
 ### Changed
+
 - **Standardized All Built-in Nodes to `BaseNode`**:
   - Migrated 100% of Nodeflow's built-in nodes to `BaseNode.svelte`:
     - `TriggerNode` (HTTP Trigger)
@@ -73,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.1] - 2026-10-08
 
 ### Added
+
 - **Autosave Engine & Animated Save Button**:
   - Added an interactive Autosave toggle option directly next to the Save button on the navigation bar.
   - Smooth horizontal slide animation (`transition:slide={{ axis: 'x' }}`) automatically hides the manual Save button when Autosave is active, and smoothly reveals it when deactivated.
@@ -80,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Real-time autosave indicators (pulse dot while persisting, solid emerald indicator when in sync) and persistent setting storage via `localStorage`.
 
 ### Fixed
+
 - **Dark Themed Flow Controls & Svelte Flow Attribution**:
   - Themed SvelteFlow zoom in/out, fit-view, and lock controls to match Nodeflow's sleek slate-900 / slate-800 dark palette, eliminating the previous light gray on white controls.
   - Styled SvelteFlow attribution watermark with dark translucent backdrop blur and slate links.
@@ -94,6 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.0] - 2026-10-08
 
 ### Added
+
 - **Complete Rebrand to Nodeflow**:
   - Rebranded the platform name from Nodely to **Nodeflow** across all application headers, navigation bars, page titles, settings, and landing site.
 - **Telegram Bot API Platform Integration**:
@@ -121,12 +127,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.1] - 2026-10-08
 
 ### Added
+
 - **Official Brand Favicon (`favicon.svg`)**:
   - Rendered the official Nodely gradient brand icon (diagonal `#2563eb` -> `#6366f1` -> `#a855f7` squircle with centered white Lucide Network node glyph) as an SVG favicon.
   - Linked brand favicon in `app.html` for the primary Nodely web dashboard and engine.
   - Replaced landing site favicon (`Nodely-Landing/public/favicon.svg`) with the matching brand identity SVG.
 
 ### Changed
+
 - Bumped application version to `0.4.1` across `package.json`, navbar badges, and dashboard headers.
 
 ---
@@ -134,6 +142,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2026-10-08
 
 ### Added
+
 - **Universal Generic AI Node (`aiNode`)**:
   - Transformed the OpenAI completion node into a versatile, multi-provider AI node compatible with Vercel AI SDK conventions.
   - Supports multiple leading AI providers out-of-the-box:
@@ -151,6 +160,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Global default model and temperature controls.
 
 ### Changed
+
 - **Terminology Shift to "Nodeflows"**:
   - Replaced all legacy references to "projects" and "API routes" across navigation tabs, headers, modal dialogs, and cards with **Nodeflows**.
   - Root route (`/`) navigation and titles updated to visual Nodeflow management.
@@ -164,6 +174,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2026-10-08
 
 ### Added
+
 - **Google Auth Node (`googleAuthNode`)**:
   - Validates Google OAuth ID tokens from either incoming headers (`Authorization: Bearer <token>`) or request payload (`payload.credential` / `payload.id_token`).
   - Automatically decodes token claims (email, name, picture, subject ID, audience, expiration).
@@ -208,6 +219,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added code generation support for all 3 nodes in both SvelteKit and Express exporters (`src/lib/engine/generator.ts`).
 
 ### Changed
+
 - Bumped project version to `0.3.0` across `package.json`, navbar badges, and dashboard headers.
 
 ---
@@ -215,11 +227,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.1] - 2026-10-08
 
 ### Fixed
+
 - **Dev Server Refresh on Publish/Take Down**:
   - Configured Vite's file watcher (`vite.config.ts`) with `server.watch.ignored: ['**/.nodely*.json', '**/.nodely*/**', '**/build/**']`.
   - Writing route state and published configurations to disk (`.nodely-routes.json`, `.nodely-published.json`) no longer triggers HMR page reloads or dependency re-bundling.
 
 ### Added
+
 - **Per-Card Isolated Loading State**:
   - When toggling an endpoint between Live and Draft, only the targeted project card transitions into an isolated loading state with smooth backdrop blur and animated status radar.
   - Distinct contextual action feedback: "Hosting Endpoint Live..." (emerald spinner) or "Taking Endpoint Down..." (amber spinner).
@@ -230,6 +244,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added non-intrusive background sync badge in the top navigation header during manual or background refreshes.
 
 ### Changed
+
 - Bumped project version to `0.2.1` in `package.json`, navbar badges, and dashboard headers.
 
 ---
@@ -237,6 +252,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-10-08
 
 ### Added
+
 - **API Route Browser & Dashboard (`/`)**:
   - Converted the root index route into a centralized API browser and endpoint management dashboard.
   - Displays all created API endpoints with HTTP method pills (`GET`, `POST`, `PUT`, `DELETE`, `PATCH`), live/draft status indicators, node pipeline summaries, and quick-copy endpoint URLs.
@@ -254,6 +270,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Top navigation bar now includes "Back to All Routes", current endpoint path pill, and "Save Workflow" action.
 
 ### Changed
+
 - Bumped project version to `0.2.0` in `package.json`, navbar badges, and documentation.
 
 ---
@@ -261,6 +278,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-10-08
 
 ### Added
+
 - **Auth Gate Node (`authNode`)**:
   - Middleware security node supporting API Key header checks and Bearer JWT token matching.
   - Dedicated branching with `VALID` (authorized) and `INVALID` (401 response) output handles.
@@ -279,6 +297,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated both SvelteKit and Express code exporters to generate code for `authNode`, `validatorNode`, and `delayNode`.
 
 ### Changed
+
 - **Template Node Spacing**:
   - Increased vertical spacing across all starter templates (`user-auth`, `weather-api`, `note-crud`, `empty`) from cramped 15–40px gaps to 100–140px clear breathing room.
   - Completely resolved node overlaps between `CodeBlock` and subsequent nodes (`Conditional`, `Response`, `DataStore`).
@@ -286,6 +305,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Bumped project version to `0.1.0` in `package.json` and UI badges.
 
 ### Fixed
+
 - **Solid White User Connection Lines**:
   - Fixed issue where user-drawn edges in the flow canvas were rendered as solid white lines by properly attaching `onbeforeconnect`, animated flags, and theme styles before edge registration.
 
@@ -294,6 +314,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1] - 2026-10-08
 
 ### Initial Release
+
 - Svelte 5 + SvelteKit visual API builder with `@xyflow/svelte`.
 - Drag-and-drop palette featuring HTTP Trigger, Code Block, Conditional Branch, External API Fetch, Data Store, and HTTP Response nodes.
 - In-browser API execution simulator with step-by-step trace and live console logs.

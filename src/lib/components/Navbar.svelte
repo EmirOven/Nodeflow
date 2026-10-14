@@ -56,11 +56,27 @@
 	let showTemplatesMenu = $state(false);
 
 	const templates = [
-		{ id: 'user-auth', name: 'User Registration & Validation', desc: 'POST endpoint with condition checks & DB persist' },
-		{ id: 'telegram-bot', name: 'AI Telegram Bot Pipeline', desc: 'Telegram Webhook -> AI LLM Brain -> Telegram Reply' },
-		{ id: 'weather-api', name: 'Weather Data Aggregator', desc: 'GET endpoint with external fetch & data transform' },
+		{
+			id: 'user-auth',
+			name: 'User Registration & Validation',
+			desc: 'POST endpoint with condition checks & DB persist'
+		},
+		{
+			id: 'telegram-bot',
+			name: 'AI Telegram Bot Pipeline',
+			desc: 'Telegram Webhook -> AI LLM Brain -> Telegram Reply'
+		},
+		{
+			id: 'weather-api',
+			name: 'Weather Data Aggregator',
+			desc: 'GET endpoint with external fetch & data transform'
+		},
 		{ id: 'note-crud', name: 'Note Storage & List', desc: 'CRUD operations on collections' },
-		{ id: 'empty', name: 'Simple Hello API (Starter)', desc: 'Clean single Trigger -> Response pipeline' },
+		{
+			id: 'empty',
+			name: 'Simple Hello API (Starter)',
+			desc: 'Clean single Trigger -> Response pipeline'
+		},
 		{ id: 'blank', name: 'Completely Blank Canvas', desc: 'Empty workspace with 0 nodes' }
 	];
 
@@ -81,22 +97,24 @@
 </script>
 
 <header
-	class="flex h-14 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 backdrop-blur-xl z-20 select-none"
+	class="z-20 flex h-14 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 backdrop-blur-xl select-none"
 >
 	<!-- Left: Brand & Route Navigation -->
 	<div class="flex items-center gap-3">
 		<div class="flex items-center gap-1 border-r border-slate-800 pr-2.5">
 			<a
 				href="/"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition group"
+				class="group flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Back to All Nodeflows"
 			>
-				<ArrowLeft class="h-3.5 w-3.5 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
+				<ArrowLeft
+					class="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:-translate-x-0.5"
+				/>
 				<span>Nodeflows</span>
 			</a>
 			<a
 				href="/users"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Project Users Directory"
 			>
 				<Users class="h-3.5 w-3.5 text-slate-400" />
@@ -104,7 +122,7 @@
 			</a>
 			<a
 				href="/extensions"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Nodeflow Extensions & Plugins"
 			>
 				<Blocks class="h-3.5 w-3.5 text-slate-400" />
@@ -112,7 +130,7 @@
 			</a>
 			<a
 				href="/settings"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-400 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Nodeflow Settings & Secrets"
 			>
 				<Settings class="h-3.5 w-3.5 text-slate-400" />
@@ -123,18 +141,24 @@
 		<div>
 			<div class="flex items-center gap-2">
 				<h1 class="text-sm font-bold tracking-tight text-white">{routeTitle || 'Nodeflow'}</h1>
-				<span class="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400 border border-blue-500/20">
+				<span
+					class="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400"
+				>
 					v0.5.4
 				</span>
 			</div>
 			<div class="flex items-center gap-1.5 text-[11px] text-slate-400">
-				<span class="rounded px-1.5 py-0.2 font-mono text-[9px] font-bold border {getMethodBadgeClass(routeMethod)}">
+				<span
+					class="py-0.2 rounded border px-1.5 font-mono text-[9px] font-bold {getMethodBadgeClass(
+						routeMethod
+					)}"
+				>
 					{routeMethod}
 				</span>
 				<span class="font-mono text-slate-300">{routePath}</span>
 				{#if isRoutePublished}
 					<span class="flex items-center gap-1 text-[10px] text-emerald-400">
-						<span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+						<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
 						Live
 					</span>
 				{/if}
@@ -149,7 +173,7 @@
 			<button
 				type="button"
 				onclick={() => (showTemplatesMenu = !showTemplatesMenu)}
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white"
 			>
 				<FolderOpen class="h-3.5 w-3.5 text-blue-400" />
 				<span>Templates</span>
@@ -165,9 +189,9 @@
 				></div>
 
 				<div
-					class="absolute left-0 mt-1.5 w-72 rounded-xl border border-slate-800 bg-slate-950 shadow-2xl z-50 p-1.5 space-y-1"
+					class="absolute left-0 z-50 mt-1.5 w-72 space-y-1 rounded-xl border border-slate-800 bg-slate-950 p-1.5 shadow-2xl"
 				>
-					<div class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+					<div class="px-2 py-1 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
 						Starter Templates
 					</div>
 					{#each templates as t}
@@ -177,12 +201,14 @@
 								onSelectTemplate(t.id);
 								showTemplatesMenu = false;
 							}}
-							class="w-full text-left rounded-lg p-2 text-xs hover:bg-slate-900 transition flex flex-col gap-0.5"
+							class="flex w-full flex-col gap-0.5 rounded-lg p-2 text-left text-xs transition hover:bg-slate-900"
 						>
 							<div class="flex items-center justify-between">
 								<span class="font-semibold text-slate-200">{t.name}</span>
 								{#if t.id === 'empty' || t.id === 'blank'}
-									<span class="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-400">Empty</span>
+									<span class="py-0.2 rounded bg-blue-500/10 px-1 text-[9px] text-blue-400"
+										>Empty</span
+									>
 								{/if}
 							</div>
 							<span class="text-[10px] text-slate-500">{t.desc}</span>
@@ -196,7 +222,7 @@
 		<button
 			type="button"
 			onclick={onResetFlow}
-			class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-rose-400 transition"
+			class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-2.5 py-1.5 text-xs text-slate-400 transition hover:bg-slate-800 hover:text-rose-400"
 			title="Reset canvas"
 		>
 			<RotateCcw class="h-3.5 w-3.5" />
@@ -208,18 +234,26 @@
 	<div class="flex items-center gap-2.5">
 		<!-- Autosave Option & Save Route -->
 		{#if onSave}
-			<div class="flex items-center gap-1.5 rounded-xl border border-slate-800/80 bg-slate-900/60 p-0.5 shadow-inner">
+			<div
+				class="flex items-center gap-1.5 rounded-xl border border-slate-800/80 bg-slate-900/60 p-0.5 shadow-inner"
+			>
 				<!-- Autosave Toggle Button -->
 				<button
 					type="button"
 					onclick={() => onToggleAutosave?.(!isAutosave)}
 					class="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium transition select-none {isAutosave
-						? 'bg-blue-600/20 text-blue-300 border border-blue-500/40 shadow-sm'
-						: 'text-slate-400 hover:text-slate-200 border border-transparent hover:bg-slate-800/60'}"
-					title={isAutosave ? 'Autosave is active. Changes are automatically saved.' : 'Enable Autosave to save changes automatically.'}
+						? 'border border-blue-500/40 bg-blue-600/20 text-blue-300 shadow-sm'
+						: 'border border-transparent text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'}"
+					title={isAutosave
+						? 'Autosave is active. Changes are automatically saved.'
+						: 'Enable Autosave to save changes automatically.'}
 				>
 					<!-- Mini switch track -->
-					<div class="relative h-3.5 w-6 rounded-full transition-colors duration-200 {isAutosave ? 'bg-blue-600' : 'bg-slate-700'}">
+					<div
+						class="relative h-3.5 w-6 rounded-full transition-colors duration-200 {isAutosave
+							? 'bg-blue-600'
+							: 'bg-slate-700'}"
+					>
 						<div
 							class="absolute top-0.5 left-0.5 h-2.5 w-2.5 rounded-full bg-white transition-transform duration-200 {isAutosave
 								? 'translate-x-2.5'
@@ -229,9 +263,13 @@
 					<span class="text-[11px] font-semibold">Autosave</span>
 					{#if isAutosave}
 						{#if isSaving}
-							<span class="inline-block h-1.5 w-1.5 rounded-full bg-blue-400 animate-ping" title="Saving changes..."></span>
+							<span
+								class="inline-block h-1.5 w-1.5 animate-ping rounded-full bg-blue-400"
+								title="Saving changes..."
+							></span>
 						{:else}
-							<span class="h-1.5 w-1.5 rounded-full bg-emerald-400" title="All changes saved"></span>
+							<span class="h-1.5 w-1.5 rounded-full bg-emerald-400" title="All changes saved"
+							></span>
 						{/if}
 					{/if}
 				</button>
@@ -240,17 +278,19 @@
 				{#if !isAutosave}
 					<div
 						transition:slide={{ axis: 'x', duration: 250 }}
-						class="overflow-hidden flex items-center"
+						class="flex items-center overflow-hidden"
 					>
 						<button
 							type="button"
 							onclick={onSave}
 							disabled={isSaving}
-							class="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-600 hover:bg-slate-800 transition active:scale-95 disabled:opacity-50 whitespace-nowrap shadow-sm"
+							class="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-slate-200 shadow-sm transition hover:border-slate-600 hover:bg-slate-800 active:scale-95 disabled:opacity-50"
 							title="Save current Nodeflow project"
 						>
 							{#if isSaving}
-								<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-transparent"></span>
+								<span
+									class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-transparent"
+								></span>
 								<span>Saving...</span>
 							{:else}
 								<Save class="h-3.5 w-3.5 text-blue-400" />
@@ -266,7 +306,7 @@
 		<button
 			type="button"
 			onclick={onOpenExport}
-			class="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800 transition"
+			class="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800"
 		>
 			<Code2 class="h-3.5 w-3.5 text-indigo-400" />
 			<span>Export Code</span>
@@ -276,7 +316,7 @@
 		<button
 			type="button"
 			onclick={onOpenTest}
-			class="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-950/40 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-900/50 transition active:scale-95"
+			class="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-950/40 px-3 py-1.5 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-900/50 active:scale-95"
 		>
 			<Play class="h-3.5 w-3.5 fill-current" />
 			<span>Test API</span>
@@ -287,10 +327,12 @@
 			type="button"
 			onclick={onOpenPublish}
 			disabled={isPublishing}
-			class="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-emerald-950/50 hover:from-emerald-500 hover:to-teal-500 transition active:scale-95"
+			class="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-emerald-950/50 transition hover:from-emerald-500 hover:to-teal-500 active:scale-95"
 		>
 			{#if isPublishing}
-				<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+				<span
+					class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+				></span>
 				<span>Publishing...</span>
 			{:else}
 				<Radio class="h-3.5 w-3.5 animate-pulse" />

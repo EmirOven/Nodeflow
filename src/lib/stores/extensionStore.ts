@@ -31,9 +31,7 @@ export async function fetchExtensions(): Promise<ExtensionPackage[]> {
 export async function toggleExtensionEnabled(id: string, enabled: boolean): Promise<boolean> {
 	try {
 		// Optimistic update
-		extensions.update((list) =>
-			list.map((ext) => (ext.id === id ? { ...ext, enabled } : ext))
-		);
+		extensions.update((list) => list.map((ext) => (ext.id === id ? { ...ext, enabled } : ext)));
 
 		const res = await fetch('/api/extensions', {
 			method: 'PATCH',
@@ -49,9 +47,7 @@ export async function toggleExtensionEnabled(id: string, enabled: boolean): Prom
 
 		const data = await res.json();
 		if (data.extension) {
-			extensions.update((list) =>
-				list.map((ext) => (ext.id === id ? data.extension : ext))
-			);
+			extensions.update((list) => list.map((ext) => (ext.id === id ? data.extension : ext)));
 		}
 		return true;
 	} catch (err) {
@@ -66,7 +62,8 @@ export async function importExtension(
 ): Promise<{ success: boolean; extension?: ExtensionPackage; error?: string }> {
 	isExtensionsLoading.set(true);
 	try {
-		const payload = typeof manifestOrUrl === 'string' ? { url: manifestOrUrl } : { manifest: manifestOrUrl };
+		const payload =
+			typeof manifestOrUrl === 'string' ? { url: manifestOrUrl } : { manifest: manifestOrUrl };
 		const res = await fetch('/api/extensions', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

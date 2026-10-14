@@ -24,13 +24,16 @@
 >
 	<div class="space-y-2.5">
 		<div class="space-y-1">
-			<label for="fetch-url-{id}" class="text-[11px] font-medium text-slate-400">External Endpoint</label>
+			<label for="fetch-url-{id}" class="text-[11px] font-medium text-slate-400"
+				>External Endpoint</label
+			>
 			<div class="flex items-center gap-1.5">
 				<select
 					aria-label="HTTP method"
-					class="rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold text-cyan-400 outline-none cursor-pointer"
+					class="cursor-pointer rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs font-bold text-cyan-400 outline-none"
 					value={fetchData.method || 'GET'}
-					onchange={(e) => updateNodeData(id, { method: (e.target as HTMLSelectElement).value as HttpMethod })}
+					onchange={(e) =>
+						updateNodeData(id, { method: (e.target as HTMLSelectElement).value as HttpMethod })}
 				>
 					{#each methods as m}
 						<option value={m} class="bg-slate-900 text-slate-200">{m}</option>

@@ -146,7 +146,10 @@
 
 	// Reset to defaults
 	async function handleResetDefaults() {
-		if (!confirm('Reset all extensions to Nodeflow defaults? Custom imported extensions may be lost.')) return;
+		if (
+			!confirm('Reset all extensions to Nodeflow defaults? Custom imported extensions may be lost.')
+		)
+			return;
 		isLoading = true;
 		try {
 			const res = await fetch('/api/extensions', {
@@ -348,7 +351,8 @@
 				id: 'ext_discord_webhook',
 				name: 'Discord Webhook Dispatcher',
 				version: '1.0.0',
-				description: 'Deliver rich messages, notifications, and embeds directly to Discord server channels.',
+				description:
+					'Deliver rich messages, notifications, and embeds directly to Discord server channels.',
 				category: 'Integrations',
 				author: 'Community / Discord',
 				icon: 'MessageSquare',
@@ -367,11 +371,29 @@
 						{ id: 'error', label: 'FAILED', color: 'rose' }
 					],
 					properties: [
-						{ name: 'webhookUrl', label: 'Discord Webhook URL', type: 'password', placeholder: 'https://discord.com/api/webhooks/...' },
-						{ name: 'content', label: 'Message Content', type: 'textarea', defaultValue: 'Event triggered: {{payload.summary || payload.text}}' },
-						{ name: 'username', label: 'Bot Username (Optional)', type: 'text', placeholder: 'Nodeflow Bot' }
+						{
+							name: 'webhookUrl',
+							label: 'Discord Webhook URL',
+							type: 'password',
+							placeholder: 'https://discord.com/api/webhooks/...'
+						},
+						{
+							name: 'content',
+							label: 'Message Content',
+							type: 'textarea',
+							defaultValue: 'Event triggered: {{payload.summary || payload.text}}'
+						},
+						{
+							name: 'username',
+							label: 'Bot Username (Optional)',
+							type: 'text',
+							placeholder: 'Nodeflow Bot'
+						}
 					],
-					defaultData: { content: 'Event triggered: {{payload.summary || payload.text}}', username: 'Nodeflow Bot' }
+					defaultData: {
+						content: 'Event triggered: {{payload.summary || payload.text}}',
+						username: 'Nodeflow Bot'
+					}
 				}
 			}
 		},
@@ -406,15 +428,35 @@
 						{ id: 'error', label: 'DECLINED', color: 'rose' }
 					],
 					properties: [
-						{ name: 'apiKey', label: 'Stripe Secret Key', type: 'password', placeholder: 'sk_test_...' },
-						{ name: 'action', label: 'Action', type: 'select', defaultValue: 'createPaymentIntent', options: [
-							{ label: 'Create Payment Intent', value: 'createPaymentIntent' },
-							{ label: 'Create Customer', value: 'createCustomer' }
-						] },
-						{ name: 'amountExpr', label: 'Amount (in cents) Expression', type: 'text', defaultValue: 'payload.amount || 2000' },
+						{
+							name: 'apiKey',
+							label: 'Stripe Secret Key',
+							type: 'password',
+							placeholder: 'sk_test_...'
+						},
+						{
+							name: 'action',
+							label: 'Action',
+							type: 'select',
+							defaultValue: 'createPaymentIntent',
+							options: [
+								{ label: 'Create Payment Intent', value: 'createPaymentIntent' },
+								{ label: 'Create Customer', value: 'createCustomer' }
+							]
+						},
+						{
+							name: 'amountExpr',
+							label: 'Amount (in cents) Expression',
+							type: 'text',
+							defaultValue: 'payload.amount || 2000'
+						},
 						{ name: 'currency', label: 'Currency', type: 'text', defaultValue: 'usd' }
 					],
-					defaultData: { action: 'createPaymentIntent', amountExpr: 'payload.amount || 2000', currency: 'usd' }
+					defaultData: {
+						action: 'createPaymentIntent',
+						amountExpr: 'payload.amount || 2000',
+						currency: 'usd'
+					}
 				}
 			}
 		},
@@ -430,7 +472,8 @@
 				id: 'ext_slack_notifier',
 				name: 'Slack Block Kit Notifier',
 				version: '1.0.0',
-				description: 'Post alerts and interactive block cards to Slack channels via incoming webhooks.',
+				description:
+					'Post alerts and interactive block cards to Slack channels via incoming webhooks.',
 				category: 'Integrations',
 				author: 'Community / Slack',
 				icon: 'Slack',
@@ -449,9 +492,19 @@
 						{ id: 'error', label: 'ERROR', color: 'rose' }
 					],
 					properties: [
-						{ name: 'webhookUrl', label: 'Incoming Webhook URL', type: 'password', placeholder: 'https://hooks.slack.com/services/...' },
+						{
+							name: 'webhookUrl',
+							label: 'Incoming Webhook URL',
+							type: 'password',
+							placeholder: 'https://hooks.slack.com/services/...'
+						},
 						{ name: 'channel', label: 'Channel Override', type: 'text', placeholder: '#general' },
-						{ name: 'messageText', label: 'Message Text', type: 'textarea', defaultValue: 'Alert from Nodeflow: {{payload.summary}}' }
+						{
+							name: 'messageText',
+							label: 'Message Text',
+							type: 'textarea',
+							defaultValue: 'Alert from Nodeflow: {{payload.summary}}'
+						}
 					],
 					defaultData: { messageText: 'Alert from Nodeflow: {{payload.summary}}' }
 				}
@@ -469,7 +522,8 @@
 				id: 'ext_resend_email',
 				name: 'Resend Transactional Email',
 				version: '1.0.0',
-				description: 'Deliver transactional emails with HTML templates and tracking through Resend API.',
+				description:
+					'Deliver transactional emails with HTML templates and tracking through Resend API.',
 				category: 'Messaging',
 				author: 'Community / Resend',
 				icon: 'Mail',
@@ -489,11 +543,30 @@
 					],
 					properties: [
 						{ name: 'apiKey', label: 'Resend API Key', type: 'password', placeholder: 're_123...' },
-						{ name: 'from', label: 'From Email Address', type: 'text', defaultValue: 'notifications@example.com' },
-						{ name: 'toExpr', label: 'Recipient Email Expr', type: 'text', defaultValue: 'payload.email' },
-						{ name: 'subject', label: 'Subject Line', type: 'text', defaultValue: 'Welcome to our platform!' }
+						{
+							name: 'from',
+							label: 'From Email Address',
+							type: 'text',
+							defaultValue: 'notifications@example.com'
+						},
+						{
+							name: 'toExpr',
+							label: 'Recipient Email Expr',
+							type: 'text',
+							defaultValue: 'payload.email'
+						},
+						{
+							name: 'subject',
+							label: 'Subject Line',
+							type: 'text',
+							defaultValue: 'Welcome to our platform!'
+						}
 					],
-					defaultData: { from: 'notifications@example.com', toExpr: 'payload.email', subject: 'Welcome to our platform!' }
+					defaultData: {
+						from: 'notifications@example.com',
+						toExpr: 'payload.email',
+						subject: 'Welcome to our platform!'
+					}
 				}
 			}
 		},
@@ -529,14 +602,30 @@
 						{ id: 'error', label: 'ERROR', color: 'rose' }
 					],
 					properties: [
-						{ name: 'redisUrl', label: 'Redis URL', type: 'password', placeholder: 'redis://default:token@host:port' },
-						{ name: 'operation', label: 'Operation', type: 'select', defaultValue: 'get', options: [
-							{ label: 'GET (Retrieve)', value: 'get' },
-							{ label: 'SET (Store with TTL)', value: 'set' },
-							{ label: 'INCR (Increment Counter)', value: 'incr' },
-							{ label: 'DEL (Invalidate)', value: 'del' }
-						] },
-						{ name: 'keyExpr', label: 'Key Expression', type: 'text', defaultValue: 'payload.cacheKey || "item:" + payload.id' },
+						{
+							name: 'redisUrl',
+							label: 'Redis URL',
+							type: 'password',
+							placeholder: 'redis://default:token@host:port'
+						},
+						{
+							name: 'operation',
+							label: 'Operation',
+							type: 'select',
+							defaultValue: 'get',
+							options: [
+								{ label: 'GET (Retrieve)', value: 'get' },
+								{ label: 'SET (Store with TTL)', value: 'set' },
+								{ label: 'INCR (Increment Counter)', value: 'incr' },
+								{ label: 'DEL (Invalidate)', value: 'del' }
+							]
+						},
+						{
+							name: 'keyExpr',
+							label: 'Key Expression',
+							type: 'text',
+							defaultValue: 'payload.cacheKey || "item:" + payload.id'
+						},
 						{ name: 'ttlSeconds', label: 'TTL in Seconds', type: 'number', defaultValue: 300 }
 					],
 					defaultData: { operation: 'get', keyExpr: 'payload.cacheKey', ttlSeconds: 300 }
@@ -574,7 +663,12 @@
 						{ id: 'error', label: 'FAILED', color: 'rose' }
 					],
 					properties: [
-						{ name: 'token', label: 'Personal Access Token', type: 'password', placeholder: 'ghp_...' },
+						{
+							name: 'token',
+							label: 'Personal Access Token',
+							type: 'password',
+							placeholder: 'ghp_...'
+						},
 						{ name: 'owner', label: 'Repo Owner', type: 'text', placeholder: 'octocat' },
 						{ name: 'repo', label: 'Repository Name', type: 'text', placeholder: 'my-project' },
 						{ name: 'eventType', label: 'Event Type', type: 'text', defaultValue: 'nodeflow_event' }
@@ -589,7 +683,10 @@
 	const filteredExtensions = $derived.by(() => {
 		return extensionsList.filter((ext) => {
 			// Category filter
-			if (selectedCategory !== 'ALL' && ext.category.toLowerCase() !== selectedCategory.toLowerCase()) {
+			if (
+				selectedCategory !== 'ALL' &&
+				ext.category.toLowerCase() !== selectedCategory.toLowerCase()
+			) {
 				return false;
 			}
 			// Status filter
@@ -616,7 +713,9 @@
 	const totalCount = $derived(extensionsList.length);
 	const enabledCount = $derived(extensionsList.filter((e: ExtensionPackage) => e.enabled).length);
 	const builtInCount = $derived(extensionsList.filter((e: ExtensionPackage) => e.isBuiltIn).length);
-	const communityCount = $derived(extensionsList.filter((e: ExtensionPackage) => !e.isBuiltIn).length);
+	const communityCount = $derived(
+		extensionsList.filter((e: ExtensionPackage) => !e.isBuiltIn).length
+	);
 
 	const allCategories = $derived.by(() => {
 		const set = new Set<string>();
@@ -681,7 +780,7 @@
 	<title>Extensions & Plugins — Nodeflow</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
+<div class="flex min-h-screen flex-col bg-slate-950 text-slate-100 select-none">
 	<!-- Top Navigation -->
 	<header
 		class="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-800 bg-slate-950/90 px-6 backdrop-blur-xl"
@@ -690,16 +789,18 @@
 		<div class="flex items-center gap-4">
 			<a
 				href="/"
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition group"
+				class="group flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-slate-300 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Back to All Nodeflows"
 			>
-				<ArrowLeft class="h-3.5 w-3.5 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
+				<ArrowLeft
+					class="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:-translate-x-0.5"
+				/>
 				<span>Nodeflows</span>
 			</a>
 
 			<div class="flex items-center gap-3">
 				<div
-					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/25 text-white"
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25"
 				>
 					<Blocks class="h-5 w-5" />
 				</div>
@@ -707,28 +808,44 @@
 					<div class="flex items-center gap-2">
 						<h1 class="text-base font-bold tracking-tight text-white">Nodeflow Extensions</h1>
 						<span
-							class="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400 border border-blue-500/20"
+							class="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-400"
 						>
 							v0.5.2
 						</span>
 					</div>
-					<p class="text-xs text-slate-400">Import, create & manage custom nodes for your nodeflows</p>
+					<p class="text-xs text-slate-400">
+						Import, create & manage custom nodes for your nodeflows
+					</p>
 				</div>
 			</div>
 		</div>
 
 		<!-- Center: Navigation Tabs -->
-		<div class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800">
-			<a href="/" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+		<div
+			class="hidden items-center gap-1 rounded-xl border border-slate-800 bg-slate-900/60 p-1 md:flex"
+		>
+			<a
+				href="/"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Nodeflows
 			</a>
-			<a href="/users" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/users"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Project Users
 			</a>
-			<a href="/extensions" class="px-3 py-1 text-xs font-semibold text-white bg-slate-800 rounded-lg shadow-sm">
+			<a
+				href="/extensions"
+				class="rounded-lg bg-slate-800 px-3 py-1 text-xs font-semibold text-white shadow-sm"
+			>
 				Extensions
 			</a>
-			<a href="/settings" class="px-3 py-1 text-xs font-medium text-slate-400 hover:text-white rounded-lg transition">
+			<a
+				href="/settings"
+				class="rounded-lg px-3 py-1 text-xs font-medium text-slate-400 transition hover:text-white"
+			>
 				Settings
 			</a>
 		</div>
@@ -738,7 +855,7 @@
 			<button
 				type="button"
 				onclick={handleResetDefaults}
-				class="rounded-lg border border-slate-800 bg-slate-900/80 p-2 text-slate-400 hover:border-slate-700 hover:bg-slate-800 hover:text-slate-200 transition"
+				class="rounded-lg border border-slate-800 bg-slate-900/80 p-2 text-slate-400 transition hover:border-slate-700 hover:bg-slate-800 hover:text-slate-200"
 				title="Reset Extensions to Defaults"
 			>
 				<RotateCcw class="h-3.5 w-3.5" />
@@ -747,7 +864,7 @@
 			<a
 				href="/api/extensions/export"
 				download
-				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white transition"
+				class="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
 				title="Export all extensions as a JSON bundle"
 			>
 				<Download class="h-3.5 w-3.5" />
@@ -761,7 +878,7 @@
 					importError = null;
 					activeImportTab = 'registry';
 				}}
-				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-950/60 hover:from-blue-500 hover:to-indigo-500 transition active:scale-95"
+				class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-950/60 transition hover:from-blue-500 hover:to-indigo-500 active:scale-95"
 			>
 				<Plus class="h-4 w-4" />
 				<span>Import Extension</span>
@@ -770,11 +887,12 @@
 	</header>
 
 	<!-- Main Content Area -->
-	<main class="flex-1 px-6 py-6 max-w-7xl w-full mx-auto space-y-6">
+	<main class="mx-auto w-full max-w-7xl flex-1 space-y-6 px-6 py-6">
 		<!-- Toast Notification -->
 		{#if toastMessage}
 			<div
-				class="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border px-4 py-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-3 duration-200 {toastType === 'success'
+				class="animate-in fade-in slide-in-from-bottom-3 fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-xl border px-4 py-3 shadow-2xl backdrop-blur-xl duration-200 {toastType ===
+				'success'
 					? 'border-emerald-500/40 bg-emerald-950/90 text-emerald-200'
 					: 'border-rose-500/40 bg-rose-950/90 text-rose-200'}"
 			>
@@ -788,9 +906,9 @@
 		{/if}
 
 		<!-- Overview Metrics Bar -->
-		<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+		<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
 			<div class="rounded-xl border border-slate-800/80 bg-slate-900/50 p-4 backdrop-blur-sm">
-				<div class="flex items-center justify-between text-slate-400 text-xs">
+				<div class="flex items-center justify-between text-xs text-slate-400">
 					<span>Total Extensions</span>
 					<Blocks class="h-4 w-4 text-blue-400" />
 				</div>
@@ -799,7 +917,7 @@
 			</div>
 
 			<div class="rounded-xl border border-slate-800/80 bg-slate-900/50 p-4 backdrop-blur-sm">
-				<div class="flex items-center justify-between text-slate-400 text-xs">
+				<div class="flex items-center justify-between text-xs text-slate-400">
 					<span>Active in Canvas</span>
 					<Sparkles class="h-4 w-4 text-emerald-400" />
 				</div>
@@ -808,7 +926,7 @@
 			</div>
 
 			<div class="rounded-xl border border-slate-800/80 bg-slate-900/50 p-4 backdrop-blur-sm">
-				<div class="flex items-center justify-between text-slate-400 text-xs">
+				<div class="flex items-center justify-between text-xs text-slate-400">
 					<span>Built-in Nodes</span>
 					<ShieldCheck class="h-4 w-4 text-indigo-400" />
 				</div>
@@ -817,7 +935,7 @@
 			</div>
 
 			<div class="rounded-xl border border-slate-800/80 bg-slate-900/50 p-4 backdrop-blur-sm">
-				<div class="flex items-center justify-between text-slate-400 text-xs">
+				<div class="flex items-center justify-between text-xs text-slate-400">
 					<span>Community & Custom</span>
 					<Layers class="h-4 w-4 text-purple-400" />
 				</div>
@@ -828,20 +946,20 @@
 
 		<!-- Search & Category Filters -->
 		<div class="space-y-3">
-			<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+			<div class="flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
 				<!-- Search Input -->
-				<div class="relative flex-1 max-w-md">
-					<Search class="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+				<div class="relative max-w-md flex-1">
+					<Search class="absolute top-2.5 left-3 h-4 w-4 text-slate-500" />
 					<input
 						type="text"
 						placeholder="Search extensions by name, author, tag, or description..."
-						class="w-full rounded-xl border border-slate-800 bg-slate-900/80 py-2 pl-9 pr-4 text-xs text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition"
+						class="w-full rounded-xl border border-slate-800 bg-slate-900/80 py-2 pr-4 pl-9 text-xs text-slate-200 placeholder-slate-500 transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 focus:outline-none"
 						bind:value={searchQuery}
 					/>
 					{#if searchQuery}
 						<button
 							type="button"
-							class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300"
+							class="absolute top-2.5 right-3 text-slate-500 hover:text-slate-300"
 							onclick={() => (searchQuery = '')}
 						>
 							<X class="h-4 w-4" />
@@ -850,12 +968,15 @@
 				</div>
 
 				<!-- Source / Status Pill Filter -->
-				<div class="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800 self-start sm:self-auto overflow-x-auto">
+				<div
+					class="flex items-center gap-1 self-start overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/80 p-1 sm:self-auto"
+				>
 					<button
 						type="button"
 						onclick={() => (selectedStatus = 'ALL')}
-						class="px-2.5 py-1 text-[11px] font-medium rounded-lg transition {selectedStatus === 'ALL'
-							? 'bg-slate-800 text-white font-semibold shadow-sm'
+						class="rounded-lg px-2.5 py-1 text-[11px] font-medium transition {selectedStatus ===
+						'ALL'
+							? 'bg-slate-800 font-semibold text-white shadow-sm'
 							: 'text-slate-400 hover:text-white'}"
 					>
 						All
@@ -863,8 +984,9 @@
 					<button
 						type="button"
 						onclick={() => (selectedStatus = 'ENABLED')}
-						class="px-2.5 py-1 text-[11px] font-medium rounded-lg transition {selectedStatus === 'ENABLED'
-							? 'bg-slate-800 text-emerald-400 font-semibold shadow-sm'
+						class="rounded-lg px-2.5 py-1 text-[11px] font-medium transition {selectedStatus ===
+						'ENABLED'
+							? 'bg-slate-800 font-semibold text-emerald-400 shadow-sm'
 							: 'text-slate-400 hover:text-white'}"
 					>
 						Enabled ({enabledCount})
@@ -872,8 +994,9 @@
 					<button
 						type="button"
 						onclick={() => (selectedStatus = 'COMMUNITY')}
-						class="px-2.5 py-1 text-[11px] font-medium rounded-lg transition {selectedStatus === 'COMMUNITY'
-							? 'bg-slate-800 text-purple-400 font-semibold shadow-sm'
+						class="rounded-lg px-2.5 py-1 text-[11px] font-medium transition {selectedStatus ===
+						'COMMUNITY'
+							? 'bg-slate-800 font-semibold text-purple-400 shadow-sm'
 							: 'text-slate-400 hover:text-white'}"
 					>
 						Community ({communityCount})
@@ -881,8 +1004,9 @@
 					<button
 						type="button"
 						onclick={() => (selectedStatus = 'BUILTIN')}
-						class="px-2.5 py-1 text-[11px] font-medium rounded-lg transition {selectedStatus === 'BUILTIN'
-							? 'bg-slate-800 text-blue-400 font-semibold shadow-sm'
+						class="rounded-lg px-2.5 py-1 text-[11px] font-medium transition {selectedStatus ===
+						'BUILTIN'
+							? 'bg-slate-800 font-semibold text-blue-400 shadow-sm'
 							: 'text-slate-400 hover:text-white'}"
 					>
 						Built-in ({builtInCount})
@@ -895,7 +1019,8 @@
 				<button
 					type="button"
 					onclick={() => (selectedCategory = 'ALL')}
-					class="shrink-0 rounded-lg px-3 py-1 font-medium transition border {selectedCategory === 'ALL'
+					class="shrink-0 rounded-lg border px-3 py-1 font-medium transition {selectedCategory ===
+					'ALL'
 						? 'border-indigo-500/60 bg-indigo-500/20 text-indigo-300'
 						: 'border-slate-800/80 bg-slate-900/60 text-slate-400 hover:border-slate-700 hover:text-slate-200'}"
 				>
@@ -905,7 +1030,8 @@
 					<button
 						type="button"
 						onclick={() => (selectedCategory = cat)}
-						class="shrink-0 rounded-lg px-3 py-1 font-medium transition border {selectedCategory === cat
+						class="shrink-0 rounded-lg border px-3 py-1 font-medium transition {selectedCategory ===
+						cat
 							? 'border-indigo-500/60 bg-indigo-500/20 text-indigo-300'
 							: 'border-slate-800/80 bg-slate-900/60 text-slate-400 hover:border-slate-700 hover:text-slate-200'}"
 					>
@@ -917,13 +1043,18 @@
 
 		<!-- Extensions Grid -->
 		{#if filteredExtensions.length === 0}
-			<div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/30 p-12 text-center space-y-3">
-				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800 text-slate-500">
+			<div
+				class="space-y-3 rounded-2xl border border-dashed border-slate-800 bg-slate-900/30 p-12 text-center"
+			>
+				<div
+					class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800 text-slate-500"
+				>
 					<Blocks class="h-6 w-6" />
 				</div>
 				<h3 class="text-sm font-semibold text-slate-200">No extensions found</h3>
-				<p class="text-xs text-slate-500 max-w-sm mx-auto">
-					No extensions matched your filter or search query. Try clearing filters or import a new extension.
+				<p class="mx-auto max-w-sm text-xs text-slate-500">
+					No extensions matched your filter or search query. Try clearing filters or import a new
+					extension.
 				</p>
 				<button
 					type="button"
@@ -932,17 +1063,17 @@
 						selectedCategory = 'ALL';
 						selectedStatus = 'ALL';
 					}}
-					class="rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-300 hover:bg-slate-800 transition"
+					class="rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-300 transition hover:bg-slate-800"
 				>
 					Clear Filters
 				</button>
 			</div>
 		{:else}
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{#each filteredExtensions as ext (ext.id)}
 					<div
 						class="flex flex-col justify-between rounded-xl border bg-slate-900/70 p-4 backdrop-blur-sm transition-all duration-200 {ext.enabled
-							? 'border-slate-800 hover:border-slate-700 shadow-md'
+							? 'border-slate-800 shadow-md hover:border-slate-700'
 							: 'border-slate-900 bg-slate-950/40 opacity-70'}"
 					>
 						<!-- Card Top -->
@@ -951,34 +1082,42 @@
 							<div class="flex items-start justify-between gap-3">
 								<div class="flex items-start gap-2.5">
 									<div
-										class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border {getAccentIconWrapperClass(ext.accentColor)}"
+										class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border {getAccentIconWrapperClass(
+											ext.accentColor
+										)}"
 									>
 										<DynamicIcon name={ext.icon} class="h-5 w-5" />
 									</div>
 
 									<div>
-										<div class="flex items-center gap-1.5 flex-wrap">
-											<h3 class="text-sm font-bold text-white leading-tight">
+										<div class="flex flex-wrap items-center gap-1.5">
+											<h3 class="text-sm leading-tight font-bold text-white">
 												{ext.name}
 											</h3>
-											<span class="text-[10px] font-mono text-slate-500">
+											<span class="font-mono text-[10px] text-slate-500">
 												v{ext.version}
 											</span>
 										</div>
 
 										<div class="mt-1 flex items-center gap-1.5">
 											<span
-												class="rounded px-1.5 py-0.2 text-[9px] font-semibold border {getAccentBadgeClass(ext.accentColor)}"
+												class="py-0.2 rounded border px-1.5 text-[9px] font-semibold {getAccentBadgeClass(
+													ext.accentColor
+												)}"
 											>
 												{ext.category}
 											</span>
 
 											{#if ext.isBuiltIn}
-												<span class="rounded bg-slate-800/90 px-1.5 py-0.2 text-[9px] font-medium text-slate-400 border border-slate-700/60">
+												<span
+													class="py-0.2 rounded border border-slate-700/60 bg-slate-800/90 px-1.5 text-[9px] font-medium text-slate-400"
+												>
 													Built-in
 												</span>
 											{:else}
-												<span class="rounded bg-purple-500/10 px-1.5 py-0.2 text-[9px] font-medium text-purple-400 border border-purple-500/20">
+												<span
+													class="py-0.2 rounded border border-purple-500/20 bg-purple-500/10 px-1.5 text-[9px] font-medium text-purple-400"
+												>
 													Community
 												</span>
 											{/if}
@@ -1006,23 +1145,30 @@
 							</div>
 
 							<!-- Description -->
-							<p class="text-xs text-slate-400 leading-relaxed line-clamp-2">
+							<p class="line-clamp-2 text-xs leading-relaxed text-slate-400">
 								{ext.description}
 							</p>
 
 							<!-- Node Spec Summary (Handles & Branches) -->
-							<div class="rounded-lg border border-slate-850 bg-slate-950/60 p-2.5 text-[11px] space-y-1.5">
-								<div class="flex items-center justify-between text-slate-400 text-[10px]">
+							<div
+								class="border-slate-850 space-y-1.5 rounded-lg border bg-slate-950/60 p-2.5 text-[11px]"
+							>
+								<div class="flex items-center justify-between text-[10px] text-slate-400">
 									<span>Outputs & Branches:</span>
 									<span class="font-mono text-slate-500">
-										{ext.nodeDefinition.outputs?.length || 1} branch{(ext.nodeDefinition.outputs?.length || 1) > 1 ? 'es' : ''}
+										{ext.nodeDefinition.outputs?.length || 1} branch{(ext.nodeDefinition.outputs
+											?.length || 1) > 1
+											? 'es'
+											: ''}
 									</span>
 								</div>
 
 								{#if ext.nodeDefinition.outputs && ext.nodeDefinition.outputs.length > 0}
-									<div class="flex items-center gap-1.5 flex-wrap">
+									<div class="flex flex-wrap items-center gap-1.5">
 										{#each ext.nodeDefinition.outputs as out}
-											<div class="flex items-center gap-1 rounded bg-slate-900 px-1.5 py-0.5 border border-slate-800 text-[9px] font-bold font-mono">
+											<div
+												class="flex items-center gap-1 rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 font-mono text-[9px] font-bold"
+											>
 												<span
 													class="h-1.5 w-1.5 rounded-full {out.color === 'emerald'
 														? 'bg-emerald-400'
@@ -1037,7 +1183,7 @@
 										{/each}
 									</div>
 								{:else}
-									<div class="text-[10px] text-slate-500 font-mono">
+									<div class="font-mono text-[10px] text-slate-500">
 										Default single downstream output
 									</div>
 								{/if}
@@ -1045,9 +1191,9 @@
 
 							<!-- Tags -->
 							{#if ext.tags && ext.tags.length > 0}
-								<div class="flex items-center gap-1 flex-wrap">
+								<div class="flex flex-wrap items-center gap-1">
 									{#each ext.tags as tag}
-										<span class="text-[9px] font-mono text-slate-500">
+										<span class="font-mono text-[9px] text-slate-500">
 											#{tag}
 										</span>
 									{/each}
@@ -1056,8 +1202,10 @@
 						</div>
 
 						<!-- Card Bottom Toolbar -->
-						<div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-							<span class="text-[10px] text-slate-500 truncate max-w-[120px]">
+						<div
+							class="mt-4 flex items-center justify-between border-t border-slate-800/80 pt-3 text-xs"
+						>
+							<span class="max-w-[120px] truncate text-[10px] text-slate-500">
 								by {ext.author}
 							</span>
 
@@ -1065,7 +1213,7 @@
 								<button
 									type="button"
 									onclick={() => openInspect(ext)}
-									class="rounded-lg border border-slate-800 bg-slate-900 px-2 py-1 text-[11px] font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition flex items-center gap-1"
+									class="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-2 py-1 text-[11px] font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
 									title="Inspect Manifest & Schema"
 								>
 									<Eye class="h-3 w-3" />
@@ -1075,7 +1223,7 @@
 								<a
 									href="/api/extensions/export?id={encodeURIComponent(ext.id)}"
 									download
-									class="rounded-lg border border-slate-800 bg-slate-900 p-1 text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition"
+									class="rounded-lg border border-slate-800 bg-slate-900 p-1 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
 									title="Download JSON Manifest"
 								>
 									<Download class="h-3.5 w-3.5" />
@@ -1088,7 +1236,7 @@
 											extToDelete = ext;
 											isDeleteOpen = true;
 										}}
-										class="rounded-lg border border-slate-800 bg-slate-900 p-1 text-slate-400 hover:border-rose-500/40 hover:bg-rose-500/10 hover:text-rose-400 transition"
+										class="rounded-lg border border-slate-800 bg-slate-900 p-1 text-slate-400 transition hover:border-rose-500/40 hover:bg-rose-500/10 hover:text-rose-400"
 										title="Uninstall Extension"
 									>
 										<Trash2 class="h-3.5 w-3.5" />
@@ -1107,22 +1255,30 @@
 <!-- IMPORT EXTENSION MODAL                                         -->
 <!-- ============================================================== -->
 {#if isImportOpen}
-	<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-		<div class="w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+	<div
+		class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-150"
+	>
+		<div
+			class="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl"
+		>
 			<!-- Header -->
 			<div class="flex items-center justify-between border-b border-slate-800 px-6 py-4">
 				<div class="flex items-center gap-2.5">
-					<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400">
+					<div
+						class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400"
+					>
 						<Plus class="h-4 w-4" />
 					</div>
 					<div>
 						<h2 class="text-sm font-bold text-white">Import Extension</h2>
-						<p class="text-[11px] text-slate-400">Add custom nodes from manifest files, URLs, or community registry</p>
+						<p class="text-[11px] text-slate-400">
+							Add custom nodes from manifest files, URLs, or community registry
+						</p>
 					</div>
 				</div>
 				<button
 					type="button"
-					class="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-white transition"
+					class="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 hover:text-white"
 					onclick={() => (isImportOpen = false)}
 				>
 					<X class="h-4 w-4" />
@@ -1130,12 +1286,14 @@
 			</div>
 
 			<!-- Navigation Tabs -->
-			<div class="flex border-b border-slate-800 bg-slate-950/60 px-6 pt-2 gap-2 text-xs font-medium">
+			<div
+				class="flex gap-2 border-b border-slate-800 bg-slate-950/60 px-6 pt-2 text-xs font-medium"
+			>
 				<button
 					type="button"
 					onclick={() => (activeImportTab = 'registry')}
-					class="pb-2.5 px-3 border-b-2 transition {activeImportTab === 'registry'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {activeImportTab === 'registry'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Curated Registry
@@ -1143,8 +1301,8 @@
 				<button
 					type="button"
 					onclick={() => (activeImportTab = 'upload')}
-					class="pb-2.5 px-3 border-b-2 transition {activeImportTab === 'upload'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {activeImportTab === 'upload'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Upload JSON File
@@ -1152,8 +1310,8 @@
 				<button
 					type="button"
 					onclick={() => (activeImportTab = 'url')}
-					class="pb-2.5 px-3 border-b-2 transition {activeImportTab === 'url'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {activeImportTab === 'url'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					From URL / CDN
@@ -1164,8 +1322,8 @@
 						activeImportTab = 'editor';
 						if (!importJsonText) importJsonText = sampleManifestTemplate;
 					}}
-					class="pb-2.5 px-3 border-b-2 transition {activeImportTab === 'editor'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {activeImportTab === 'editor'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Manifest JSON Editor
@@ -1173,9 +1331,11 @@
 			</div>
 
 			<!-- Tab Content Body -->
-			<div class="flex-1 overflow-y-auto p-6 space-y-4">
+			<div class="flex-1 space-y-4 overflow-y-auto p-6">
 				{#if importError}
-					<div class="rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-xs text-rose-300 flex items-center justify-between">
+					<div
+						class="flex items-center justify-between rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-xs text-rose-300"
+					>
 						<span>{importError}</span>
 						<button type="button" onclick={() => (importError = null)}>
 							<X class="h-3.5 w-3.5 text-rose-400" />
@@ -1187,36 +1347,47 @@
 				{#if activeImportTab === 'registry'}
 					<div class="space-y-3">
 						<div class="text-xs text-slate-400">
-							Select a popular community integration below to install its node manifest into your Nodeflow workspace:
+							Select a popular community integration below to install its node manifest into your
+							Nodeflow workspace:
 						</div>
 
-						<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 							{#each curatedCatalog as item}
-								<div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 flex flex-col justify-between gap-3">
+								<div
+									class="flex flex-col justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/70 p-3.5"
+								>
 									<div class="space-y-1.5">
 										<div class="flex items-center justify-between">
 											<div class="flex items-center gap-2">
-												<div class="flex h-7 w-7 items-center justify-center rounded-lg {getAccentIconWrapperClass(item.accentColor as any)}">
+												<div
+													class="flex h-7 w-7 items-center justify-center rounded-lg {getAccentIconWrapperClass(
+														item.accentColor as any
+													)}"
+												>
 													<DynamicIcon name={item.icon} class="h-4 w-4" />
 												</div>
 												<span class="text-xs font-bold text-white">{item.name}</span>
 											</div>
-											<span class="text-[9px] font-mono text-slate-500">v{item.version}</span>
+											<span class="font-mono text-[9px] text-slate-500">v{item.version}</span>
 										</div>
-										<p class="text-[11px] text-slate-400 leading-snug">
+										<p class="text-[11px] leading-snug text-slate-400">
 											{item.desc}
 										</p>
 									</div>
 
-									<div class="flex items-center justify-between pt-2 border-t border-slate-850">
-										<span class="text-[9px] font-semibold {getAccentBadgeClass(item.accentColor as any)} rounded px-1.5 py-0.5 border">
+									<div class="border-slate-850 flex items-center justify-between border-t pt-2">
+										<span
+											class="text-[9px] font-semibold {getAccentBadgeClass(
+												item.accentColor as any
+											)} rounded border px-1.5 py-0.5"
+										>
 											{item.category}
 										</span>
 										<button
 											type="button"
 											disabled={isImporting}
 											onclick={() => installCurated(item.manifest)}
-											class="rounded-lg bg-indigo-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-indigo-500 transition active:scale-95 disabled:opacity-50"
+											class="rounded-lg bg-indigo-600 px-3 py-1 text-[11px] font-semibold text-white transition hover:bg-indigo-500 active:scale-95 disabled:opacity-50"
 										>
 											{isImporting ? 'Installing...' : 'Install Node'}
 										</button>
@@ -1226,51 +1397,72 @@
 						</div>
 					</div>
 
-				<!-- TAB: UPLOAD JSON -->
+					<!-- TAB: UPLOAD JSON -->
 				{:else if activeImportTab === 'upload'}
 					<div class="space-y-4">
 						<label
-							class="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 rounded-2xl p-8 hover:border-indigo-500/60 bg-slate-950/50 cursor-pointer transition group"
+							class="group flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-800 bg-slate-950/50 p-8 transition hover:border-indigo-500/60"
 						>
-							<UploadCloud class="h-10 w-10 text-slate-500 group-hover:text-indigo-400 group-hover:scale-110 transition-all" />
-							<span class="mt-3 text-xs font-bold text-slate-200">Click to upload or drag & drop</span>
-							<span class="mt-1 text-[11px] text-slate-500">Select an extension manifest file (.json)</span>
-							<input type="file" accept=".json,application/json" class="hidden" onchange={handleFileUpload} />
+							<UploadCloud
+								class="h-10 w-10 text-slate-500 transition-all group-hover:scale-110 group-hover:text-indigo-400"
+							/>
+							<span class="mt-3 text-xs font-bold text-slate-200"
+								>Click to upload or drag & drop</span
+							>
+							<span class="mt-1 text-[11px] text-slate-500"
+								>Select an extension manifest file (.json)</span
+							>
+							<input
+								type="file"
+								accept=".json,application/json"
+								class="hidden"
+								onchange={handleFileUpload}
+							/>
 						</label>
 
-						<div class="rounded-lg bg-slate-950 p-3 text-[11px] text-slate-400 border border-slate-800/80 flex items-start gap-2">
-							<Info class="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-							<span>The uploaded file will be verified against the Nodeflow Extension schema. You can review and edit before finalizing.</span>
+						<div
+							class="flex items-start gap-2 rounded-lg border border-slate-800/80 bg-slate-950 p-3 text-[11px] text-slate-400"
+						>
+							<Info class="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
+							<span
+								>The uploaded file will be verified against the Nodeflow Extension schema. You can
+								review and edit before finalizing.</span
+							>
 						</div>
 					</div>
 
-				<!-- TAB: URL / CDN -->
+					<!-- TAB: URL / CDN -->
 				{:else if activeImportTab === 'url'}
 					<div class="space-y-3">
 						<div class="space-y-1">
-							<label for="import-url-input" class="text-xs font-medium text-slate-400">Remote Manifest URL</label>
+							<label for="import-url-input" class="text-xs font-medium text-slate-400"
+								>Remote Manifest URL</label
+							>
 							<input
 								id="import-url-input"
 								type="url"
 								placeholder="https://raw.githubusercontent.com/org/repo/main/nodeflow-extension.json"
-								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-xs font-mono text-slate-200 placeholder-slate-600 focus:border-indigo-500 focus:outline-none"
+								class="w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 font-mono text-xs text-slate-200 placeholder-slate-600 focus:border-indigo-500 focus:outline-none"
 								bind:value={importUrl}
 							/>
 						</div>
 
-						<p class="text-[11px] text-slate-500 leading-relaxed">
-							Provide a direct HTTP/HTTPS link to an extension manifest JSON file on GitHub, unpkg, jsDelivr, or any web endpoint.
+						<p class="text-[11px] leading-relaxed text-slate-500">
+							Provide a direct HTTP/HTTPS link to an extension manifest JSON file on GitHub, unpkg,
+							jsDelivr, or any web endpoint.
 						</p>
 
-						<div class="pt-2 flex justify-end">
+						<div class="flex justify-end pt-2">
 							<button
 								type="button"
 								disabled={isImporting || !importUrl.trim()}
 								onclick={submitImportUrl}
-								class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition active:scale-95 disabled:opacity-50"
+								class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-indigo-500 active:scale-95 disabled:opacity-50"
 							>
 								{#if isImporting}
-									<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+									<span
+										class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+									></span>
 									<span>Fetching & Installing...</span>
 								{:else}
 									<Download class="h-4 w-4" />
@@ -1280,7 +1472,7 @@
 						</div>
 					</div>
 
-				<!-- TAB: MANIFEST EDITOR -->
+					<!-- TAB: MANIFEST EDITOR -->
 				{:else if activeImportTab === 'editor'}
 					<div class="space-y-3">
 						<div class="flex items-center justify-between text-xs text-slate-400">
@@ -1294,25 +1486,28 @@
 							</button>
 						</div>
 
-						<div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
+						<div
+							class="overflow-hidden rounded-xl border border-slate-800 bg-slate-950 font-mono text-xs"
+						>
 							<textarea
 								rows="12"
-								class="w-full bg-transparent p-3 text-slate-200 focus:outline-none resize-y leading-relaxed font-mono selection:bg-indigo-900/60"
+								class="w-full resize-y bg-transparent p-3 font-mono leading-relaxed text-slate-200 selection:bg-indigo-900/60 focus:outline-none"
 								placeholder="Paste extension JSON manifest..."
 								bind:value={importJsonText}
-								spellcheck="false"
-							></textarea>
+								spellcheck="false"></textarea>
 						</div>
 
-						<div class="pt-2 flex justify-end">
+						<div class="flex justify-end pt-2">
 							<button
 								type="button"
 								disabled={isImporting || !importJsonText.trim()}
 								onclick={submitImportJson}
-								class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+								class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white transition hover:from-blue-500 hover:to-indigo-500 active:scale-95 disabled:opacity-50"
 							>
 								{#if isImporting}
-									<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+									<span
+										class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"
+									></span>
 									<span>Validating & Installing...</span>
 								{:else}
 									<Check class="h-4 w-4" />
@@ -1331,26 +1526,36 @@
 <!-- DETAILS / INSPECT MODAL                                        -->
 <!-- ============================================================== -->
 {#if isInspectOpen && inspectedExt}
-	<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-		<div class="w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+	<div
+		class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-150"
+	>
+		<div
+			class="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl"
+		>
 			<!-- Header -->
 			<div class="flex items-center justify-between border-b border-slate-800 px-6 py-4">
 				<div class="flex items-center gap-3">
-					<div class="flex h-9 w-9 items-center justify-center rounded-xl {getAccentIconWrapperClass(inspectedExt.accentColor)}">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl {getAccentIconWrapperClass(
+							inspectedExt.accentColor
+						)}"
+					>
 						<DynamicIcon name={inspectedExt.icon} class="h-5 w-5" />
 					</div>
 					<div>
 						<div class="flex items-center gap-2">
 							<h2 class="text-sm font-bold text-white">{inspectedExt.name}</h2>
-							<span class="text-[10px] font-mono text-slate-400">v{inspectedExt.version}</span>
+							<span class="font-mono text-[10px] text-slate-400">v{inspectedExt.version}</span>
 						</div>
-						<p class="text-[11px] text-slate-400">{inspectedExt.category} • by {inspectedExt.author}</p>
+						<p class="text-[11px] text-slate-400">
+							{inspectedExt.category} • by {inspectedExt.author}
+						</p>
 					</div>
 				</div>
 
 				<button
 					type="button"
-					class="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-white transition"
+					class="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 hover:text-white"
 					onclick={() => (isInspectOpen = false)}
 				>
 					<X class="h-4 w-4" />
@@ -1358,12 +1563,14 @@
 			</div>
 
 			<!-- Tabs -->
-			<div class="flex border-b border-slate-800 bg-slate-950/60 px-6 pt-2 gap-2 text-xs font-medium">
+			<div
+				class="flex gap-2 border-b border-slate-800 bg-slate-950/60 px-6 pt-2 text-xs font-medium"
+			>
 				<button
 					type="button"
 					onclick={() => (inspectActiveTab = 'overview')}
-					class="pb-2.5 px-3 border-b-2 transition {inspectActiveTab === 'overview'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {inspectActiveTab === 'overview'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Overview
@@ -1371,8 +1578,8 @@
 				<button
 					type="button"
 					onclick={() => (inspectActiveTab = 'properties')}
-					class="pb-2.5 px-3 border-b-2 transition {inspectActiveTab === 'properties'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {inspectActiveTab === 'properties'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Node Properties ({inspectedExt.nodeDefinition.properties?.length || 0})
@@ -1380,8 +1587,8 @@
 				<button
 					type="button"
 					onclick={() => (inspectActiveTab = 'manifest')}
-					class="pb-2.5 px-3 border-b-2 transition {inspectActiveTab === 'manifest'
-						? 'border-indigo-500 text-white font-semibold'
+					class="border-b-2 px-3 pb-2.5 transition {inspectActiveTab === 'manifest'
+						? 'border-indigo-500 font-semibold text-white'
 						: 'border-transparent text-slate-400 hover:text-slate-200'}"
 				>
 					Raw Manifest JSON
@@ -1389,35 +1596,43 @@
 			</div>
 
 			<!-- Body -->
-			<div class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
+			<div class="flex-1 space-y-4 overflow-y-auto p-6 text-xs">
 				{#if inspectActiveTab === 'overview'}
 					<div class="space-y-4">
 						<div class="space-y-1">
 							<span class="text-[11px] font-semibold text-slate-400">Description</span>
-							<p class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+							<p
+								class="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-xs leading-relaxed text-slate-300"
+							>
 								{inspectedExt.description}
 							</p>
 						</div>
 
 						<div class="grid grid-cols-2 gap-3">
-							<div class="rounded-xl border border-slate-800 bg-slate-950/50 p-3 space-y-1">
+							<div class="space-y-1 rounded-xl border border-slate-800 bg-slate-950/50 p-3">
 								<span class="text-[10px] text-slate-500">Nodeflow Type Identifier</span>
-								<div class="font-mono text-indigo-400 text-xs">{inspectedExt.nodeType}</div>
+								<div class="font-mono text-xs text-indigo-400">{inspectedExt.nodeType}</div>
 							</div>
-							<div class="rounded-xl border border-slate-800 bg-slate-950/50 p-3 space-y-1">
+							<div class="space-y-1 rounded-xl border border-slate-800 bg-slate-950/50 p-3">
 								<span class="text-[10px] text-slate-500">Default Width</span>
-								<div class="font-mono text-slate-300 text-xs">{inspectedExt.nodeDefinition.width || 'w-80'}</div>
+								<div class="font-mono text-xs text-slate-300">
+									{inspectedExt.nodeDefinition.width || 'w-80'}
+								</div>
 							</div>
 						</div>
 
 						<!-- Output Handles Specification -->
 						<div class="space-y-2">
-							<span class="text-[11px] font-semibold text-slate-400">Output Handles & Branch Logic</span>
-							<div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 space-y-2">
+							<span class="text-[11px] font-semibold text-slate-400"
+								>Output Handles & Branch Logic</span
+							>
+							<div class="space-y-2 rounded-xl border border-slate-800 bg-slate-950/70 p-3">
 								{#if inspectedExt.nodeDefinition.outputs && inspectedExt.nodeDefinition.outputs.length > 0}
 									<div class="space-y-1.5">
 										{#each inspectedExt.nodeDefinition.outputs as out}
-											<div class="flex items-center justify-between text-xs py-1 border-b border-slate-850 last:border-b-0">
+											<div
+												class="border-slate-850 flex items-center justify-between border-b py-1 text-xs last:border-b-0"
+											>
 												<div class="flex items-center gap-2">
 													<span
 														class="h-2 w-2 rounded-full {out.color === 'emerald'
@@ -1433,7 +1648,9 @@
 										{/each}
 									</div>
 								{:else}
-									<p class="text-xs text-slate-400">Single bottom output handle (sequential flow).</p>
+									<p class="text-xs text-slate-400">
+										Single bottom output handle (sequential flow).
+									</p>
 								{/if}
 							</div>
 						</div>
@@ -1452,16 +1669,19 @@
 							</div>
 						{/if}
 					</div>
-
 				{:else if inspectActiveTab === 'properties'}
 					<div class="space-y-3">
 						{#if inspectedExt.nodeDefinition.properties && inspectedExt.nodeDefinition.properties.length > 0}
-							<div class="divide-y divide-slate-800 rounded-xl border border-slate-800 bg-slate-950/70">
+							<div
+								class="divide-y divide-slate-800 rounded-xl border border-slate-800 bg-slate-950/70"
+							>
 								{#each inspectedExt.nodeDefinition.properties as prop}
-									<div class="p-3.5 space-y-1">
+									<div class="space-y-1 p-3.5">
 										<div class="flex items-center justify-between">
-											<span class="font-mono font-bold text-indigo-300 text-xs">{prop.name}</span>
-											<span class="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
+											<span class="font-mono text-xs font-bold text-indigo-300">{prop.name}</span>
+											<span
+												class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-400"
+											>
 												{prop.type}
 											</span>
 										</div>
@@ -1470,20 +1690,23 @@
 											<p class="text-[11px] text-slate-500">{prop.description}</p>
 										{/if}
 										{#if prop.defaultValue !== undefined}
-											<div class="text-[10px] text-slate-400 font-mono">
-												Default: <span class="text-slate-300">{JSON.stringify(prop.defaultValue)}</span>
+											<div class="font-mono text-[10px] text-slate-400">
+												Default: <span class="text-slate-300"
+													>{JSON.stringify(prop.defaultValue)}</span
+												>
 											</div>
 										{/if}
 									</div>
 								{/each}
 							</div>
 						{:else}
-							<div class="rounded-xl border border-slate-800 bg-slate-950 p-6 text-center text-xs text-slate-500">
+							<div
+								class="rounded-xl border border-slate-800 bg-slate-950 p-6 text-center text-xs text-slate-500"
+							>
 								This extension does not declare custom configurable properties.
 							</div>
 						{/if}
 					</div>
-
 				{:else if inspectActiveTab === 'manifest'}
 					<div class="space-y-2">
 						<div class="flex items-center justify-between text-xs text-slate-400">
@@ -1504,8 +1727,11 @@
 						</div>
 
 						<pre
-							class="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-[11px] text-slate-300 overflow-x-auto max-h-96 leading-relaxed selection:bg-indigo-900/60"
-						>{JSON.stringify(inspectedExt, null, 2)}</pre>
+							class="max-h-96 overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-[11px] leading-relaxed text-slate-300 selection:bg-indigo-900/60">{JSON.stringify(
+								inspectedExt,
+								null,
+								2
+							)}</pre>
 					</div>
 				{/if}
 			</div>
@@ -1517,10 +1743,16 @@
 <!-- DELETE CONFIRMATION MODAL                                      -->
 <!-- ============================================================== -->
 {#if isDeleteOpen && extToDelete}
-	<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-		<div class="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl p-6 space-y-4">
+	<div
+		class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm duration-150"
+	>
+		<div
+			class="w-full max-w-md space-y-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl"
+		>
 			<div class="flex items-center gap-3">
-				<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400">
+				<div
+					class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400"
+				>
 					<Trash2 class="h-5 w-5" />
 				</div>
 				<div>
@@ -1529,8 +1761,11 @@
 				</div>
 			</div>
 
-			<p class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-slate-800">
-				Uninstalling <strong class="text-white">{extToDelete.name}</strong> will remove it from the palette. Existing flows that utilize this node type will require the extension to be re-installed.
+			<p
+				class="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-xs leading-relaxed text-slate-300"
+			>
+				Uninstalling <strong class="text-white">{extToDelete.name}</strong> will remove it from the palette.
+				Existing flows that utilize this node type will require the extension to be re-installed.
 			</p>
 
 			<div class="flex items-center justify-end gap-2.5 pt-2">
@@ -1540,7 +1775,7 @@
 						isDeleteOpen = false;
 						extToDelete = null;
 					}}
-					class="rounded-xl border border-slate-800 px-4 py-2 text-xs font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition"
+					class="rounded-xl border border-slate-800 px-4 py-2 text-xs font-semibold text-slate-400 transition hover:bg-slate-800 hover:text-white"
 				>
 					Cancel
 				</button>
@@ -1548,7 +1783,7 @@
 					type="button"
 					disabled={isDeleting}
 					onclick={confirmDelete}
-					class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white hover:bg-rose-500 transition active:scale-95 disabled:opacity-50"
+					class="rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-rose-500 active:scale-95 disabled:opacity-50"
 				>
 					{isDeleting ? 'Uninstalling...' : 'Uninstall'}
 				</button>

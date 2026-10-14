@@ -40,7 +40,13 @@
 	import DynamicExtensionNode from './nodes/DynamicExtensionNode.svelte';
 	import { executeFlow } from '../engine/executor';
 	import { generateSvelteKitCode, generateExpressCode } from '../engine/generator';
-	import type { NodelyNodeType, ExtensionPackage, TestRequestPayload, ExecutionResult, HttpMethod } from '../types';
+	import type {
+		NodelyNodeType,
+		ExtensionPackage,
+		TestRequestPayload,
+		ExecutionResult,
+		HttpMethod
+	} from '../types';
 
 	let loadedExtensions = $state<ExtensionPackage[]>([]);
 
@@ -131,7 +137,13 @@
 			if (savedPref !== null) {
 				isAutosave = savedPref === 'true';
 			}
-			lastSavedSnapshot = JSON.stringify({ nodes, edges, routeTitle: currentRouteTitle, routeMethod: currentRouteMethod, routePath: currentRoutePath });
+			lastSavedSnapshot = JSON.stringify({
+				nodes,
+				edges,
+				routeTitle: currentRouteTitle,
+				routeMethod: currentRouteMethod,
+				routePath: currentRoutePath
+			});
 			setTimeout(() => {
 				isAutosaveInitialized = true;
 			}, 600);
@@ -144,18 +156,42 @@
 			localStorage.setItem('nodeflow_autosave', String(val));
 		}
 		if (val) {
-			lastSavedSnapshot = JSON.stringify({ nodes, edges, routeTitle: currentRouteTitle, routeMethod: currentRouteMethod, routePath: currentRoutePath });
+			lastSavedSnapshot = JSON.stringify({
+				nodes,
+				edges,
+				routeTitle: currentRouteTitle,
+				routeMethod: currentRouteMethod,
+				routePath: currentRoutePath
+			});
 		}
 	}
 
 	// Debounced autosave effect
 	$effect(() => {
-		const snapshot = JSON.stringify({ nodes, edges, routeTitle: currentRouteTitle, routeMethod: currentRouteMethod, routePath: currentRoutePath });
-		if (isAutosaveInitialized && isAutosave && currentRouteId && lastSavedSnapshot && snapshot !== lastSavedSnapshot) {
+		const snapshot = JSON.stringify({
+			nodes,
+			edges,
+			routeTitle: currentRouteTitle,
+			routeMethod: currentRouteMethod,
+			routePath: currentRoutePath
+		});
+		if (
+			isAutosaveInitialized &&
+			isAutosave &&
+			currentRouteId &&
+			lastSavedSnapshot &&
+			snapshot !== lastSavedSnapshot
+		) {
 			if (autosaveTimer) clearTimeout(autosaveTimer);
 			autosaveTimer = setTimeout(async () => {
 				await handleSaveRoute(true);
-				lastSavedSnapshot = JSON.stringify({ nodes, edges, routeTitle: currentRouteTitle, routeMethod: currentRouteMethod, routePath: currentRoutePath });
+				lastSavedSnapshot = JSON.stringify({
+					nodes,
+					edges,
+					routeTitle: currentRouteTitle,
+					routeMethod: currentRouteMethod,
+					routePath: currentRoutePath
+				});
 			}, 1000);
 		}
 		return () => {
@@ -597,7 +633,13 @@
 				currentRouteTitle = title;
 				currentRouteMethod = method;
 				currentRoutePath = path;
-				lastSavedSnapshot = JSON.stringify({ nodes, edges, routeTitle: title, routeMethod: method, routePath: path });
+				lastSavedSnapshot = JSON.stringify({
+					nodes,
+					edges,
+					routeTitle: title,
+					routeMethod: method,
+					routePath: path
+				});
 			} else if (!silent) {
 				const err = await res.json().catch(() => ({ error: 'Save failed' }));
 				alert(`Failed to save: ${err.error || 'Server error'}`);
@@ -618,7 +660,10 @@
 		if (!target) return;
 		const nodeEl = target.closest<HTMLElement>('.svelte-flow__node');
 		if (nodeEl && nodeEl !== lastElevatedNodeEl) {
-			if (lastElevatedNodeEl && !lastElevatedNodeEl.matches(':focus-within, .selected, [data-dropdown-open="true"]')) {
+			if (
+				lastElevatedNodeEl &&
+				!lastElevatedNodeEl.matches(':focus-within, .selected, [data-dropdown-open="true"]')
+			) {
 				lastElevatedNodeEl.style.zIndex = '';
 			}
 			nodeEl.style.zIndex = '1000';
@@ -631,7 +676,10 @@
 		if (!target) return;
 		const nodeEl = target.closest<HTMLElement>('.svelte-flow__node');
 		if (nodeEl && nodeEl !== lastElevatedNodeEl) {
-			if (lastElevatedNodeEl && !lastElevatedNodeEl.matches(':focus-within, .selected, [data-dropdown-open="true"]')) {
+			if (
+				lastElevatedNodeEl &&
+				!lastElevatedNodeEl.matches(':focus-within, .selected, [data-dropdown-open="true"]')
+			) {
 				lastElevatedNodeEl.style.zIndex = '';
 			}
 			nodeEl.style.zIndex = '1000';
@@ -644,7 +692,7 @@
 		const triggerData = (trigger?.data || {}) as any;
 		const method = (triggerData.method || currentRouteMethod || 'GET') as string;
 		const path = (triggerData.path || currentRoutePath || '/api/v1/endpoint') as string;
-		const title = (triggerData.title || currentRouteTitle || 'Nodely API') as string;
+		const title = (triggerData.title || currentRouteTitle || 'Nodeflow API') as string;
 
 		isPublishing = true;
 		try {
@@ -737,7 +785,7 @@
 </script>
 
 <div
-	class="flex h-screen w-screen flex-col bg-slate-950 text-slate-100 overflow-hidden select-none"
+	class="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 text-slate-100 select-none"
 	onclick={closeContextMenus}
 	role="presentation"
 >
@@ -761,13 +809,13 @@
 	/>
 
 	<!-- Main Workspace -->
-	<div class="flex flex-1 overflow-hidden relative">
+	<div class="relative flex flex-1 overflow-hidden">
 		<!-- Left Sidebar with Draggable Palette -->
 		<Sidebar onAddNode={handleAddNode} />
 
 		<!-- Flow Canvas Area -->
 		<div
-			class="flex-1 h-full w-full relative bg-slate-950"
+			class="relative h-full w-full flex-1 bg-slate-950"
 			ondragover={handleDragOver}
 			ondrop={handleDrop}
 			onpointerdown={handleCanvasPointerDown}
@@ -797,16 +845,16 @@
 				fitView
 				minZoom={0.2}
 				maxZoom={2}
-				class="bg-slate-950 dark"
+				class="dark bg-slate-950"
 			>
 				<Background bgColor="#020617" patternColor="#1e293b" gap={24} size={1.5} />
-				<Controls class="!bg-slate-900 !border-slate-800 !text-slate-200 !shadow-xl !rounded-xl" />
+				<Controls class="!rounded-xl !border-slate-800 !bg-slate-900 !text-slate-200 !shadow-xl" />
 			</SvelteFlow>
 
 			<!-- Right-Click Context Menu for Connections / Edges -->
 			{#if edgeContextMenu}
 				<div
-					class="fixed z-50 min-w-52 rounded-xl border border-slate-700 bg-slate-900/95 p-1.5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-100"
+					class="animate-in fade-in zoom-in-95 fixed z-50 min-w-52 rounded-xl border border-slate-700 bg-slate-900/95 p-1.5 shadow-2xl backdrop-blur-xl duration-100"
 					style="left: {edgeContextMenu.x}px; top: {edgeContextMenu.y}px;"
 					onclick={(e) => e.stopPropagation()}
 					onkeydown={(e) => {
@@ -816,11 +864,13 @@
 					tabindex="0"
 				>
 					<div
-						class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 mb-1 flex items-center justify-between"
+						class="mb-1 flex items-center justify-between border-b border-slate-800 px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase"
 					>
 						<span>Connection</span>
 						{#if edgeContextMenu.sourceHandle}
-							<span class="rounded bg-indigo-500/20 px-1 py-0.2 text-[9px] text-indigo-300 font-mono">
+							<span
+								class="py-0.2 rounded bg-indigo-500/20 px-1 font-mono text-[9px] text-indigo-300"
+							>
 								{edgeContextMenu.sourceHandle}
 							</span>
 						{/if}
@@ -829,7 +879,7 @@
 					<button
 						type="button"
 						onclick={() => edgeContextMenu && deleteEdge(edgeContextMenu.edgeId)}
-						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition text-left"
+						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-semibold text-rose-400 transition hover:bg-rose-500/10 hover:text-rose-300"
 					>
 						<Trash2 class="h-3.5 w-3.5" />
 						<span>Delete Connection</span>
@@ -840,7 +890,7 @@
 			<!-- Right-Click Context Menu for Nodes -->
 			{#if nodeContextMenu}
 				<div
-					class="fixed z-50 min-w-48 rounded-xl border border-slate-700 bg-slate-900/95 p-1.5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-100"
+					class="animate-in fade-in zoom-in-95 fixed z-50 min-w-48 rounded-xl border border-slate-700 bg-slate-900/95 p-1.5 shadow-2xl backdrop-blur-xl duration-100"
 					style="left: {nodeContextMenu.x}px; top: {nodeContextMenu.y}px;"
 					onclick={(e) => e.stopPropagation()}
 					onkeydown={(e) => {
@@ -850,7 +900,7 @@
 					tabindex="0"
 				>
 					<div
-						class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 mb-1 truncate"
+						class="mb-1 truncate border-b border-slate-800 px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase"
 					>
 						{nodeContextMenu.title}
 					</div>
@@ -872,7 +922,7 @@
 								closeContextMenus();
 							}
 						}}
-						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs text-indigo-300 hover:bg-slate-800 hover:text-white transition text-left"
+						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs text-indigo-300 transition hover:bg-slate-800 hover:text-white"
 					>
 						<Braces class="h-3.5 w-3.5 text-indigo-400" />
 						<span>View Data Structure</span>
@@ -881,7 +931,7 @@
 					<button
 						type="button"
 						onclick={() => nodeContextMenu && duplicateNode(nodeContextMenu.nodeId)}
-						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition text-left"
+						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs text-slate-300 transition hover:bg-slate-800 hover:text-white"
 					>
 						<Copy class="h-3.5 w-3.5 text-blue-400" />
 						<span>Duplicate Node</span>
@@ -890,7 +940,7 @@
 					<button
 						type="button"
 						onclick={() => nodeContextMenu && deleteNode(nodeContextMenu.nodeId)}
-						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition text-left"
+						class="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-semibold text-rose-400 transition hover:bg-rose-500/10 hover:text-rose-300"
 					>
 						<Trash2 class="h-3.5 w-3.5" />
 						<span>Delete Node</span>
@@ -936,7 +986,9 @@
 		border: 1px solid #334155 !important;
 		border-radius: 0.75rem !important;
 		overflow: hidden !important;
-		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+		box-shadow:
+			0 10px 25px -5px rgba(0, 0, 0, 0.5),
+			0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
 	}
 
 	:global(.svelte-flow__controls-button) {
@@ -993,8 +1045,8 @@
 
 	:global(.svelte-flow__node:focus-within),
 	:global(.svelte-flow__node.selected),
-	:global(.svelte-flow__node[data-dropdown-open="true"]),
-	:global(.svelte-flow__node:has([data-dropdown-open="true"])) {
+	:global(.svelte-flow__node[data-dropdown-open='true']),
+	:global(.svelte-flow__node:has([data-dropdown-open='true'])) {
 		z-index: 1000 !important;
 	}
 </style>

@@ -37,7 +37,7 @@
 						const val = (e.target as HTMLSelectElement).value as 'apiKey' | 'bearer';
 						updateNodeData(id, {
 							authType: val,
-							headerName: val === 'bearer' ? 'authorization' : (authData.headerName || 'x-api-key')
+							headerName: val === 'bearer' ? 'authorization' : authData.headerName || 'x-api-key'
 						});
 					}}
 				>
@@ -47,7 +47,9 @@
 			</div>
 
 			<div class="space-y-1">
-				<label for="auth-header-{id}" class="text-[11px] font-medium text-slate-400">Header Name</label>
+				<label for="auth-header-{id}" class="text-[11px] font-medium text-slate-400"
+					>Header Name</label
+				>
 				<input
 					id="auth-header-{id}"
 					type="text"
@@ -62,18 +64,21 @@
 		<!-- Expected Secret / Key -->
 		<div class="space-y-1">
 			<div class="flex items-center justify-between">
-				<label for="auth-secret-{id}" class="text-[11px] font-medium text-slate-400">Expected Secret / Token</label>
+				<label for="auth-secret-{id}" class="text-[11px] font-medium text-slate-400"
+					>Expected Secret / Token</label
+				>
 				<span class="text-[9px] text-slate-500">Exact match</span>
 			</div>
 			<div class="relative">
-				<KeyRound class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
+				<KeyRound class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-slate-500" />
 				<input
 					id="auth-secret-{id}"
 					type="text"
-					class="w-full rounded-lg border border-slate-700 bg-slate-950 pl-8 pr-2.5 py-1.5 font-mono text-xs text-rose-300 placeholder-slate-600 focus:border-rose-500 focus:outline-none"
-					value={authData.expectedValue || 'secret_nodely_key'}
-					placeholder="secret_nodely_key"
-					oninput={(e) => updateNodeData(id, { expectedValue: (e.target as HTMLInputElement).value })}
+					class="w-full rounded-lg border border-slate-700 bg-slate-950 py-1.5 pr-2.5 pl-8 font-mono text-xs text-rose-300 placeholder-slate-600 focus:border-rose-500 focus:outline-none"
+					value={authData.expectedValue || 'secret_nodeflow_key'}
+					placeholder="secret_nodeflow_key"
+					oninput={(e) =>
+						updateNodeData(id, { expectedValue: (e.target as HTMLInputElement).value })}
 				/>
 			</div>
 		</div>
